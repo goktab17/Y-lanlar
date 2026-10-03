@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Yılan Kaçışı</title>
+    <style>
+        * { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+        body {
+            margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            background: #f0f2f5; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #1a1a2e; overflow: hidden; touch-action: manipulation;
+            transition: background 0.3s, color 0.3s;
+        }
+        .game-container { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; width: 100%; max-width: 480px; }
+        h1 { font-size: 1.2rem; font-weight: 700; margin: 0; letter-spacing: 1px; color: #2c3e50; transition: color 0.3s; }
+
+        .top-panel {
+            width: 100%; max-width: 400px;
+            display: flex; flex-direction: column; gap: 6px;
+            background: #ffffff; border-radius: 14px; padding: 10px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06); border: 1px solid #e0e6ed;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .top-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.9rem; font-weight: 600; color: #7f8c8d;
+            transition: color 0.3s;
+        }
+        .top-row strong { color: #2c3e50; transition: color 0.3s; }
+        .hearts { display: flex; gap: 3px; font-size: 1.25rem; }
+        .heart { transition: transform 0.2s, filter 0.3s; }
+        .heart.lost { filter: grayscale(1) brightness(1.3); opacity: 0.5; }
+        .heart.beat { animation: heartbeat 0.5s ease; }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.35); }
+            70% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        .top-actions {
+            display: flex; gap: 6px; justify-content: center;
+            margin-top: 4px;
+        }
+        .small-btn {
+            flex: 1;
+            padding: 6px 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            background: #f8f9fb;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .small-btn:active { transform: scale(0.96); background: #ecf0f1; }
+        .small-btn.save {
+            background: #e8f5e9; color: #27ae60; border-color: #a5d6a7;
+        }
+        .small-btn.exit {
+            background: #fce4ec; color: #c0392b; border-color: #f8bbd0;
+        }
+
+        .regen-bar {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.82rem; color: #7f8c8d;
+            background: #f8f9fb; border-radius: 8px; padding: 5px 10px;
+            opacity: 0; max-height: 0; overflow: hidden;
+            transition: opacity 0.3s, max-height 0.3s, margin 0.3s;
+        }
+        .regen-bar.visible { opacity: 1; max-height: 40px; margin-top: 4px; }
+        .regen-bar .clock { color: #e67e22; font-weight: 700; font-size: 0.95rem; }
+        .regen-progress {
+            flex: 1; height: 6px; background: #ecf0f1; border-radius: 3px; overflow: hidden;
+        }
+        .regen-progress-fill {
+            height: 100%; background: linear-gradient(90deg, #f39c12, #e67e22);
+            border-radius: 3px; transition: width 1s linear;
+        }
+
+        canvas {
+            border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); background: #ffffff;
+            cursor: pointer; width: 100%; height: auto; max-width: 400px; aspect-ratio: 1 / 1;
+            border: 1px solid #e0e6ed;
+            touch-action: none;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .controls { display: flex; gap: 8px; width: 100%; max-width: 400px; }
+        button.ctrl {
+            flex: 1; padding: 11px 12px; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: transform 0.1s, background 0.2s, box-shadow 0.2s; background: #ffffff;
+            color: #2c3e50; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); border: 1px solid #e0e6ed;
+            position: relative;
+        }
+        button.ctrl:active { transform: scale(0.96); }
+        button.hint-btn { background: #f39c12; color: #ffffff; border: none; box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3); }
+        button.hint-btn:disabled { background: #bdc3c7; box-shadow: none; opacity: 0.6; }
+        .hint-badge {
+            position: absolute; top: -6px; right: -6px;
+            background: #e74c3c; color: #fff; border-radius: 10px;
+            padding: 2px 7px; font-size: 0.72rem; font-weight: 700;
+            box-shadow: 0 2px 6px rgba(231, 76, 60, 0.4);
+        }
+        .message { font-size: 0.95rem; font-weight: 600; min-height: 1.3em; text-align: center; transition: opacity 0.3s; color: #7f8c8d; }
+        .message.success { color: #27ae60; }
+        .message.error { color: #e74c3c; }
+        .message.hidden { opacity: 0; }
+
+        .big-warning {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.4);
+            font-size: 2.4rem; font-weight: 900; color: #e74c3c;
+            letter-spacing: 2px;
+            pointer-events: none; z-index: 1000; opacity: 0;
+            transition: opacity 0.15s ease-out, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center; padding: 16px 32px; white-space: nowrap;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            border: 3px solid #e74c3c;
+        }
+        .big-warning.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .big-warning.success {
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        /* ============ AYARLAR BUTONU (SAĞ ÜST) ============ */
+        .settings-btn {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #e0e6ed;
+            background: #ffffff;
+            color: #2c3e50;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            z-index: 5000;
+            transition: transform 0.2s, background 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .settings-btn:active { transform: scale(0.9) rotate(30deg); }
+        .settings-btn.open { transform: rotate(60deg); background: #3498db; color: #fff; border-color: #3498db; }
+
+        /* ============ AYARLAR PANELİ ============ */
+        .settings-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 4900;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .settings-overlay.show { opacity: 1; pointer-events: auto; }
+
+        .settings-panel {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 0;
+            width: 90%;
+            max-width: 340px;
+            z-index: 4950;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            overflow: hidden;
+        }
+        .settings-panel.show {
+            opacity: 1; pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .settings-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .settings-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .settings-close:active { background: rgba(255,255,255,0.4); }
+
+        .settings-body {
+            padding: 8px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid #f0f2f5;
+            transition: background 0.2s;
+        }
+        .setting-item:last-child { border-bottom: none; }
+        .setting-item:active { background: #f8f9fb; }
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .setting-icon {
+            font-size: 1.25rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 30px;
+            background: #d5dbdb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: #ffffff;
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.on { background: #27ae60; }
+        .toggle-switch.on::after { transform: translateX(22px); }
+        .toggle-switch.disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* ============ AÇILIŞ EKRANI ============ */
+        .start-screen {
+            position: fixed; inset: 0;
+            background: linear-gradient(160deg, #1a2980 0%, #26d0ce 100%);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 3000; padding: 24px;
+            opacity: 1; visibility: visible;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+        .start-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .start-screen .logo {
+            font-size: 5rem;
+            margin-bottom: 8px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-14px) rotate(5deg); }
+        }
+        .start-screen h1 {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin: 0 0 8px 0;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .start-screen .tagline {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        .start-screen .menu {
+            display: flex; flex-direction: column;
+            gap: 14px; width: 100%; max-width: 300px;
+        }
+        .menu-btn {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+        }
+        .menu-btn:active { transform: scale(0.96); }
+        .menu-btn.new-game {
+            background: linear-gradient(135deg, #27ae60, #16a085);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.5);
+        }
+        .menu-btn.load-game {
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        .menu-btn.load-game:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+            background: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.7);
+            box-shadow: none;
+        }
+        .save-info {
+            margin-top: 20px;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.82rem;
+            text-align: center;
+            padding: 10px 16px;
+            background: rgba(0,0,0,0.15);
+            border-radius: 10px;
+            max-width: 300px;
+            line-height: 1.5;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .save-info.empty { opacity: 0.5; font-style: italic; }
+
+        .no-lives-overlay {
+            position: fixed; inset: 0;
+            background: rgba(15, 20, 30, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 2000; padding: 20px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .no-lives-overlay.show {
+            opacity: 1; pointer-events: auto;
+        }
+        .no-lives-overlay .icon {
+            font-size: 4.5rem;
+            animation: pulse 1.6s ease-in-out infinite;
+            margin-bottom: 14px;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+        }
+        .no-lives-overlay .title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
+        }
+        .no-lives-overlay .subtitle {
+            font-size: 0.95rem;
+            color: #bdc3c7;
+            margin-bottom: 22px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .no-lives-overlay .countdown-box {
+            background: rgba(255,255,255,0.08);
+            border: 2px solid rgba(243, 156, 18, 0.5);
+            border-radius: 16px;
+            padding: 14px 26px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .no-lives-overlay .countdown-label {
+            font-size: 0.72rem;
+            color: #f39c12;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .no-lives-overlay .countdown-time {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+        }
+        .no-lives-overlay .overlay-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            width: 100%;
+            max-width: 320px;
+        }
+        .no-lives-overlay .overlay-buttons button {
+            flex: 1;
+            padding: 13px 14px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s, box-shadow 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .no-lives-overlay .overlay-buttons button:active {
+            transform: scale(0.96);
+        }
+        .btn-restart {
+            background: linear-gradient(135deg, #27ae60, #16a085);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(39, 174, 96, 0.4);
+        }
+        .btn-close-overlay {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.25) !important;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+        }
+        .no-lives-overlay .hint {
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: #95a5a6;
+            text-align: center;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+
+        /* ============================================================ */
+        /* ============ GECE TEMASI (body.dark) ====================== */
+        /* ============================================================ */
+        body.dark { background: #0f1620; color: #e0e6ed; }
+        body.dark h1 { color: #e0e6ed; }
+        body.dark .top-panel {
+            background: #1a2530; border-color: #2c3e50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        body.dark .top-row { color: #95a5a6; }
+        body.dark .top-row strong { color: #ecf0f1; }
+        body.dark .small-btn {
+            background: #253340; color: #95a5a6; border-color: #2c3e50;
+        }
+        body.dark .small-btn:active { background: #2c3e50; }
+        body.dark .small-btn.save {
+            background: #1a3325; color: #2ecc71; border-color: #27ae60;
+        }
+        body.dark .small-btn.exit {
+            background: #3a1e22; color: #e74c3c; border-color: #c0392b;
+        }
+        body.dark .regen-bar { background: #1e2a35; color: #95a5a6; }
+        body.dark .regen-progress { background: #253340; }
+        body.dark canvas {
+            background: #1a2530; border-color: #2c3e50;
+        }
+        body.dark button.ctrl {
+            background: #253340; color: #ecf0f1; border-color: #2c3e50;
+        }
+        body.dark .message { color: #95a5a6; }
+        body.dark .big-warning {
+            background: #1a2530; border-color: #e74c3c;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+        }
+        body.dark .big-warning.success { border-color: #27ae60; }
+        body.dark .settings-btn {
+            background: #1a2530; color: #e0e6ed; border-color: #2c3e50;
+        }
+        body.dark .settings-panel {
+            background: #1a2530;
+        }
+        body.dark .settings-header {
+            background: linear-gradient(135deg, #2c3e50, #1a2530);
+        }
+        body.dark .setting-item { border-bottom-color: #253340; }
+        body.dark .setting-item:active { background: #253340; }
+        body.dark .setting-label { color: #ecf0f1; }
+        body.dark .toggle-switch { background: #3a4a5a; }
+        body.dark .toggle-switch.on { background: #27ae60; }
+
+        @media (max-width: 480px) {
+            .game-container { padding: 8px; gap: 6px; }
+            h1 { font-size: 1rem; }
+            button.ctrl { padding: 9px 10px; font-size: 0.8rem; }
+            .big-warning { font-size: 1.5rem; padding: 12px 20px; letter-spacing: 1.5px; }
+            .no-lives-overlay .title { font-size: 1.5rem; }
+            .no-lives-overlay .countdown-time { font-size: 2rem; }
+            .no-lives-overlay .icon { font-size: 3.5rem; }
+            .start-screen .logo { font-size: 4rem; }
+            .start-screen h1 { font-size: 1.6rem; }
+            .menu-btn { padding: 14px 18px; font-size: 0.95rem; }
+            .settings-btn { width: 40px; height: 40px; font-size: 1.2rem; top: 8px; right: 8px; }
+            .setting-label { font-size: 0.9rem; }
+            .setting-item { padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ AYARLAR BUTONU ============ -->
+    <button type="button" class="settings-btn" id="settingsBtn" aria-label="Ayarlar">⚙️</button>
+
+    <!-- ============ AYARLAR PANELİ ============ -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <span>⚙️ Ayarlar</span>
+            <button type="button" class="settings-close" id="settingsCloseBtn">✖</button>
+        </div>
+        <div class="settings-body">
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="setting-icon">🔊</span>
+                    <span>Ses Efektleri</span>
+                </div>
+                <div class="toggle-switch" id="toggleAudio"></div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="setting-icon">🌙</span>
+                    <span>Gece Teması</span>
+                </div>
+                <div class="toggle-switch" id="toggleTheme"></div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="setting-icon">🎨</span>
+                    <span>Renkli Yılanlar</span>
+                </div>
+                <div class="toggle-switch" id="toggleColors"></div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="setting-icon">📳</span>
+                    <span>Titreşim</span>
+                </div>
+                <div class="toggle-switch" id="toggleVibrate"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AÇILIŞ EKRANI -->
+    <div class="start-screen" id="startScreen">
+        <div class="logo">🐍</div>
+        <h1>YILAN KAÇIŞI</h1>
+        <div class="tagline">Zihnini zorlayan kıvrımlı bulmaca</div>
+        <div class="menu">
+            <button type="button" class="menu-btn new-game" id="newGameBtn">
+                <span>🎮</span> Yeni Oyun
+            </button>
+            <button type="button" class="menu-btn load-game" id="loadGameBtn" disabled>
+                <span>💾</span> Kayıtlı Oyunu Yükle
+            </button>
+        </div>
+        <div class="save-info empty" id="saveInfo">Kayıt bulunamadı</div>
+    </div>
+
+    <div class="game-container">
+        <h1>🐍 YILAN KAÇIŞI</h1>
+
+        <div class="top-panel">
+            <div class="top-row">
+                <span>Seviye: <strong id="levelDisplay">1</strong></span>
+                <div class="hearts" id="heartsContainer">
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                </div>
+                <span>Yılan: <strong id="remainingDisplay">0</strong></span>
+            </div>
+            <div class="regen-bar" id="regenBar">
+                <span>⏱️</span>
+                <span>Sonraki can:</span>
+                <span class="clock" id="regenClock">10:00</span>
+                <div class="regen-progress"><div class="regen-progress-fill" id="regenProgressFill" style="width:100%"></div></div>
+            </div>
+            <div class="top-actions">
+                <button type="button" class="small-btn save" id="saveExitBtn">💾 Kaydet & Çık</button>
+                <button type="button" class="small-btn exit" id="exitNoSaveBtn">🚪 Kaydetmeden Çık</button>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+        <div class="message hidden" id="message"></div>
+        <div class="controls">
+            <button type="button" class="ctrl" id="resetBtn">🔄 Sıfırla</button>
+            <button type="button" class="ctrl hint-btn" id="hintBtn">💡 İpucu<span class="hint-badge" id="hintBadge">3</span></button>
+        </div>
+    </div>
+
+    <div class="big-warning" id="bigWarning">YOL KAPALI!</div>
+
+    <div class="no-lives-overlay" id="noLivesOverlay">
+        <div class="icon">💔</div>
+        <div class="title">CAN HAKKINIZ YOK</div>
+        <div class="subtitle">Yeni bir can hakkı kazanmak için bekleyin</div>
+        <div class="countdown-box">
+            <div class="countdown-label">Sonraki Can Hakkına</div>
+            <div class="countdown-time" id="overlayCountdown">10:00</div>
+        </div>
+        <div class="overlay-buttons">
+            <button type="button" class="btn-restart" id="restartBtn">🔄 Yeni Oyun Başlat</button>
+            <button type="button" class="btn-close-overlay" id="closeOverlayBtn">✖️ Kapat</button>
+        </div>
+        <div class="hint">Kapatırsanız haritayı görebilirsiniz.<br>Haritaya dokunduğunuzda bu ekran tekrar açılır.</div>
+    </div>
+
+    <script>
+        (function() {
+            "use strict";
+
+            // ============ YAPILANDIRMA ============
+            const CANVAS_SIZE = 400;
+            const ANIMATION_SPEED = 0.012;
+            const MAX_LEVEL = 200;
+            const MAX_LIVES = 5;
+            const LIFE_REGEN_MS = 10 * 60 * 1000;
+            const STARTING_HINTS = 3;
+            const HINT_REWARD_INTERVAL = 3;
+            const HINT_REWARD_AMOUNT = 1;
+            const AUTO_NEXT_DELAY = 1500;
+            const CLICK_GUARD_MS = 300;
+
+            const GRID_MIN = 15;
+            const GRID_MAX = 24;
+            const GRID_LEVELS_PER_STEP = 20;
+
+            const DIR_VECTORS = [
+                { dx: 0, dy: -1 }, { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }
+            ];
+
+            const COLORS = [
+                '#2C3E50', '#E74C3C', '#27AE60', '#8E44AD', '#F39C12',
+                '#3498DB', '#1ABC9C', '#D35400', '#C0392B', '#16A085',
+                '#E67E22', '#9B59B6', '#E91E63', '#00BCD4', '#FF5722',
+                '#795548', '#607D8B', '#FF9800', '#4CAF50', '#673AB7',
+                '#2196F3', '#F44336', '#009688', '#FFC107', '#9C27B0'
+            ];
+
+            // ============ AYARLAR ============
+            const SETTINGS_KEY = 'snakeEscape_settings_v1';
+            const settings = {
+                audioEnabled: true,
+                darkTheme: false,
+                colorEnabled: true,
+                vibrationEnabled: true
+            };
+
+            function loadSettings() {
+                try {
+                    const raw = localStorage.getItem(SETTINGS_KEY);
+                    if (!raw) return;
+                    const data = JSON.parse(raw);
+                    if (typeof data.audioEnabled === 'boolean') settings.audioEnabled = data.audioEnabled;
+                    if (typeof data.darkTheme === 'boolean') settings.darkTheme = data.darkTheme;
+                    if (typeof data.colorEnabled === 'boolean') settings.colorEnabled = data.colorEnabled;
+                    if (typeof data.vibrationEnabled === 'boolean') settings.vibrationEnabled = data.vibrationEnabled;
+                } catch (e) {}
+            }
+
+            function saveSettings() {
+                try {
+                    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+                } catch (e) {}
+            }
+
+            // Canvas arka plan renkleri (tema değişince güncellenir)
+            let canvasBgColor = '#ffffff';
+            let canvasDotColor = 'rgba(0, 0, 0, 0.06)';
+
+            function applyTheme() {
+                if (settings.darkTheme) {
+                    document.body.classList.add('dark');
+                    canvasBgColor = '#1a2530';
+                    canvasDotColor = 'rgba(255, 255, 255, 0.08)';
+                } else {
+                    document.body.classList.remove('dark');
+                    canvasBgColor = '#ffffff';
+                    canvasDotColor = 'rgba(0, 0, 0, 0.06)';
+                }
+            }
+
+            // ============ DURUM ============
+            let currentLevel = 1;
+            let snakes = [];
+            let animatingSnakes = [];
+            let isAnimating = false;
+            let gameWon = false;
+            let hintSnake = null;
+            let hintTimer = 0;
+
+            let lives = MAX_LIVES;
+            let nextLifeTime = 0;
+            let hints = STARTING_HINTS;
+            let noLivesDismissed = false;
+            let lastClickTime = 0;
+            let gameActive = false;
+
+            // ============ DOM ============
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const levelDisplay = document.getElementById('levelDisplay');
+            const remainingDisplay = document.getElementById('remainingDisplay');
+            const messageEl = document.getElementById('message');
+            const bigWarningEl = document.getElementById('bigWarning');
+            const resetBtn = document.getElementById('resetBtn');
+            const hintBtn = document.getElementById('hintBtn');
+            const hintBadge = document.getElementById('hintBadge');
+            const heartsContainer = document.getElementById('heartsContainer');
+            const regenBar = document.getElementById('regenBar');
+            const regenClock = document.getElementById('regenClock');
+            const regenProgressFill = document.getElementById('regenProgressFill');
+            const noLivesOverlay = document.getElementById('noLivesOverlay');
+            const overlayCountdown = document.getElementById('overlayCountdown');
+            const restartBtn = document.getElementById('restartBtn');
+            const closeOverlayBtn = document.getElementById('closeOverlayBtn');
+            const startScreen = document.getElementById('startScreen');
+            const newGameBtn = document.getElementById('newGameBtn');
+            const loadGameBtn = document.getElementById('loadGameBtn');
+            const saveInfo = document.getElementById('saveInfo');
+            const saveExitBtn = document.getElementById('saveExitBtn');
+            const exitNoSaveBtn = document.getElementById('exitNoSaveBtn');
+
+            // Ayarlar DOM
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsOverlay = document.getElementById('settingsOverlay');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+            const toggleAudio = document.getElementById('toggleAudio');
+            const toggleTheme = document.getElementById('toggleTheme');
+            const toggleColors = document.getElementById('toggleColors');
+            const toggleVibrate = document.getElementById('toggleVibrate');
+
+            canvas.width = CANVAS_SIZE;
+            canvas.height = CANVAS_SIZE;
+
+            // ============ AYARLAR UI ============
+            function updateToggleUI() {
+                if (settings.audioEnabled) toggleAudio.classList.add('on');
+                else toggleAudio.classList.remove('on');
+
+                if (settings.darkTheme) toggleTheme.classList.add('on');
+                else toggleTheme.classList.remove('on');
+
+                if (settings.colorEnabled) toggleColors.classList.add('on');
+                else toggleColors.classList.remove('on');
+
+                if (settings.vibrationEnabled) toggleVibrate.classList.add('on');
+                else toggleVibrate.classList.remove('on');
+            }
+
+            function openSettings() {
+                ensureAudio();
+                settingsPanel.classList.add('show');
+                settingsOverlay.classList.add('show');
+                settingsBtn.classList.add('open');
+            }
+            function closeSettings() {
+                settingsPanel.classList.remove('show');
+                settingsOverlay.classList.remove('show');
+                settingsBtn.classList.remove('open');
+            }
+
+            function toggleAudioSetting() {
+                settings.audioEnabled = !settings.audioEnabled;
+                saveSettings();
+                updateToggleUI();
+                if (settings.audioEnabled) {
+                    ensureAudio();
+                    playSuccessSound();
+                }
+            }
+            function toggleThemeSetting() {
+                settings.darkTheme = !settings.darkTheme;
+                saveSettings();
+                applyTheme();
+                updateToggleUI();
+                vibrate(20);
+            }
+            function toggleColorsSetting() {
+                settings.colorEnabled = !settings.colorEnabled;
+                saveSettings();
+                updateToggleUI();
+                if (settings.audioEnabled) playSuccessSound();
+                vibrate(20);
+            }
+            function toggleVibrationSetting() {
+                settings.vibrationEnabled = !settings.vibrationEnabled;
+                saveSettings();
+                updateToggleUI();
+                if (settings.vibrationEnabled) {
+                    // Kullanıcıya titreşimin açıldığını hissettir
+                    try { if (navigator.vibrate) navigator.vibrate(50); } catch (e) {}
+                }
+                if (settings.audioEnabled) playSuccessSound();
+            }
+
+            // ============ GRID BOYUTU ============
+            function getGridSize() {
+                return getGridSizeForLevel(currentLevel);
+            }
+            function getGridSizeForLevel(levelNum) {
+                const step = Math.floor((levelNum - 1) / GRID_LEVELS_PER_STEP);
+                return Math.min(GRID_MIN + step, GRID_MAX);
+            }
+            function getCellSize() { return CANVAS_SIZE / getGridSize(); }
+
+            // ============ KAYIT SİSTEMİ ============
+            const SAVE_KEY = 'snakeEscape_save_v1';
+
+            function saveGame() {
+                try {
+                    const saveData = {
+                        version: 1,
+                        savedAt: Date.now(),
+                        level: currentLevel,
+                        lives: lives,
+                        nextLifeTime: nextLifeTime,
+                        hints: hints
+                    };
+                    localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function loadGame() {
+                try {
+                    const raw = localStorage.getItem(SAVE_KEY);
+                    if (!raw) return null;
+                    const data = JSON.parse(raw);
+                    if (typeof data.level === 'number') currentLevel = Math.max(1, Math.min(MAX_LEVEL, data.level));
+                    if (typeof data.lives === 'number') lives = Math.max(0, Math.min(MAX_LIVES, data.lives));
+                    if (typeof data.nextLifeTime === 'number') nextLifeTime = data.nextLifeTime;
+                    if (typeof data.hints === 'number') hints = Math.max(0, data.hints);
+                    return data;
+                } catch (e) { return null; }
+            }
+
+            function hasSaveGame() {
+                try {
+                    const raw = localStorage.getItem(SAVE_KEY);
+                    if (!raw) return false;
+                    const data = JSON.parse(raw);
+                    return typeof data.level === 'number';
+                } catch (e) { return false; }
+            }
+
+            function clearSaveGame() {
+                try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
+            }
+
+            function updateStartScreenInfo() {
+                if (hasSaveGame()) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(SAVE_KEY));
+                        const savedDate = new Date(data.savedAt || 0);
+                        const dateStr = savedDate.toLocaleDateString('tr-TR');
+                        const timeStr = savedDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                        saveInfo.textContent = `💾 Kayıt: Seviye ${data.level} • ${dateStr} ${timeStr}`;
+                        saveInfo.classList.remove('empty');
+                        loadGameBtn.disabled = false;
+                    } catch (e) {
+                        saveInfo.textContent = 'Kayıt bulunamadı';
+                        saveInfo.classList.add('empty');
+                        loadGameBtn.disabled = true;
+                    }
+                } else {
+                    saveInfo.textContent = 'Kayıt bulunamadı';
+                    saveInfo.classList.add('empty');
+                    loadGameBtn.disabled = true;
+                }
+            }
+
+            // ============ SES & TİTREŞİM ============
+            let audioCtx = null;
+            function ensureAudio() {
+                try {
+                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+                } catch (e) { audioCtx = null; }
+            }
+            function playSuccessSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(600, now);
+                    osc.frequency.exponentialRampToValueAtTime(1100, now + 0.18);
+                    gain.gain.setValueAtTime(0.14, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                    osc.start(now); osc.stop(now + 0.25);
+                } catch (e) {}
+            }
+            function playErrorSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    for (let i = 0; i < 2; i++) {
+                        const t = now + i * 0.11;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.type = 'square';
+                        osc.frequency.setValueAtTime(160, t);
+                        osc.frequency.setValueAtTime(120, t + 0.06);
+                        gain.gain.setValueAtTime(0.001, t);
+                        gain.gain.linearRampToValueAtTime(0.13, t + 0.01);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+                        osc.start(t); osc.stop(t + 0.12);
+                    }
+                } catch (e) {}
+            }
+            function playWinSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const notes = [523, 659, 784, 1046];
+                    notes.forEach((freq, i) => {
+                        const t = now + i * 0.09;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        gain.gain.setValueAtTime(0.001, t);
+                        gain.gain.linearRampToValueAtTime(0.12, t + 0.02);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+                        osc.start(t); osc.stop(t + 0.5);
+                    });
+                } catch (e) {}
+            }
+            function playHintSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(880, now);
+                    osc.frequency.setValueAtTime(1320, now + 0.08);
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.1, now + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                    osc.start(now); osc.stop(now + 0.2);
+                } catch (e) {}
+            }
+            function playLevelUpSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const notes = [659, 880, 1174];
+                    notes.forEach((freq, i) => {
+                        const t = now + i * 0.1;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.type = 'triangle';
+                        osc.frequency.value = freq;
+                        gain.gain.setValueAtTime(0.001, t);
+                        gain.gain.linearRampToValueAtTime(0.1, t + 0.02);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+                        osc.start(t); osc.stop(t + 0.35);
+                    });
+                } catch (e) {}
+            }
+            function playHintRewardSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const notes = [784, 1046, 1318];
+                    notes.forEach((freq, i) => {
+                        const t = now + i * 0.08;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        gain.gain.setValueAtTime(0.001, t);
+                        gain.gain.linearRampToValueAtTime(0.11, t + 0.02);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+                        osc.start(t); osc.stop(t + 0.35);
+                    });
+                } catch (e) {}
+            }
+            function playSaveSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(700, now);
+                    osc.frequency.setValueAtTime(1000, now + 0.1);
+                    osc.frequency.setValueAtTime(1400, now + 0.2);
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.1, now + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now); osc.stop(now + 0.35);
+                } catch (e) {}
+            }
+            function vibrate(pattern) {
+                if (!settings.vibrationEnabled) return;
+                try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) {}
+            }
+
+            // ============ BÜYÜK UYARI ============
+            let bigWarningTimeout;
+            function showBigWarning(text, type = 'error', duration = 900) {
+                clearTimeout(bigWarningTimeout);
+                bigWarningEl.textContent = text;
+                bigWarningEl.className = 'big-warning show';
+                if (type === 'success') bigWarningEl.classList.add('success');
+                bigWarningTimeout = setTimeout(() => {
+                    bigWarningEl.classList.remove('show');
+                }, duration);
+            }
+
+            // ============ SEED RNG ============
+            function mulberry32(a) {
+                return function() {
+                    a |= 0; a = a + 0x6D2B79F5 | 0;
+                    var t = Math.imul(a ^ a >>> 15, 1 | a);
+                    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+                };
+            }
+
+            // ============ YILAN ŞEKLİ ============
+            function generateShape(rng, movementDir, targetLength, turnProb) {
+                const opposite = (movementDir + 2) % 4;
+                let currDir = opposite;
+                const shape = [{ x: 0, y: 0 }];
+                const visited = new Set(['0,0']);
+                let currX = 0, currY = 0;
+                for (let i = 1; i < targetLength; i++) {
+                    let dirsToTry;
+                    if (i >= 2 && rng() < turnProb) {
+                        const turn = rng() < 0.5 ? 1 : 3;
+                        dirsToTry = [(currDir + turn) % 4, currDir, (currDir + (turn === 1 ? 3 : 1)) % 4];
+                    } else {
+                        dirsToTry = [currDir];
+                    }
+                    let moved = false;
+                    for (const d of dirsToTry) {
+                        const nx = currX + DIR_VECTORS[d].dx;
+                        const ny = currY + DIR_VECTORS[d].dy;
+                        const key = `${nx},${ny}`;
+                        if (!visited.has(key)) {
+                            currX = nx; currY = ny; currDir = d;
+                            visited.add(key);
+                            shape.push({ x: currX, y: currY });
+                            moved = true; break;
+                        }
+                    }
+                    if (!moved) break;
+                }
+                return shape;
+            }
+
+            function getSnakeCellsFromShape(head, shape) {
+                return shape.map(p => ({ x: head.x + p.x, y: head.y + p.y }));
+            }
+            function getSnakeDirectionFromShape(shape) {
+                if (shape.length < 2) return { dx: 1, dy: 0 };
+                const dx = shape[0].x - shape[1].x;
+                const dy = shape[0].y - shape[1].y;
+                return { dx: Math.sign(dx), dy: Math.sign(dy) };
+            }
+            function snakeFits(head, shape, gridSize) {
+                for (const p of shape) {
+                    const x = head.x + p.x, y = head.y + p.y;
+                    if (x < 0 || x >= gridSize || y < 0 || y >= gridSize) return false;
+                }
+                return true;
+            }
+            function snakeOverlaps(head, shape, existingSnakes) {
+                const cells = new Set(getSnakeCellsFromShape(head, shape).map(c => `${c.x},${c.y}`));
+                for (const s of existingSnakes) {
+                    for (const c of getSnakeCellsFromShape(s.head, s.shape)) {
+                        if (cells.has(`${c.x},${c.y}`)) return true;
+                    }
+                }
+                return false;
+            }
+            function snakePathClear(head, shape, existingSnakes, gridSize) {
+                const dir = getSnakeDirectionFromShape(shape);
+                const occupied = new Set();
+                for (const s of existingSnakes) {
+                    for (const c of getSnakeCellsFromShape(s.head, s.shape)) {
+                        occupied.add(`${c.x},${c.y}`);
+                    }
+                }
+                let x = head.x + dir.dx, y = head.y + dir.dy;
+                while (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+                    if (occupied.has(`${x},${y}`)) return false;
+                    x += dir.dx; y += dir.dy;
+                }
+                return true;
+            }
+
+            // ============ SEVİYE ÜRETİCİ ============
+            function generateLevel(levelNum) {
+                const rng = mulberry32(levelNum * 7919 + 1234);
+                const gridSize = getGridSizeForLevel(levelNum);
+
+                const snakeCountTarget = 8 + Math.floor(levelNum / 2);
+                const maxSnakesForGrid = Math.floor(gridSize * gridSize / 12);
+                const snakeCount = Math.min(snakeCountTarget, maxSnakesForGrid);
+
+                const maxLenCap = Math.floor(gridSize * 1.6);
+                const maxLen = Math.min(13 + Math.floor(levelNum / 6), maxLenCap);
+                const minLen = Math.max(6, maxLen - 6);
+
+                const turnProb = Math.min(0.5 + levelNum / 250, 0.80);
+
+                const result = [];
+                let consecutiveFailures = 0;
+
+                for (let i = 0; i < snakeCount; i++) {
+                    let placed = false;
+                    const attempts = 800 + gridSize * 50;
+                    for (let a = 0; a < attempts; a++) {
+                        const movementDir = Math.floor(rng() * 4);
+
+                        let targetLen;
+                        if (rng() < 0.75) {
+                            targetLen = minLen + Math.floor(rng() * (maxLen - minLen + 1));
+                        } else {
+                            targetLen = Math.max(4, minLen - 2) + Math.floor(rng() * 5);
+                        }
+
+                        const shape = generateShape(rng, movementDir, targetLen, turnProb);
+                        if (shape.length < 5) continue;
+
+                        const headX = Math.floor(rng() * gridSize);
+                        const headY = Math.floor(rng() * gridSize);
+                        const head = { x: headX, y: headY };
+
+                        if (!snakeFits(head, shape, gridSize)) continue;
+                        if (snakeOverlaps(head, shape, result)) continue;
+                        if (!snakePathClear(head, shape, result, gridSize)) continue;
+
+                        result.push({
+                            head,
+                            shape: shape.map(p => ({ x: p.x, y: p.y })),
+                            color: COLORS[i % COLORS.length]
+                        });
+                        placed = true; break;
+                    }
+                    if (placed) consecutiveFailures = 0;
+                    else { consecutiveFailures++; if (consecutiveFailures >= 8) break; }
+                }
+
+                if (result.length === 0) {
+                    const mid = Math.floor(gridSize / 2);
+                    result.push({
+                        head: { x: mid, y: mid },
+                        shape: [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: -2, y: 0 }, { x: -2, y: 1 }],
+                        color: COLORS[0]
+                    });
+                }
+                return result;
+            }
+
+            const levelCache = {};
+            function getLevelData(n) {
+                if (!levelCache[n]) levelCache[n] = generateLevel(n);
+                return levelCache[n];
+            }
+
+            // ============ YARDIMCILAR ============
+            function getSnakeDirection(snake) { return getSnakeDirectionFromShape(snake.shape); }
+            function getSnakeCells(snake) {
+                return snake.shape.map(part => ({
+                    x: snake.head.x + part.x, y: snake.head.y + part.y
+                }));
+            }
+            function getSnakeAt(x, y) {
+                for (let i = 0; i < snakes.length; i++) {
+                    const cells = getSnakeCells(snakes[i]);
+                    for (const c of cells) {
+                        if (c.x === x && c.y === y) return { snake: snakes[i], index: i };
+                    }
+                }
+                return null;
+            }
+            function getAllOccupiedCells(excludeSnake = null) {
+                const occupied = new Set();
+                for (const s of snakes) {
+                    if (s === excludeSnake) continue;
+                    for (const c of getSnakeCells(s)) occupied.add(`${c.x},${c.y}`);
+                }
+                return occupied;
+            }
+            function isPathClear(snake) {
+                const gridSize = getGridSize();
+                const vec = getSnakeDirection(snake);
+                const occupied = getAllOccupiedCells(snake);
+                let x = snake.head.x + vec.dx, y = snake.head.y + vec.dy;
+                while (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+                    if (occupied.has(`${x},${y}`)) return false;
+                    x += vec.dx; y += vec.dy;
+                }
+                return true;
+            }
+            function pathCell(cells, n, vec, j) {
+                if (j <= n) return cells[n - j];
+                const k = j - n;
+                return { x: cells[0].x + vec.dx * k, y: cells[0].y + vec.dy * k };
+            }
+            function getSegmentPosition(cells, n, vec, segIndex, progress, totalExitCells) {
+                const headPos = n + progress * totalExitCells;
+                let segPos = headPos - segIndex;
+                if (segPos < 0) segPos = 0;
+                const i1 = Math.floor(segPos), i2 = i1 + 1, frac = segPos - i1;
+                const p1 = pathCell(cells, n, vec, i1);
+                const p2 = pathCell(cells, n, vec, i2);
+                return { x: p1.x + (p2.x - p1.x) * frac, y: p1.y + (p2.y - p1.y) * frac };
+            }
+            function removeSnake(snake) {
+                const idx = snakes.indexOf(snake);
+                if (idx !== -1) snakes.splice(idx, 1);
+                animatingSnakes.push({ snake, progress: 0 });
+                isAnimating = true;
+                hintSnake = null;
+            }
+            function updateAnimations() {
+                for (let i = animatingSnakes.length - 1; i >= 0; i--) {
+                    const anim = animatingSnakes[i];
+                    anim.progress += ANIMATION_SPEED;
+                    if (anim.progress >= 1) animatingSnakes.splice(i, 1);
+                }
+                if (animatingSnakes.length === 0) {
+                    isAnimating = false;
+                    checkWinCondition();
+                }
+            }
+            function checkWinCondition() {
+                if (snakes.length === 0 && !gameWon) {
+                    gameWon = true;
+                    showMessage('🎉 Seviye tamamlandı!', 'success');
+                    showBigWarning('TAMAMLANDI! 🎉', 'success', 1200);
+                    playWinSound();
+                    vibrate([60, 40, 60, 40, 120]);
+
+                    let gotHint = false;
+                    if (currentLevel % HINT_REWARD_INTERVAL === 0) {
+                        hints += HINT_REWARD_AMOUNT;
+                        gotHint = true;
+                    }
+                    updateHintBadge();
+                    // OTOMATİK KAYIT
+                    saveGame();
+                    updateStartScreenInfo();
+
+                    if (gotHint) {
+                        setTimeout(() => {
+                            showBigWarning('💡 +1 İPUCU!', 'success', 1300);
+                            playHintRewardSound();
+                            vibrate([40, 30, 40]);
+                        }, 700);
+                    }
+
+                    setTimeout(() => {
+                        if (currentLevel < MAX_LEVEL) {
+                            loadLevel(currentLevel + 1, true);
+                        } else {
+                            showBigWarning('🏆 TÜM SEVİYELER BİTTİ!', 'success', 3000);
+                        }
+                    }, AUTO_NEXT_DELAY + (gotHint ? 1000 : 0));
+                }
+            }
+
+            let messageTimeout;
+            function showMessage(text, type = '') {
+                clearTimeout(messageTimeout);
+                messageEl.textContent = text;
+                messageEl.className = 'message ' + type;
+                messageTimeout = setTimeout(() => { messageEl.className = 'message hidden'; }, 1800);
+            }
+
+            // ============ CAN SİSTEMİ ============
+            function updateHearts(animate = false) {
+                const hearts = heartsContainer.querySelectorAll('.heart');
+                hearts.forEach((heart, index) => {
+                    if (index < lives) {
+                        heart.classList.remove('lost');
+                    } else {
+                        heart.classList.add('lost');
+                    }
+                    if (animate && index === lives) {
+                        heart.classList.add('beat');
+                        setTimeout(() => heart.classList.remove('beat'), 500);
+                    }
+                });
+            }
+
+            function formatTime(ms) {
+                if (ms < 0) ms = 0;
+                const totalSec = Math.ceil(ms / 1000);
+                const mm = String(Math.floor(totalSec / 60)).padStart(2, '0');
+                const ss = String(totalSec % 60).padStart(2, '0');
+                return `${mm}:${ss}`;
+            }
+
+            function updateRegenUI() {
+                if (lives >= MAX_LIVES) {
+                    regenBar.classList.remove('visible');
+                    return;
+                }
+                regenBar.classList.add('visible');
+                const now = Date.now();
+                let remaining = nextLifeTime - now;
+                if (remaining < 0) remaining = 0;
+                regenClock.textContent = formatTime(remaining);
+                const pct = Math.max(0, Math.min(100, 100 - (remaining / LIFE_REGEN_MS) * 100));
+                regenProgressFill.style.width = pct + '%';
+            }
+
+            function updateNoLivesOverlay() {
+                if (lives <= 0 && !noLivesDismissed) {
+                    noLivesOverlay.classList.add('show');
+                    const now = Date.now();
+                    let remaining = nextLifeTime - now;
+                    if (remaining < 0) remaining = 0;
+                    overlayCountdown.textContent = formatTime(remaining);
+                } else {
+                    noLivesOverlay.classList.remove('show');
+                }
+            }
+
+            function checkLifeRegen() {
+                if (lives >= MAX_LIVES) return;
+                const now = Date.now();
+                if (now >= nextLifeTime) {
+                    lives++;
+                    updateHearts(true);
+                    if (lives < MAX_LIVES) {
+                        nextLifeTime = now + LIFE_REGEN_MS;
+                    } else {
+                        nextLifeTime = 0;
+                    }
+                    saveGame();
+                    if (lives > 0) {
+                        noLivesDismissed = false;
+                        noLivesOverlay.classList.remove('show');
+                        showMessage('❤️ Can kazandın!', 'success');
+                        playSuccessSound();
+                        vibrate(40);
+                    }
+                }
+            }
+
+            function loseLife() {
+                if (lives > 0) {
+                    lives--;
+                    updateHearts();
+                    if (lives < MAX_LIVES && nextLifeTime === 0) {
+                        nextLifeTime = Date.now() + LIFE_REGEN_MS;
+                    }
+                    saveGame();
+                    return true;
+                }
+                return false;
+            }
+
+            // ============ ÇİZİM ============
+            function drawGrid() {
+                const gridSize = getGridSize();
+                const cellSize = getCellSize();
+                ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+                ctx.fillStyle = canvasBgColor;
+                ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+                ctx.fillStyle = canvasDotColor;
+                for (let i = 0; i <= gridSize; i++) {
+                    for (let j = 0; j <= gridSize; j++) {
+                        ctx.beginPath();
+                        ctx.arc(i * cellSize, j * cellSize, 1, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                ctx.strokeStyle = 'rgba(52, 152, 219, 0.25)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(1, 1, CANVAS_SIZE - 2, CANVAS_SIZE - 2);
+            }
+
+            // Renkli/gri toggle'ı için yılan rengini belirle
+            function getSnakeDisplayColor(snake) {
+                if (settings.colorEnabled) return snake.color;
+                return '#7f8c8d'; // gri
+            }
+
+            function drawSnake(snake, progress = 0, alpha = 1, isHint = false) {
+                const cellSize = getCellSize();
+                const gridSize = getGridSize();
+                const cells = getSnakeCells(snake);
+                const n = cells.length - 1;
+                const vec = getSnakeDirection(snake);
+                const totalExitCells = gridSize + 4;
+                const displayColor = getSnakeDisplayColor(snake);
+
+                let shakeX = 0, shakeY = 0;
+                const now = performance.now();
+                if (snake.shakeUntil && now < snake.shakeUntil) {
+                    const remaining = (snake.shakeUntil - now) / 400;
+                    const intensity = remaining * cellSize * 0.18;
+                    const t = now / 30;
+                    shakeX = Math.sin(t * 1.9) * intensity;
+                    shakeY = Math.cos(t * 2.3) * intensity;
+                }
+
+                const positions = [];
+                for (let i = 0; i <= n; i++) {
+                    const cell = getSegmentPosition(cells, n, vec, i, progress, totalExitCells);
+                    positions.push({
+                        x: (cell.x + 0.5) * cellSize + shakeX,
+                        y: (cell.y + 0.5) * cellSize + shakeY
+                    });
+                }
+
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                if (positions.length > 1) {
+                    ctx.beginPath();
+                    ctx.moveTo(positions[0].x, positions[0].y);
+                    for (let i = 1; i < positions.length; i++) ctx.lineTo(positions[i].x, positions[i].y);
+                    const lineWidth = Math.max(cellSize * 0.42, 4);
+                    ctx.lineWidth = lineWidth;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = displayColor;
+                    if (isHint) { ctx.shadowColor = '#f39c12'; ctx.shadowBlur = 24; }
+                    else { ctx.shadowColor = 'rgba(0,0,0,0.12)'; ctx.shadowBlur = 3; }
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
+                const headPos = positions[0];
+                const headRadius = Math.max(cellSize * 0.26, 3);
+                ctx.beginPath();
+                ctx.arc(headPos.x, headPos.y, headRadius, 0, Math.PI * 2);
+                ctx.fillStyle = displayColor;
+                ctx.fill();
+
+                const eyeOffset = cellSize * 0.09;
+                const eyeRadius = Math.max(cellSize * 0.07, 1);
+                ctx.beginPath();
+                ctx.arc(headPos.x + vec.dx * eyeOffset, headPos.y + vec.dy * eyeOffset,
+                        eyeRadius, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+
+                if (isHint) {
+                    const arrowLength = cellSize * 1.2;
+                    const arrowStartX = headPos.x + vec.dx * cellSize * 0.5;
+                    const arrowStartY = headPos.y + vec.dy * cellSize * 0.5;
+                    const arrowEndX = arrowStartX + vec.dx * arrowLength;
+                    const arrowEndY = arrowStartY + vec.dy * arrowLength;
+                    ctx.strokeStyle = '#f39c12';
+                    ctx.fillStyle = '#f39c12';
+                    ctx.lineWidth = 4;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(arrowStartX, arrowStartY);
+                    ctx.lineTo(arrowEndX, arrowEndY);
+                    ctx.stroke();
+                    const angle = Math.atan2(vec.dy, vec.dx);
+                    const arrowHeadLen = cellSize * 0.4;
+                    ctx.beginPath();
+                    ctx.moveTo(arrowEndX, arrowEndY);
+                    ctx.lineTo(arrowEndX - Math.cos(angle - Math.PI / 6) * arrowHeadLen,
+                               arrowEndY - Math.sin(angle - Math.PI / 6) * arrowHeadLen);
+                    ctx.lineTo(arrowEndX - Math.cos(angle + Math.PI / 6) * arrowHeadLen,
+                               arrowEndY - Math.sin(angle + Math.PI / 6) * arrowHeadLen);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+
+            function render() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+                ctx.clip();
+                drawGrid();
+                for (const anim of animatingSnakes) {
+                    const alpha = 1 - Math.min(anim.progress, 1) * 0.85;
+                    drawSnake(anim.snake, anim.progress, alpha);
+                }
+                for (const snake of snakes) {
+                    drawSnake(snake, 0, 1, snake === hintSnake);
+                }
+                ctx.restore();
+            }
+
+            // ============ OYUN DÖNGÜSÜ ============
+            let lastRegenCheck = 0;
+            function gameLoop(timestamp) {
+                if (isAnimating) updateAnimations();
+                if (hintSnake) { hintTimer--; if (hintTimer <= 0) hintSnake = null; }
+
+                if (!timestamp) timestamp = performance.now();
+                if (timestamp - lastRegenCheck > 1000) {
+                    lastRegenCheck = timestamp;
+                    checkLifeRegen();
+                    updateRegenUI();
+                    updateNoLivesOverlay();
+                }
+
+                render();
+                requestAnimationFrame(gameLoop);
+            }
+
+            // ============ GİRDİ ============
+            function handleCanvasClick(e) {
+                if (!gameActive) return;
+                ensureAudio();
+                const now = Date.now();
+                if (now - lastClickTime < CLICK_GUARD_MS) return;
+                lastClickTime = now;
+
+                if (lives <= 0) {
+                    noLivesDismissed = false;
+                    updateNoLivesOverlay();
+                    playErrorSound();
+                    vibrate([50, 30, 50]);
+                    return;
+                }
+
+                if (isAnimating || gameWon) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+
+                let clientX, clientY;
+                if (e.touches) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
+                else if (e.changedTouches) { clientX = e.changedTouches[0].clientX; clientY = e.changedTouches[0].clientY; }
+                else { clientX = e.clientX; clientY = e.clientY; }
+
+                const canvasX = (clientX - rect.left) * scaleX;
+                const canvasY = (clientY - rect.top) * scaleY;
+                const cellSize = getCellSize();
+                const gridX = Math.floor(canvasX / cellSize);
+                const gridY = Math.floor(canvasY / cellSize);
+                const gridSize = getGridSize();
+                if (gridX < 0 || gridX >= gridSize || gridY < 0 || gridY >= gridSize) return;
+
+                const result = getSnakeAt(gridX, gridY);
+                if (!result) return;
+                const { snake } = result;
+
+                if (snake.head.x !== gridX || snake.head.y !== gridY) {
+                    showMessage('Yılanın başına tıkla!', 'error');
+                    return;
+                }
+
+                if (isPathClear(snake)) {
+                    removeSnake(snake);
+                    showMessage('🐍 Süzüldü!', 'success');
+                    showBigWarning('SÜZÜLDÜ! 🐍', 'success', 700);
+                    playSuccessSound();
+                    vibrate(30);
+                    updateRemaining();
+                } else {
+                    snake.shakeUntil = performance.now() + 400;
+                    playErrorSound();
+                    vibrate([80, 50, 80]);
+
+                    if (lives > 0) {
+                        loseLife();
+                        showMessage('Yol kapalı! (-1 ❤️)', 'error');
+                        showBigWarning('YOL KAPALI!', 'error', 900);
+                        if (lives <= 0) {
+                            noLivesDismissed = false;
+                            updateNoLivesOverlay();
+                        }
+                    }
+                }
+            }
+
+            function updateRemaining() { remainingDisplay.textContent = snakes.length; }
+            function updateHintBadge() {
+                hintBadge.textContent = hints;
+                hintBtn.disabled = hints <= 0;
+            }
+
+            function restartGame() {
+                ensureAudio();
+                clearSaveGame();
+                currentLevel = 1;
+                lives = MAX_LIVES;
+                hints = STARTING_HINTS;
+                nextLifeTime = 0;
+                noLivesDismissed = false;
+                lastClickTime = 0;
+                updateStartScreenInfo();
+                loadLevel(1, true);
+                playLevelUpSound();
+                vibrate(60);
+            }
+
+            // ============ SEVİYE YÖNETİMİ ============
+            function loadLevel(level, showTransition = false) {
+                currentLevel = Math.max(1, Math.min(MAX_LEVEL, level));
+                const levelData = getLevelData(currentLevel);
+                snakes = levelData.map(s => ({
+                    head: { x: s.head.x, y: s.head.y },
+                    shape: s.shape.map(p => ({ x: p.x, y: p.y })),
+                    color: s.color,
+                    shakeUntil: 0
+                }));
+                animatingSnakes = [];
+                isAnimating = false;
+                gameWon = false;
+                hintSnake = null;
+                levelDisplay.textContent = currentLevel;
+                updateRemaining();
+                updateHearts();
+                updateRegenUI();
+                updateNoLivesOverlay();
+                updateHintBadge();
+
+                // OTOMATİK KAYIT (her seviye başında da kayıt)
+                saveGame();
+
+                if (showTransition) {
+                    setTimeout(() => {
+                        showBigWarning('SEVİYE ' + currentLevel, 'success', 1500);
+                        playLevelUpSound();
+                        vibrate(40);
+                    }, 200);
+                } else {
+                    showMessage(`Seviye ${currentLevel}`, 'success');
+                }
+            }
+
+            function resetLevel() {
+                ensureAudio();
+                if (!gameActive) return;
+                if (lives <= 0) {
+                    noLivesDismissed = false;
+                    updateNoLivesOverlay();
+                    return;
+                }
+                loadLevel(currentLevel);
+            }
+
+            function showHint() {
+                ensureAudio();
+                if (!gameActive) return;
+                if (lives <= 0) {
+                    noLivesDismissed = false;
+                    updateNoLivesOverlay();
+                    return;
+                }
+                if (isAnimating || gameWon) return;
+                if (hints <= 0) {
+                    showMessage('İpucu hakkın kalmadı!', 'error');
+                    showBigWarning('İPUCU YOK!', 'error', 800);
+                    playErrorSound();
+                    vibrate([50, 30, 50]);
+                    return;
+                }
+
+                const available = snakes.filter(s => isPathClear(s));
+                if (available.length > 0) {
+                    let best = available[0];
+                    let bestDist = Infinity;
+                    const gridSize = getGridSize();
+                    for (const s of available) {
+                        const vec = getSnakeDirection(s);
+                        let dist = 0;
+                        let x = s.head.x + vec.dx, y = s.head.y + vec.dy;
+                        while (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+                            dist++; x += vec.dx; y += vec.dy;
+                        }
+                        if (dist < bestDist) { bestDist = dist; best = s; }
+                    }
+                    hintSnake = best;
+                    hintTimer = 180;
+                    hints--;
+                    updateHintBadge();
+                    saveGame();
+                    showMessage('💡 İşte çıkabilecek bir yılan!', 'success');
+                    playHintSound();
+                } else {
+                    showMessage('Şu an çıkabilecek yılan yok.', 'error');
+                    showBigWarning('ÇIKIŞ YOK!', 'error', 800);
+                    playErrorSound();
+                    vibrate([50, 30, 50]);
+                }
+            }
+
+            function closeOverlay() {
+                ensureAudio();
+                noLivesDismissed = true;
+                noLivesOverlay.classList.remove('show');
+                showMessage('Haritaya dokununca ekran tekrar açılır', 'error');
+            }
+
+            // ============ KAYDET & ÇIK ============
+            function saveAndExit() {
+                ensureAudio();
+                const ok = saveGame();
+                if (ok) {
+                    playSaveSound();
+                    vibrate([40, 30, 40]);
+                    showBigWarning('💾 KAYDEDİLDİ!', 'success', 1000);
+                } else {
+                    showBigWarning('KAYIT BAŞARISIZ!', 'error', 1000);
+                }
+                setTimeout(() => {
+                    gameActive = false;
+                    startScreen.classList.remove('hidden');
+                    updateStartScreenInfo();
+                }, 900);
+            }
+
+            function exitWithoutSaving() {
+                ensureAudio();
+                gameActive = false;
+                startScreen.classList.remove('hidden');
+                updateStartScreenInfo();
+                vibrate([20, 20, 20]);
+            }
+
+            function startNewGame() {
+                ensureAudio();
+                clearSaveGame();
+                currentLevel = 1;
+                lives = MAX_LIVES;
+                hints = STARTING_HINTS;
+                nextLifeTime = 0;
+                noLivesDismissed = false;
+                lastClickTime = 0;
+                gameActive = true;
+                startScreen.classList.add('hidden');
+                loadLevel(1, true);
+                playLevelUpSound();
+                vibrate(60);
+                saveGame(); // Yeni oyunu hemen kaydet
+            }
+
+            function continueSavedGame() {
+                ensureAudio();
+                if (!hasSaveGame()) {
+                    showBigWarning('KAYIT YOK!', 'error', 1000);
+                    return;
+                }
+                const data = loadGame();
+                if (!data) {
+                    showBigWarning('KAYIT YÜKLENEMEDİ!', 'error', 1000);
+                    return;
+                }
+                if (lives < MAX_LIVES && nextLifeTime === 0) {
+                    nextLifeTime = Date.now() + LIFE_REGEN_MS;
+                }
+                noLivesDismissed = false;
+                lastClickTime = 0;
+                gameActive = true;
+                startScreen.classList.add('hidden');
+                loadLevel(currentLevel, true);
+                playLevelUpSound();
+                vibrate(60);
+                showMessage(`Kayıt yüklendi: Seviye ${currentLevel}`, 'success');
+            }
+
+            // ============ BAŞLATMA ============
+            function init() {
+                // Ayarları yükle ve uygula
+                loadSettings();
+                applyTheme();
+                updateToggleUI();
+
+                // Canvas olayları
+                canvas.addEventListener('pointerdown', (e) => {
+                    e.preventDefault();
+                    handleCanvasClick(e);
+                });
+
+                // Oyun butonları
+                resetBtn.addEventListener('click', resetLevel);
+                hintBtn.addEventListener('click', showHint);
+                restartBtn.addEventListener('click', restartGame);
+                closeOverlayBtn.addEventListener('click', closeOverlay);
+                saveExitBtn.addEventListener('click', saveAndExit);
+                exitNoSaveBtn.addEventListener('click', exitWithoutSaving);
+                newGameBtn.addEventListener('click', startNewGame);
+                loadGameBtn.addEventListener('click', continueSavedGame);
+
+                // Ayarlar butonları
+                settingsBtn.addEventListener('click', function() {
+                    if (settingsPanel.classList.contains('show')) {
+                        closeSettings();
+                    } else {
+                        openSettings();
+                    }
+                });
+                settingsOverlay.addEventListener('click', closeSettings);
+                settingsCloseBtn.addEventListener('click', closeSettings);
+
+                // Toggle butonları
+                toggleAudio.addEventListener('click', toggleAudioSetting);
+                toggleTheme.addEventListener('click', toggleThemeSetting);
+                toggleColors.addEventListener('click', toggleColorsSetting);
+                toggleVibrate.addEventListener('click', toggleVibrationSetting);
+
+                // ESC ile ayarları kapat (masaüstü)
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && settingsPanel.classList.contains('show')) {
+                        closeSettings();
+                    }
+                });
+
+                updateStartScreenInfo();
+                updateHintBadge();
+                updateHearts();
+                updateRegenUI();
+
+                loadLevel(1, false);
+                gameLoop();
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

@@ -38,6 +38,27 @@
             70% { transform: scale(0.95); }
             100% { transform: scale(1); }
         }
+
+        /* ALTIN GÖSTERGESİ */
+        .gold-bar {
+            display: flex; justify-content: center; align-items: center;
+            gap: 6px; padding: 4px 10px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fbbf24;
+            border-radius: 10px;
+            font-size: 0.9rem; font-weight: 700; color: #78350f;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(251, 191, 36, 0.25);
+        }
+        .gold-bar .gold-icon { font-size: 1.1rem; }
+        .gold-bar .gold-count { font-variant-numeric: tabular-nums; }
+        .gold-bar.flash { animation: goldFlash 0.6s ease; }
+        @keyframes goldFlash {
+            0% { transform: scale(1); background: linear-gradient(135deg, #fde68a 0%, #fbbf24 100%); }
+            50% { transform: scale(1.08); background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%); }
+            100% { transform: scale(1); background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+        }
+
         .top-actions { display: flex; gap: 6px; justify-content: center; margin-top: 4px; }
         .small-btn {
             flex: 1; padding: 6px 8px; font-size: 0.72rem; font-weight: 600;
@@ -106,6 +127,7 @@
         }
         .big-warning.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         .big-warning.success { color: #27ae60; border-color: #27ae60; }
+        .big-warning.gold { color: #78350f; border-color: #fbbf24; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
 
         .settings-btn {
             position: fixed; top: 12px; right: 12px;
@@ -265,6 +287,19 @@
             font-size: 0.95rem; color: #bdc3c7; margin-bottom: 22px;
             text-align: center; font-weight: 500;
         }
+        .no-lives-overlay .gold-display {
+            display: flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 8px 18px;
+            margin-bottom: 14px;
+            font-size: 1rem; font-weight: 700; color: #78350f;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+        }
+        .no-lives-overlay .gold-display .gold-icon { font-size: 1.4rem; }
+        .no-lives-overlay .gold-display .gold-num { font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+
         .no-lives-overlay .countdown-box {
             background: rgba(255,255,255,0.08);
             border: 2px solid rgba(243, 156, 18, 0.5);
@@ -281,16 +316,44 @@
             letter-spacing: 2px; font-variant-numeric: tabular-nums;
         }
         .no-lives-overlay .overlay-buttons {
-            display: flex; gap: 12px; margin-top: 24px;
+            display: flex; flex-direction: column; gap: 10px; margin-top: 22px;
             width: 100%; max-width: 320px;
         }
         .no-lives-overlay .overlay-buttons button {
-            flex: 1; padding: 13px 14px; border-radius: 12px;
+            padding: 13px 14px; border-radius: 12px;
             font-size: 0.95rem; font-weight: 700; cursor: pointer;
-            border: none; transition: transform 0.1s, box-shadow 0.2s;
+            border: none; transition: transform 0.1s, box-shadow 0.2s, opacity 0.3s, background 0.3s;
             letter-spacing: 0.5px;
+            position: relative;
         }
-        .no-lives-overlay .overlay-buttons button:active { transform: scale(0.96); }
+        .no-lives-overlay .overlay-buttons button:active:not(:disabled) { transform: scale(0.96); }
+
+        .no-lives-overlay .overlay-buttons button:disabled {
+            cursor: not-allowed;
+            opacity: 0.35;
+            filter: grayscale(0.8);
+            transform: none !important;
+        }
+        .no-lives-overlay .overlay-buttons button.btn-activated {
+            animation: btnPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes btnPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-buy-life {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #78350f;
+            box-shadow: 0 4px 14px rgba(251, 191, 36, 0.5);
+            font-size: 1rem !important;
+        }
+        .btn-buy-life:disabled {
+            background: linear-gradient(135deg, #cbd5e1, #94a3b8) !important;
+            color: #475569 !important;
+            box-shadow: none !important;
+        }
         .btn-restart {
             background: linear-gradient(135deg, #27ae60, #16a085);
             color: #fff; box-shadow: 0 4px 14px rgba(39, 174, 96, 0.4);
@@ -300,9 +363,19 @@
             border: 1px solid rgba(255,255,255,0.25) !important;
             box-shadow: 0 4px 14px rgba(0,0,0,0.2);
         }
+        .btn-main-menu {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(52, 152, 219, 0.4);
+        }
         .no-lives-overlay .hint {
-            margin-top: 20px; font-size: 0.78rem; color: #95a5a6;
+            margin-top: 16px; font-size: 0.78rem; color: #95a5a6;
             text-align: center; max-width: 300px; line-height: 1.5;
+        }
+        .no-lives-overlay .wait-hint {
+            margin-top: 8px; font-size: 0.72rem; color: #f39c12;
+            text-align: center; font-weight: 600;
+            transition: opacity 0.3s;
         }
 
         body.dark { background: #0f1620; color: #e0e6ed; }
@@ -403,6 +476,10 @@
                 </div>
                 <span>Yılan: <strong id="remainingDisplay">0</strong></span>
             </div>
+            <div class="gold-bar" id="goldBar">
+                <span class="gold-icon">🪙</span>
+                <span>Altın: <span class="gold-count" id="goldCount">0</span></span>
+            </div>
             <div class="regen-bar" id="regenBar">
                 <span>⏱️</span>
                 <span>Sonraki can:</span>
@@ -428,15 +505,22 @@
     <div class="no-lives-overlay" id="noLivesOverlay">
         <div class="icon">💔</div>
         <div class="title">CAN HAKKINIZ YOK</div>
-        <div class="subtitle">Yeni bir can hakkı kazanmak için bekleyin</div>
+        <div class="subtitle">Can satın al veya bekle</div>
+        <div class="gold-display">
+            <span class="gold-icon">🪙</span>
+            <span class="gold-num" id="overlayGoldCount">0</span>
+        </div>
         <div class="countdown-box">
-            <div class="countdown-label">Sonraki Can Hakkına</div>
+            <div class="countdown-label">Sonraki Ücretsiz Can</div>
             <div class="countdown-time" id="overlayCountdown">10:00</div>
         </div>
         <div class="overlay-buttons">
-            <button type="button" class="btn-restart" id="restartBtn">🔄 Yeni Oyun Başlat</button>
-            <button type="button" class="btn-close-overlay" id="closeOverlayBtn">✖️ Kapat</button>
+            <button type="button" class="btn-buy-life" id="buyLifeBtn" disabled>🪙 Can Satın Al (2 Altın)</button>
+            <button type="button" class="btn-restart" id="restartBtn" disabled>🔄 Yeni Oyun Başlat</button>
+            <button type="button" class="btn-main-menu" id="mainMenuBtn" disabled>🏠 Ana Menüye Dön</button>
+            <button type="button" class="btn-close-overlay" id="closeOverlayBtn" disabled>✖️ Kapat</button>
         </div>
+        <div class="wait-hint" id="waitHint">Butonlar 2 saniye içinde aktif olacak...</div>
         <div class="hint">Kapatırsanız haritayı görebilirsiniz.<br>Haritaya dokunduğunuzda bu ekran tekrar açılır.</div>
     </div>
 
@@ -446,29 +530,29 @@
 
             // ============ YAPILANDIRMA ============
             const CANVAS_SIZE = 1000;
-            const ANIMATION_SPEED = 0.012;
+            // ANİMASYON HIZI %25 ARTTIRILDI: 0.012 → 0.015
+            const ANIMATION_SPEED = 0.015;
             const MAX_LEVEL = 200;
             const MAX_LIVES = 5;
             const LIFE_REGEN_MS = 10 * 60 * 1000;
             const STARTING_HINTS = 3;
             const HINT_REWARD_INTERVAL = 3;
             const HINT_REWARD_AMOUNT = 1;
+            const GOLD_PER_LEVEL = 1;
+            const LIFE_COST_GOLD = 2;
             const AUTO_NEXT_DELAY = 1500;
             const CLICK_GUARD_MS = 80;
             const HEAD_CLICK_TOLERANCE = 1;
+            const OVERLAY_BTN_DELAY_MS = 2000;
 
-            // Yılan sayısı: Seviye 1 = 40, her seviyede +1
             const SNAKE_BASE = 40;
             const SNAKE_PER_LEVEL = 1;
-
-            // Yılan boyu: ortalama 30 hücre (bazıları 50'ye kadar)
             const AVG_SNAKE_SIZE = 30;
 
             const DIR_VECTORS = [
                 { dx: 0, dy: -1 }, { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }
             ];
 
-            // Fotoğraftaki gibi zengin renk paleti
             const COLORS = [
                 '#1e3a8a', '#2563eb', '#3b82f6', '#60a5fa',
                 '#dc2626', '#ef4444', '#f87171',
@@ -480,230 +564,6 @@
                 '#be185d', '#ec4899', '#f472b6',
                 '#059669', '#10b981', '#34d399',
                 '#7c2d12', '#9a3412', '#c2410c'
-            ];
-
-            // ============ HAYVAN SİLÜETLERİ (20x20) ============
-            const ANIMALS = [
-                { name: 'Kedi', mask: [
-                    "....................",
-                    "...XX..........XX...",
-                    "...XXX........XXX...",
-                    "...XXXX......XXXX...",
-                    "...XXXXX....XXXXX...",
-                    "..XXXXXXXXXXXXXXXX..",
-                    ".XXXXXXXXXXXXXXXXXX.",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XX.XXXXXXXXXXXXXX.XX",
-                    "XX..XXXXXXXXXXXX..XX",
-                    "XX...XXXXXXXXXX...XX",
-                    "XX....XXXXXXXX....XX",
-                    "XX.....XXXXXX.....XX",
-                    "XX......XXXX......XX",
-                    ".XX..............XX.",
-                    "..XXX..........XXX..",
-                    "...XXXXX....XXXXX...",
-                    "....XXXXXXXXXXXX....",
-                    "......XXXXXXXX......"
-                ]},
-                { name: 'Köpek', mask: [
-                    "....................",
-                    "..XX............XX..",
-                    "..XXX..........XXX..",
-                    "..XXXX........XXXX..",
-                    "..XXXXXXXXXXXXXXXX..",
-                    ".XXXXXXXXXXXXXXXXXX.",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XX.XXXXXXXXXXXXXX.XX",
-                    "XX..XXXXXXXXXXXX..XX",
-                    "XX...XXXXXXXXXX...XX",
-                    "XX....XXXXXXXX....XX",
-                    "XX.....XXXXXX.....XX",
-                    "XX......XXXX......XX",
-                    "XX................XX",
-                    "XXX..............XXX",
-                    ".XXX............XXX.",
-                    "..XXXXXXXXXXXXXX....",
-                    "...XXXXXXXXXXXX.....",
-                    ".....XXXXXXXX......."
-                ]},
-                { name: 'Balık', mask: [
-                    "....................",
-                    "....................",
-                    "........XXXX........",
-                    ".......XXXXXX.......",
-                    "......XXXXXXXX......",
-                    ".....XXXXXXXXXX.....",
-                    "XXXX.XXXXXXXXXXXX...",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXX.XXXXXXXXXXXX...",
-                    ".....XXXXXXXXXX.....",
-                    "......XXXXXXXX......",
-                    ".......XXXXXX.......",
-                    "........XXXX........",
-                    "....................",
-                    "....................",
-                    "...................."
-                ]},
-                { name: 'Kuş', mask: [
-                    "....................",
-                    ".........XX.........",
-                    "........XXXX........",
-                    "........XXXX........",
-                    ".......XXXXXX.......",
-                    "......XXXXXXXX......",
-                    ".....XXXXXXXXXX.....",
-                    "....XXXXX..XXXXX....",
-                    "...XXXXXX..XXXXXX...",
-                    "..XXXXXXX..XXXXXXX..",
-                    "..XXXXXXX..XXXXXXX..",
-                    "...XXXXXX..XXXXXX...",
-                    "....XXXXX..XXXXX....",
-                    ".....XXXXXXXXXX.....",
-                    "......XXXXXXXX......",
-                    ".......XXXXXX.......",
-                    "........XXXX........",
-                    "........XXXX........",
-                    ".........XX.........",
-                    "...................."
-                ]},
-                { name: 'Kelebek', mask: [
-                    "....................",
-                    "..XX............XX..",
-                    ".XXXX..........XXXX.",
-                    "XXXXXX........XXXXXX",
-                    "XXXXXXX......XXXXXXX",
-                    "XXXXXXX......XXXXXXX",
-                    "XXXXXXX......XXXXXXX",
-                    ".XXXXXX......XXXXXX.",
-                    "..XXXXX......XXXXX..",
-                    "...XXXX......XXXX...",
-                    "...XXXX......XXXX...",
-                    "..XXXXX......XXXXX..",
-                    ".XXXXXX......XXXXXX.",
-                    "XXXXXXX......XXXXXXX",
-                    "XXXXXXX......XXXXXXX",
-                    "XXXXXXX......XXXXXXX",
-                    ".XXXX..........XXXX.",
-                    "..XX............XX..",
-                    "....................",
-                    "...................."
-                ]},
-                { name: 'Tavşan', mask: [
-                    "....................",
-                    "...XX........XX.....",
-                    "...XXX......XXX.....",
-                    "...XXX......XXX.....",
-                    "...XXXX....XXXX.....",
-                    "...XXXX....XXXX.....",
-                    "...XXXXX..XXXXX.....",
-                    "....XXXXXXXXXX......",
-                    ".....XXXXXXXX.......",
-                    "......XXXXXX........",
-                    ".....XXXXXXXX.......",
-                    "....XXXXXXXXXX......",
-                    "...XXXXXXXXXXXX.....",
-                    "..XXXXXXXXXXXXXX....",
-                    ".XXXXXXXXXXXXXXXX...",
-                    "XXXXXXXXXXXXXXXXXX..",
-                    "XXXXXXXXXXXXXXXXXX..",
-                    ".XXXXXXXXXXXXXXXX...",
-                    "..XXXXXXXXXXXXXX....",
-                    "....XXXXXXXXXX......"
-                ]},
-                { name: 'Fil', mask: [
-                    "....................",
-                    "....................",
-                    "..XXXXXXXXXXXXX.....",
-                    ".XXXXXXXXXXXXXXX....",
-                    "XXXXXXXXXXXXXXXXX...",
-                    "XXXXXXXXXXXXXXXXX...",
-                    "XXXXXXXXXXXXXXXXX...",
-                    "XXXXXXXXXXXXXXXXX...",
-                    "XX.XXXXXXXXXXXXXX...",
-                    "XX..XXXXXXXXXXXXX...",
-                    "XX...XXXXXXXXXXXX...",
-                    "XX....XXXXXXXXXXX...",
-                    "XX.....XXXXXXXXXX...",
-                    "XX......XXXXXXXXX...",
-                    "XX.......XXXXXXXX...",
-                    "XX........XXXXXXX...",
-                    "XX.........XXXXXX...",
-                    "XX..........XXXXX...",
-                    "XX...........XXXX...",
-                    "XX............XXX..."
-                ]},
-                { name: 'Kalp', mask: [
-                    "....................",
-                    "..XXX..........XXX..",
-                    ".XXXXX........XXXXX.",
-                    "XXXXXXX......XXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    ".XXXXXXXXXXXXXXXXXX.",
-                    "..XXXXXXXXXXXXXXXX..",
-                    "...XXXXXXXXXXXXXX...",
-                    "....XXXXXXXXXXXX....",
-                    ".....XXXXXXXXXX.....",
-                    "......XXXXXXXX......",
-                    ".......XXXXXX.......",
-                    "........XXXX........",
-                    ".........XX.........",
-                    "....................",
-                    "...................."
-                ]},
-                { name: 'Yıldız', mask: [
-                    "....................",
-                    ".........XX.........",
-                    "........XXXX........",
-                    "........XXXX........",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    ".XXXXXXXXXXXXXXXXXX.",
-                    "..XXXXXXXXXXXXXXXX..",
-                    "...XXXXXXXXXXXXXX...",
-                    "....XXXXXXXXXXXX....",
-                    ".....XXXXXXXXXX.....",
-                    "....XXX......XXX....",
-                    "....XXX......XXX....",
-                    "...XXX........XXX...",
-                    "...XX..........XX...",
-                    "..XX............XX..",
-                    "..X..............X..",
-                    "....................",
-                    "....................",
-                    "...................."
-                ]},
-                { name: 'Baykuş', mask: [
-                    "....................",
-                    "..XX............XX..",
-                    "..XXX..........XXX..",
-                    "..XXXX........XXXX..",
-                    "..XXXXXXXXXXXXXXXX..",
-                    ".XXXXXXXXXXXXXXXXXX.",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    "XXXX.XXXXXXXXXX.XXXX",
-                    "XXX...XXXXXXXX...XXX",
-                    "XX.....XXXXXX.....XX",
-                    "XX.....XXXXXX.....XX",
-                    "XXX...XXXXXXXX...XXX",
-                    "XXXX.XXXXXXXXXX.XXXX",
-                    "XXXXXXXXXXXXXXXXXXXX",
-                    ".XXXXXXXXXXXXXXXXXX.",
-                    "..XXXXXXXXXXXXXXXX..",
-                    "...XXXXXXXXXXXXXX...",
-                    "....XXXXXXXXXXXX....",
-                    "......XXXXXXXX......",
-                    "........XXXX........"
-                ]}
             ];
 
             // ============ AYARLAR ============
@@ -732,19 +592,16 @@
 
             let canvasBgColor = '#ffffff';
             let canvasDotColor = 'rgba(0, 0, 0, 0.06)';
-            let silhouetteColor = 'rgba(0, 0, 0, 0.055)';
 
             function applyTheme() {
                 if (settings.darkTheme) {
                     document.body.classList.add('dark');
                     canvasBgColor = '#1a2530';
                     canvasDotColor = 'rgba(255, 255, 255, 0.06)';
-                    silhouetteColor = 'rgba(255, 255, 255, 0.05)';
                 } else {
                     document.body.classList.remove('dark');
                     canvasBgColor = '#ffffff';
                     canvasDotColor = 'rgba(0, 0, 0, 0.06)';
-                    silhouetteColor = 'rgba(0, 0, 0, 0.055)';
                 }
             }
 
@@ -759,9 +616,11 @@
             let lives = MAX_LIVES;
             let nextLifeTime = 0;
             let hints = STARTING_HINTS;
+            let gold = 0; // YENİ: Altın sayısı
             let noLivesDismissed = false;
             let lastClickTime = 0;
             let gameActive = false;
+            let overlayBtnTimer = null;
 
             // ============ DOM ============
             const canvas = document.getElementById('gameCanvas');
@@ -779,8 +638,12 @@
             const regenProgressFill = document.getElementById('regenProgressFill');
             const noLivesOverlay = document.getElementById('noLivesOverlay');
             const overlayCountdown = document.getElementById('overlayCountdown');
+            const overlayGoldCount = document.getElementById('overlayGoldCount');
             const restartBtn = document.getElementById('restartBtn');
             const closeOverlayBtn = document.getElementById('closeOverlayBtn');
+            const buyLifeBtn = document.getElementById('buyLifeBtn');
+            const mainMenuBtn = document.getElementById('mainMenuBtn');
+            const waitHint = document.getElementById('waitHint');
             const startScreen = document.getElementById('startScreen');
             const newGameBtn = document.getElementById('newGameBtn');
             const loadGameBtn = document.getElementById('loadGameBtn');
@@ -795,9 +658,28 @@
             const toggleTheme = document.getElementById('toggleTheme');
             const toggleColors = document.getElementById('toggleColors');
             const toggleVibrate = document.getElementById('toggleVibrate');
+            const goldBar = document.getElementById('goldBar');
+            const goldCountEl = document.getElementById('goldCount');
 
             canvas.width = CANVAS_SIZE;
             canvas.height = CANVAS_SIZE;
+
+            // ============ ALTIN UI ============
+            function updateGoldUI(animate = false) {
+                goldCountEl.textContent = gold;
+                overlayGoldCount.textContent = gold;
+                if (animate) {
+                    goldBar.classList.remove('flash');
+                    void goldBar.offsetWidth;
+                    goldBar.classList.add('flash');
+                }
+                // Can satın alma butonunu güncelle
+                if (gold >= LIFE_COST_GOLD) {
+                    buyLifeBtn.disabled = false;
+                } else {
+                    buyLifeBtn.disabled = true;
+                }
+            }
 
             // ============ AYARLAR UI ============
             function updateToggleUI() {
@@ -823,37 +705,42 @@
                 return SNAKE_BASE + (level - 1) * SNAKE_PER_LEVEL;
             }
 
-            // ============ GRID BOYUTU ============
-            // Yılan sayısı ve ortalama boyutuna göre dinamik hesaplama
-            // Yoğun paketleme için ~0.5 doluluk hedefi
+            function getFillFactor(levelNum) {
+                const t = (levelNum - 1) / (MAX_LEVEL - 1);
+                return 0.75 + t * 0.25;
+            }
+
             function getGridSizeForLevel(levelNum) {
                 const snakeCount = getSnakeCountTarget(levelNum);
                 const avgLen = AVG_SNAKE_SIZE;
-                // Yoğun paketleme (fotoğraftaki gibi iç içe geçmiş)
-                const fillFactor = 0.5;
+                const fillFactor = getFillFactor(levelNum);
                 const cellsNeeded = snakeCount * avgLen / fillFactor;
                 const size = Math.ceil(Math.sqrt(cellsNeeded));
-                return Math.max(45, Math.min(95, size));
+                return Math.max(40, Math.min(110, size));
             }
             function getGridSize() { return getGridSizeForLevel(currentLevel); }
             function getCellSize() { return CANVAS_SIZE / getGridSize(); }
 
             // ============ KAYIT SİSTEMİ ============
-            const SAVE_KEY = 'snakeEscape_save_v1';
+            const SAVE_KEY = 'snakeEscape_save_v3';
 
             function saveGame() {
                 try {
                     const saveData = {
-                        version: 1,
+                        version: 3,
                         savedAt: Date.now(),
                         level: currentLevel,
                         lives: lives,
                         nextLifeTime: nextLifeTime,
-                        hints: hints
+                        hints: hints,
+                        gold: gold
                     };
                     localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
                     return true;
-                } catch (e) { return false; }
+                } catch (e) {
+                    console.error('saveGame error:', e);
+                    return false;
+                }
             }
             function loadGame() {
                 try {
@@ -864,8 +751,12 @@
                     if (typeof data.lives === 'number') lives = Math.max(0, Math.min(MAX_LIVES, data.lives));
                     if (typeof data.nextLifeTime === 'number') nextLifeTime = data.nextLifeTime;
                     if (typeof data.hints === 'number') hints = Math.max(0, data.hints);
+                    if (typeof data.gold === 'number') gold = Math.max(0, data.gold);
                     return data;
-                } catch (e) { return null; }
+                } catch (e) {
+                    console.error('loadGame error:', e);
+                    return null;
+                }
             }
             function hasSaveGame() {
                 try {
@@ -884,7 +775,7 @@
                         const savedDate = new Date(data.savedAt || 0);
                         const dateStr = savedDate.toLocaleDateString('tr-TR');
                         const timeStr = savedDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-                        saveInfo.textContent = `💾 Kayıt: Seviye ${data.level} • ${dateStr} ${timeStr}`;
+                        saveInfo.textContent = `💾 Kayıt: Seviye ${data.level} • 🪙 ${data.gold || 0} • ${dateStr} ${timeStr}`;
                         saveInfo.classList.remove('empty');
                         loadGameBtn.disabled = false;
                     } catch (e) {
@@ -1056,6 +947,43 @@
                     source.start(now); source.stop(now + duration);
                 } catch (e) {}
             }
+            function playGoldSound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const notes = [1046, 1318, 1568];
+                    notes.forEach((freq, i) => {
+                        const t = now + i * 0.06;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.type = 'triangle';
+                        osc.frequency.value = freq;
+                        gain.gain.setValueAtTime(0.001, t);
+                        gain.gain.linearRampToValueAtTime(0.09, t + 0.01);
+                        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+                        osc.start(t); osc.stop(t + 0.25);
+                    });
+                } catch (e) {}
+            }
+            function playBuySound() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523, now);
+                    osc.frequency.setValueAtTime(659, now + 0.08);
+                    osc.frequency.setValueAtTime(880, now + 0.16);
+                    osc.frequency.setValueAtTime(1318, now + 0.24);
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.12, now + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                    osc.start(now); osc.stop(now + 0.45);
+                } catch (e) {}
+            }
             function vibrate(pattern) {
                 if (!settings.vibrationEnabled) return;
                 try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) {}
@@ -1068,6 +996,7 @@
                 bigWarningEl.textContent = text;
                 bigWarningEl.className = 'big-warning show';
                 if (type === 'success') bigWarningEl.classList.add('success');
+                if (type === 'gold') bigWarningEl.classList.add('gold');
                 bigWarningTimeout = setTimeout(() => {
                     bigWarningEl.classList.remove('show');
                 }, duration);
@@ -1083,43 +1012,17 @@
                 };
             }
 
-            // ============ MASKE EXPAND ============
-            function expandMask(mask, maskSize, gridSize) {
-                const result = [];
-                for (let y = 0; y < gridSize; y++) result[y] = new Array(gridSize).fill(false);
-
-                for (let my = 0; my < maskSize; my++) {
-                    for (let mx = 0; mx < maskSize; mx++) {
-                        if (mask[my][mx] === 'X') {
-                            const x1 = Math.floor(mx * gridSize / maskSize);
-                            const x2 = Math.max(x1 + 1, Math.floor((mx + 1) * gridSize / maskSize));
-                            const y1 = Math.floor(my * gridSize / maskSize);
-                            const y2 = Math.max(y1 + 1, Math.floor((my + 1) * gridSize / maskSize));
-                            for (let y = y1; y < y2 && y < gridSize; y++) {
-                                for (let x = x1; x < x2 && x < gridSize; x++) {
-                                    result[y][x] = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                return result;
-            }
-
             // ============ YILAN BOYU SEÇİCİ ============
-            // Ortalama 30, bazıları 50'ye kadar
             function pickSnakeLength(rng) {
                 const r = rng();
-                if (r < 0.20) return 18 + Math.floor(rng() * 8);   // %20: 18-25 (avg 21.5)
-                if (r < 0.55) return 26 + Math.floor(rng() * 8);   // %35: 26-33 (avg 29.5)
-                if (r < 0.85) return 34 + Math.floor(rng() * 8);   // %30: 34-41 (avg 37.5)
-                return 42 + Math.floor(rng() * 9);                  // %15: 42-50 (avg 46)
+                if (r < 0.20) return 18 + Math.floor(rng() * 8);
+                if (r < 0.55) return 26 + Math.floor(rng() * 8);
+                if (r < 0.85) return 34 + Math.floor(rng() * 8);
+                return 42 + Math.floor(rng() * 9);
             }
-            // Ağırlıklı ortalama: 0.20*21.5 + 0.35*29.5 + 0.30*37.5 + 0.15*46 = 4.3 + 10.3 + 11.25 + 6.9 = 32.75
 
             // ============ YILAN ŞEKLİ ============
-            // Maske içinde kalan şekil
-            function generateShapeInMask(rng, head, targetLen, inMask, gridSize, turnProb) {
+            function generateShapeFree(rng, targetLen, gridSize, turnProb, startX, startY, occupied) {
                 const shape = [{ x: 0, y: 0 }];
                 const visited = new Set(['0,0']);
                 let currX = 0, currY = 0;
@@ -1127,57 +1030,27 @@
 
                 for (let i = 1; i < targetLen; i++) {
                     const dirsToTry = [];
-                    // Kıvrım olasılığı düşük (uzun düz yollar için)
                     if (rng() < turnProb) {
                         const turn = rng() < 0.5 ? 1 : 3;
                         dirsToTry.push((currDir + turn) % 4);
                     }
                     dirsToTry.push(currDir);
-                    // Tıkanmayı önlemek için diğer yönler
-                    for (let d = 0; d < 4; d++) dirsToTry.push(d);
+                    for (let d = 0; d < 4; d++) {
+                        if (d !== (currDir + 2) % 4) dirsToTry.push(d);
+                    }
 
                     let moved = false;
                     for (const d of dirsToTry) {
                         const nx = currX + DIR_VECTORS[d].dx;
                         const ny = currY + DIR_VECTORS[d].dy;
                         const key = `${nx},${ny}`;
-                        const gx = head.x + nx;
-                        const gy = head.y + ny;
+                        const gx = startX + nx;
+                        const gy = startY + ny;
+
                         if (gx < 0 || gx >= gridSize || gy < 0 || gy >= gridSize) continue;
-                        if (!inMask[gy][gx]) continue;
                         if (visited.has(key)) continue;
-                        currX = nx; currY = ny; currDir = d;
-                        visited.add(key);
-                        shape.push({ x: currX, y: currY });
-                        moved = true; break;
-                    }
-                    if (!moved) break;
-                }
-                return shape;
-            }
+                        if (occupied.has(`${gx},${gy}`)) continue;
 
-            // Serbest şekil (maske dışına taşabilir)
-            function generateShapeFree(rng, targetLen, gridSize, turnProb) {
-                const shape = [{ x: 0, y: 0 }];
-                const visited = new Set(['0,0']);
-                let currX = 0, currY = 0;
-                let currDir = Math.floor(rng() * 4);
-
-                for (let i = 1; i < targetLen; i++) {
-                    const dirsToTry = [];
-                    if (rng() < turnProb) {
-                        const turn = rng() < 0.5 ? 1 : 3;
-                        dirsToTry.push((currDir + turn) % 4);
-                    }
-                    dirsToTry.push(currDir);
-                    for (let d = 0; d < 4; d++) dirsToTry.push(d);
-
-                    let moved = false;
-                    for (const d of dirsToTry) {
-                        const nx = currX + DIR_VECTORS[d].dx;
-                        const ny = currY + DIR_VECTORS[d].dy;
-                        const key = `${nx},${ny}`;
-                        if (visited.has(key)) continue;
                         currX = nx; currY = ny; currDir = d;
                         visited.add(key);
                         shape.push({ x: currX, y: currY });
@@ -1204,23 +1077,14 @@
                 }
                 return true;
             }
-            function snakeOverlaps(head, shape, existingSnakes) {
-                const cells = new Set(getSnakeCellsFromShape(head, shape).map(c => `${c.x},${c.y}`));
-                for (const s of existingSnakes) {
-                    for (const c of getSnakeCellsFromShape(s.head, s.shape)) {
-                        if (cells.has(`${c.x},${c.y}`)) return true;
-                    }
+            function snakeOverlapsSet(head, shape, occupied) {
+                for (const p of shape) {
+                    if (occupied.has(`${head.x + p.x},${head.y + p.y}`)) return true;
                 }
                 return false;
             }
-            function snakePathClear(head, shape, existingSnakes, gridSize) {
+            function snakePathClearSet(head, shape, occupied, gridSize) {
                 const dir = getSnakeDirectionFromShape(shape);
-                const occupied = new Set();
-                for (const s of existingSnakes) {
-                    for (const c of getSnakeCellsFromShape(s.head, s.shape)) {
-                        occupied.add(`${c.x},${c.y}`);
-                    }
-                }
                 let x = head.x + dir.dx, y = head.y + dir.dy;
                 while (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
                     if (occupied.has(`${x},${y}`)) return false;
@@ -1229,76 +1093,88 @@
                 return true;
             }
 
-            // ============ SEVİYE ÜRETİCİ ============
+            function getCellsSortedByCenterDistance(gridSize) {
+                const center = (gridSize - 1) / 2;
+                const cells = [];
+                for (let y = 0; y < gridSize; y++) {
+                    for (let x = 0; x < gridSize; x++) {
+                        const dx = x - center;
+                        const dy = y - center;
+                        cells.push({ x, y, dist: Math.sqrt(dx * dx + dy * dy) });
+                    }
+                }
+                cells.sort((a, b) => a.dist - b.dist);
+                return cells;
+            }
+
             function generateLevel(levelNum) {
                 const rng = mulberry32(levelNum * 7919 + 1234);
                 const gridSize = getGridSizeForLevel(levelNum);
 
                 const snakeCountTarget = getSnakeCountTarget(levelNum);
+                const turnProb = Math.min(0.85, 0.60 + (levelNum - 1) / (MAX_LEVEL - 1) * 0.25);
 
-                // Kıvrım olasılığı: uzun düz yollar için düşük
-                const turnProb = Math.min(0.22 + levelNum / 1200, 0.45);
-
-                // Hayvan maskesi
-                const animal = ANIMALS[(levelNum - 1) % ANIMALS.length];
-                const maskSize = 20;
-                const inMask = expandMask(animal.mask, maskSize, gridSize);
-
-                // Maskedeki hücreleri listele
-                const maskCells = [];
-                for (let y = 0; y < gridSize; y++) {
-                    for (let x = 0; x < gridSize; x++) {
-                        if (inMask[y][x]) maskCells.push({ x, y });
-                    }
-                }
+                const sortedCells = getCellsSortedByCenterDistance(gridSize);
+                const totalCells = sortedCells.length;
 
                 const result = [];
+                const occupied = new Set();
                 let consecutiveFailures = 0;
-                const maxConsecutiveFailures = 40;
+                const maxConsecutiveFailures = 60;
 
                 for (let i = 0; i < snakeCountTarget; i++) {
                     let placed = false;
                     const targetLen = pickSnakeLength(rng);
+                    const progress = i / snakeCountTarget;
+                    const activeRangeEnd = Math.min(totalCells, Math.floor(totalCells * (0.10 + progress * 0.90)));
 
-                    // FAZ 1: Maske içinde dene
-                    if (maskCells.length > 5) {
-                        for (let a = 0; a < 40 && !placed; a++) {
-                            const startCell = maskCells[Math.floor(rng() * maskCells.length)];
-                            const head = { x: startCell.x, y: startCell.y };
-                            const shape = generateShapeInMask(rng, head, targetLen, inMask, gridSize, turnProb);
-                            if (shape.length < Math.min(targetLen, 8)) continue;
+                    const startAttempts = 80;
+                    for (let a = 0; a < startAttempts && !placed; a++) {
+                        const idx = Math.floor(rng() * activeRangeEnd);
+                        const cell = sortedCells[idx];
 
-                            if (!snakeFits(head, shape, gridSize)) continue;
-                            if (snakeOverlaps(head, shape, result)) continue;
-                            if (!snakePathClear(head, shape, result, gridSize)) continue;
+                        if (occupied.has(`${cell.x},${cell.y}`)) continue;
 
-                            result.push({
-                                head,
-                                shape: shape.map(p => ({ x: p.x, y: p.y })),
-                                color: COLORS[i % COLORS.length]
-                            });
-                            placed = true;
-                        }
-                    }
-
-                    // FAZ 2: Serbest
-                    for (let a = 0; a < 30 && !placed; a++) {
-                        const headX = Math.floor(rng() * gridSize);
-                        const headY = Math.floor(rng() * gridSize);
-                        const head = { x: headX, y: headY };
-                        const shape = generateShapeFree(rng, targetLen, gridSize, turnProb);
-                        if (shape.length < Math.min(targetLen, 8)) continue;
+                        const head = { x: cell.x, y: cell.y };
+                        const shape = generateShapeFree(rng, targetLen, gridSize, turnProb, cell.x, cell.y, occupied);
+                        if (shape.length < Math.min(targetLen, 5)) continue;
 
                         if (!snakeFits(head, shape, gridSize)) continue;
-                        if (snakeOverlaps(head, shape, result)) continue;
-                        if (!snakePathClear(head, shape, result, gridSize)) continue;
+                        if (snakeOverlapsSet(head, shape, occupied)) continue;
+                        if (!snakePathClearSet(head, shape, occupied, gridSize)) continue;
 
                         result.push({
                             head,
                             shape: shape.map(p => ({ x: p.x, y: p.y })),
                             color: COLORS[i % COLORS.length]
                         });
+                        for (const p of shape) {
+                            occupied.add(`${cell.x + p.x},${cell.y + p.y}`);
+                        }
                         placed = true;
+                    }
+
+                    if (!placed) {
+                        for (const cell of sortedCells) {
+                            if (occupied.has(`${cell.x},${cell.y}`)) continue;
+                            const head = { x: cell.x, y: cell.y };
+                            const shape = generateShapeFree(rng, targetLen, gridSize, turnProb, cell.x, cell.y, occupied);
+                            if (shape.length < 5) continue;
+                            if (!snakeFits(head, shape, gridSize)) continue;
+                            if (snakeOverlapsSet(head, shape, occupied)) continue;
+                            if (!snakePathClearSet(head, shape, occupied, gridSize)) continue;
+
+                            result.push({
+                                head,
+                                shape: shape.map(p => ({ x: p.x, y: p.y })),
+                                color: COLORS[i % COLORS.length]
+                            });
+                            for (const p of shape) {
+                                occupied.add(`${cell.x + p.x},${cell.y + p.y}`);
+                            }
+                            placed = true;
+                            break;
+                        }
                     }
 
                     if (placed) consecutiveFailures = 0;
@@ -1406,6 +1282,10 @@
                     playWinSound();
                     vibrate([60, 40, 60, 40, 120]);
 
+                    // ALTIN KAZANIMI
+                    gold += GOLD_PER_LEVEL;
+                    updateGoldUI(true);
+
                     let gotHint = false;
                     if (currentLevel % HINT_REWARD_INTERVAL === 0) {
                         hints += HINT_REWARD_AMOUNT;
@@ -1415,12 +1295,19 @@
                     saveGame();
                     updateStartScreenInfo();
 
+                    // Altın bildirimi
+                    setTimeout(() => {
+                        showBigWarning('🪙 +1 ALTIN!', 'gold', 1300);
+                        playGoldSound();
+                        vibrate([30, 20, 30]);
+                    }, 800);
+
                     if (gotHint) {
                         setTimeout(() => {
                             showBigWarning('💡 +1 İPUCU!', 'success', 1300);
                             playHintRewardSound();
                             vibrate([40, 30, 40]);
-                        }, 700);
+                        }, 1900);
                     }
 
                     setTimeout(() => {
@@ -1429,7 +1316,7 @@
                         } else {
                             showBigWarning('🏆 TÜM SEVİYELER BİTTİ!', 'success', 3000);
                         }
-                    }, AUTO_NEXT_DELAY + (gotHint ? 1000 : 0));
+                    }, AUTO_NEXT_DELAY + 1800 + (gotHint ? 1000 : 0));
                 }
             }
 
@@ -1473,15 +1360,74 @@
                 regenProgressFill.style.width = pct + '%';
             }
 
+            function deactivateOverlayButtons() {
+                restartBtn.disabled = true;
+                closeOverlayBtn.disabled = true;
+                mainMenuBtn.disabled = true;
+                buyLifeBtn.disabled = true; // Altın yetersizse zaten disable
+                restartBtn.classList.remove('btn-activated');
+                closeOverlayBtn.classList.remove('btn-activated');
+                mainMenuBtn.classList.remove('btn-activated');
+                buyLifeBtn.classList.remove('btn-activated');
+                waitHint.style.opacity = '1';
+                waitHint.textContent = 'Butonlar 2 saniye içinde aktif olacak...';
+            }
+
+            function activateOverlayButtons() {
+                restartBtn.disabled = false;
+                closeOverlayBtn.disabled = false;
+                mainMenuBtn.disabled = false;
+                // Can satın alma butonu sadece altın yeterliyse aktif
+                buyLifeBtn.disabled = gold < LIFE_COST_GOLD;
+
+                restartBtn.classList.add('btn-activated');
+                closeOverlayBtn.classList.add('btn-activated');
+                mainMenuBtn.classList.add('btn-activated');
+                if (!buyLifeBtn.disabled) {
+                    buyLifeBtn.classList.add('btn-activated');
+                }
+
+                waitHint.style.opacity = '0.7';
+                waitHint.textContent = '✓ Butonlar aktif';
+                setTimeout(() => {
+                    if (!restartBtn.disabled) {
+                        waitHint.style.opacity = '0';
+                    }
+                }, 1500);
+            }
+
             function updateNoLivesOverlay() {
-                if (lives <= 0 && !noLivesDismissed) {
+                const shouldShow = lives <= 0 && !noLivesDismissed;
+
+                if (shouldShow) {
+                    const wasHidden = !noLivesOverlay.classList.contains('show');
                     noLivesOverlay.classList.add('show');
                     const now = Date.now();
                     let remaining = nextLifeTime - now;
                     if (remaining < 0) remaining = 0;
                     overlayCountdown.textContent = formatTime(remaining);
+                    // Altın göstergesini güncelle
+                    overlayGoldCount.textContent = gold;
+
+                    if (wasHidden) {
+                        if (overlayBtnTimer) {
+                            clearTimeout(overlayBtnTimer);
+                            overlayBtnTimer = null;
+                        }
+                        deactivateOverlayButtons();
+                        overlayBtnTimer = setTimeout(() => {
+                            if (lives <= 0 && noLivesOverlay.classList.contains('show')) {
+                                activateOverlayButtons();
+                            }
+                            overlayBtnTimer = null;
+                        }, OVERLAY_BTN_DELAY_MS);
+                    }
                 } else {
                     noLivesOverlay.classList.remove('show');
+                    if (overlayBtnTimer) {
+                        clearTimeout(overlayBtnTimer);
+                        overlayBtnTimer = null;
+                    }
                 }
             }
 
@@ -1497,6 +1443,10 @@
                     if (lives > 0) {
                         noLivesDismissed = false;
                         noLivesOverlay.classList.remove('show');
+                        if (overlayBtnTimer) {
+                            clearTimeout(overlayBtnTimer);
+                            overlayBtnTimer = null;
+                        }
                         showMessage('❤️ Can kazandın!', 'success');
                         playSuccessSound();
                         vibrate(40);
@@ -1517,28 +1467,58 @@
                 return false;
             }
 
-            // ============ ÇİZİM ============
-            function getCurrentAnimalMask() {
-                const animal = ANIMALS[(currentLevel - 1) % ANIMALS.length];
-                return expandMask(animal.mask, 20, getGridSize());
-            }
-
-            function drawSilhouette() {
-                // Hayvan silüetini hafif arka plan olarak çiz
-                const gridSize = getGridSize();
-                const cellSize = getCellSize();
-                const inMask = getCurrentAnimalMask();
-
-                ctx.fillStyle = silhouetteColor;
-                for (let y = 0; y < gridSize; y++) {
-                    for (let x = 0; x < gridSize; x++) {
-                        if (inMask[y][x]) {
-                            ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                        }
-                    }
+            // ============ CAN SATIN AL ============
+            function buyLife() {
+                ensureAudio();
+                if (buyLifeBtn.disabled) return;
+                if (gold < LIFE_COST_GOLD) {
+                    showBigWarning('YETERSİZ ALTIN!', 'error', 1000);
+                    playErrorSound();
+                    vibrate([50, 30, 50]);
+                    return;
                 }
+                gold -= LIFE_COST_GOLD;
+                lives++;
+                updateGoldUI();
+                updateHearts(true);
+                updateNoLivesOverlay();
+
+                saveGame();
+                playBuySound();
+                vibrate([60, 30, 60, 30, 60]);
+                showBigWarning('❤️ +1 CAN!', 'success', 1200);
+
+                // Overlay gizle (can > 0 oldu)
+                setTimeout(() => {
+                    noLivesOverlay.classList.remove('show');
+                    noLivesDismissed = true;
+                    if (overlayBtnTimer) {
+                        clearTimeout(overlayBtnTimer);
+                        overlayBtnTimer = null;
+                    }
+                }, 600);
             }
 
+            // ============ ANA MENÜYE DÖN ============
+            function goToMainMenu() {
+                ensureAudio();
+                if (mainMenuBtn.disabled) return;
+                // Otomatik kaydet (mevcut durumu sakla)
+                saveGame();
+                gameActive = false;
+                noLivesDismissed = true;
+                noLivesOverlay.classList.remove('show');
+                if (overlayBtnTimer) {
+                    clearTimeout(overlayBtnTimer);
+                    overlayBtnTimer = null;
+                }
+                startScreen.classList.remove('hidden');
+                updateStartScreenInfo();
+                vibrate([20, 20, 20]);
+                showMessage('Ana menüye dönüldü', 'success');
+            }
+
+            // ============ ÇİZİM ============
             function drawGrid() {
                 const gridSize = getGridSize();
                 const cellSize = getCellSize();
@@ -1546,11 +1526,7 @@
                 ctx.fillStyle = canvasBgColor;
                 ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-                // Hayvan silüeti arka plan
-                drawSilhouette();
-
-                // Grid noktaları
-                const dotSize = gridSize > 70 ? 0.7 : 1;
+                const dotSize = gridSize > 80 ? 0.6 : (gridSize > 60 ? 0.8 : 1);
                 ctx.fillStyle = canvasDotColor;
                 for (let i = 0; i <= gridSize; i++) {
                     for (let j = 0; j <= gridSize; j++) {
@@ -1599,11 +1575,15 @@
 
                 ctx.save();
                 ctx.globalAlpha = alpha;
+
+                // GÖVDE (ince çizgi)
                 if (positions.length > 1) {
                     ctx.beginPath();
-                    ctx.moveTo(positions[0].x, positions[0].y);
-                    for (let i = 1; i < positions.length; i++) ctx.lineTo(positions[i].x, positions[i].y);
-                    const lineWidth = Math.max(cellSize * 0.55, 2);
+                    ctx.moveTo(positions[1].x, positions[1].y);
+                    for (let i = 2; i < positions.length; i++) {
+                        ctx.lineTo(positions[i].x, positions[i].y);
+                    }
+                    const lineWidth = Math.max(cellSize * 0.40, 1.2);
                     ctx.lineWidth = lineWidth;
                     ctx.lineCap = 'round';
                     ctx.lineJoin = 'round';
@@ -1614,38 +1594,153 @@
                     ctx.shadowBlur = 0;
                 }
 
-                // Yılan BAŞI 2 KAT BÜYÜK
+                // KAFA (yuvarlatılmış damla şekli)
                 const headPos = positions[0];
-                const headRadius = Math.max(cellSize * 0.7, 3);
-                ctx.beginPath();
-                ctx.arc(headPos.x, headPos.y, headRadius, 0, Math.PI * 2);
-                ctx.fillStyle = displayColor;
-                ctx.fill();
+                const headSize = Math.max(cellSize * 0.90, 3);
+                const angle = Math.atan2(vec.dy, vec.dx);
+                const cos = Math.cos(angle);
+                const sin = Math.sin(angle);
+
+                function local2world(lx, ly) {
+                    return {
+                        x: headPos.x + cos * lx - sin * ly,
+                        y: headPos.y + sin * lx + cos * ly
+                    };
+                }
+
+                const tipLen = headSize * 0.85;
+                const baseOffset = headSize * 0.55;
+                const baseHalfWidth = headSize * 0.62;
+
+                const tip = local2world(tipLen, 0);
+                const baseLeft = local2world(-baseOffset, -baseHalfWidth);
+                const baseRight = local2world(-baseOffset, baseHalfWidth);
+
+                const midTR = { x: (tip.x + baseRight.x) / 2, y: (tip.y + baseRight.y) / 2 };
+                const midBL = { x: (baseLeft.x + baseRight.x) / 2, y: (baseLeft.y + baseRight.y) / 2 };
+                const midLT = { x: (baseLeft.x + tip.x) / 2, y: (baseLeft.y + tip.y) / 2 };
+
+                const centroid = {
+                    x: (tip.x + baseLeft.x + baseRight.x) / 3,
+                    y: (tip.y + baseLeft.y + baseRight.y) / 3
+                };
+
+                function bulge(pt, k) {
+                    return {
+                        x: pt.x + (pt.x - centroid.x) * k,
+                        y: pt.y + (pt.y - centroid.y) * k
+                    };
+                }
+
+                const ctrlTR = bulge(midTR, 0.55);
+                const ctrlBL = bulge(midBL, 0.40);
+                const ctrlLT = bulge(midLT, 0.55);
 
                 ctx.beginPath();
-                ctx.arc(headPos.x, headPos.y, headRadius, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(255,255,255,0.7)';
-                ctx.lineWidth = Math.max(1.2, cellSize * 0.1);
+                ctx.moveTo(tip.x, tip.y);
+                ctx.quadraticCurveTo(ctrlTR.x, ctrlTR.y, baseRight.x, baseRight.y);
+                ctx.quadraticCurveTo(ctrlBL.x, ctrlBL.y, baseLeft.x, baseLeft.y);
+                ctx.quadraticCurveTo(ctrlLT.x, ctrlLT.y, tip.x, tip.y);
+                ctx.closePath();
+
+                ctx.fillStyle = displayColor;
+                if (isHint) { ctx.shadowColor = '#f39c12'; ctx.shadowBlur = 24; }
+                else { ctx.shadowColor = 'rgba(0,0,0,0.25)'; ctx.shadowBlur = 3; }
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+                ctx.lineWidth = Math.max(1, cellSize * 0.07);
+                ctx.lineJoin = 'round';
                 ctx.stroke();
 
-                // Göz
-                const eyeOffset = cellSize * 0.2;
-                const eyeRadius = Math.max(cellSize * 0.15, 1);
+                // GÖZLER
+                const eyeForward = headSize * 0.08;
+                const eyeSide = headSize * 0.33;
+                const eyeSize = Math.max(headSize * 0.20, 1);
+                const pupilSize = eyeSize * 0.55;
+
+                const eyeLeftPos = local2world(eyeForward, -eyeSide);
+                const eyeRightPos = local2world(eyeForward, eyeSide);
+
                 ctx.beginPath();
-                ctx.arc(headPos.x + vec.dx * eyeOffset, headPos.y + vec.dy * eyeOffset,
-                        eyeRadius, 0, Math.PI * 2);
+                ctx.arc(eyeLeftPos.x, eyeLeftPos.y, eyeSize, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffffff';
                 ctx.fill();
+
                 ctx.beginPath();
-                ctx.arc(headPos.x + vec.dx * eyeOffset * 1.3, headPos.y + vec.dy * eyeOffset * 1.3,
-                        eyeRadius * 0.5, 0, Math.PI * 2);
-                ctx.fillStyle = '#000000';
+                ctx.arc(eyeRightPos.x, eyeRightPos.y, eyeSize, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
                 ctx.fill();
 
+                const pupilShift = eyeSize * 0.22;
+
+                ctx.beginPath();
+                ctx.arc(eyeLeftPos.x + cos * pupilShift, eyeLeftPos.y + sin * pupilShift,
+                        pupilSize, 0, Math.PI * 2);
+                ctx.fillStyle = '#0f0f1a';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(eyeRightPos.x + cos * pupilShift, eyeRightPos.y + sin * pupilShift,
+                        pupilSize, 0, Math.PI * 2);
+                ctx.fillStyle = '#0f0f1a';
+                ctx.fill();
+
+                // DİL
+                const tongueStartDist = tipLen * 0.90;
+                const tongueLen = headSize * 1.05;
+                const forkLen = headSize * 0.35;
+                const forkAngleRad = 0.55;
+
+                const tongueStart = local2world(tongueStartDist, 0);
+                const tongueEnd = local2world(tongueStartDist + tongueLen, 0);
+
+                const forkLeftAngle = angle - forkAngleRad;
+                const forkRightAngle = angle + forkAngleRad;
+
+                const forkLeft = {
+                    x: tongueEnd.x + Math.cos(forkLeftAngle) * forkLen,
+                    y: tongueEnd.y + Math.sin(forkLeftAngle) * forkLen
+                };
+                const forkRight = {
+                    x: tongueEnd.x + Math.cos(forkRightAngle) * forkLen,
+                    y: tongueEnd.y + Math.sin(forkRightAngle) * forkLen
+                };
+
+                ctx.strokeStyle = '#e74c3c';
+                ctx.lineWidth = Math.max(1.5, cellSize * 0.10);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                ctx.beginPath();
+                ctx.moveTo(tongueStart.x, tongueStart.y);
+                ctx.lineTo(tongueEnd.x, tongueEnd.y);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(tongueEnd.x, tongueEnd.y);
+                ctx.lineTo(forkLeft.x, forkLeft.y);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(tongueEnd.x, tongueEnd.y);
+                ctx.lineTo(forkRight.x, forkRight.y);
+                ctx.stroke();
+
+                ctx.fillStyle = '#e74c3c';
+                ctx.beginPath();
+                ctx.arc(forkLeft.x, forkLeft.y, Math.max(1, cellSize * 0.06), 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(forkRight.x, forkRight.y, Math.max(1, cellSize * 0.06), 0, Math.PI * 2);
+                ctx.fill();
+
+                // İPUCU OKU
                 if (isHint) {
-                    const arrowLength = cellSize * 1.5;
-                    const arrowStartX = headPos.x + vec.dx * cellSize * 0.8;
-                    const arrowStartY = headPos.y + vec.dy * cellSize * 0.8;
+                    const arrowLength = cellSize * 1.8;
+                    const arrowStartX = headPos.x + vec.dx * cellSize * 1.3;
+                    const arrowStartY = headPos.y + vec.dy * cellSize * 1.3;
                     const arrowEndX = arrowStartX + vec.dx * arrowLength;
                     const arrowEndY = arrowStartY + vec.dy * arrowLength;
                     ctx.strokeStyle = '#f39c12';
@@ -1656,7 +1751,6 @@
                     ctx.moveTo(arrowStartX, arrowStartY);
                     ctx.lineTo(arrowEndX, arrowEndY);
                     ctx.stroke();
-                    const angle = Math.atan2(vec.dy, vec.dx);
                     const arrowHeadLen = cellSize * 0.5;
                     ctx.beginPath();
                     ctx.moveTo(arrowEndX, arrowEndY);
@@ -1776,13 +1870,16 @@
                 currentLevel = 1;
                 lives = MAX_LIVES;
                 hints = STARTING_HINTS;
+                gold = 0;
                 nextLifeTime = 0;
                 noLivesDismissed = false;
                 lastClickTime = 0;
+                updateGoldUI();
                 updateStartScreenInfo();
                 loadLevel(1, true);
                 playLevelUpSound();
                 vibrate(60);
+                saveGame();
             }
 
             // ============ SEVİYE YÖNETİMİ ============
@@ -1804,14 +1901,11 @@
                 updateRegenUI();
                 updateNoLivesOverlay();
                 updateHintBadge();
-
-                saveGame();
-                updateStartScreenInfo();
+                updateGoldUI();
 
                 if (showTransition) {
                     setTimeout(() => {
-                        const animal = ANIMALS[(currentLevel - 1) % ANIMALS.length];
-                        showBigWarning('SEVİYE ' + currentLevel + ' • ' + animal.name, 'success', 1500);
+                        showBigWarning('SEVİYE ' + currentLevel, 'success', 1500);
                         playLevelUpSound();
                         vibrate(40);
                     }, 200);
@@ -1877,8 +1971,13 @@
 
             function closeOverlay() {
                 ensureAudio();
+                if (closeOverlayBtn.disabled) return;
                 noLivesDismissed = true;
                 noLivesOverlay.classList.remove('show');
+                if (overlayBtnTimer) {
+                    clearTimeout(overlayBtnTimer);
+                    overlayBtnTimer = null;
+                }
                 showMessage('Haritaya dokununca ekran tekrar açılır', 'error');
             }
 
@@ -1913,15 +2012,18 @@
                 currentLevel = 1;
                 lives = MAX_LIVES;
                 hints = STARTING_HINTS;
+                gold = 0;
                 nextLifeTime = 0;
                 noLivesDismissed = false;
                 lastClickTime = 0;
                 gameActive = true;
                 startScreen.classList.add('hidden');
+                updateGoldUI();
                 loadLevel(1, true);
                 playLevelUpSound();
                 vibrate(60);
                 saveGame();
+                updateStartScreenInfo();
             }
 
             function continueSavedGame() {
@@ -1942,6 +2044,7 @@
                 lastClickTime = 0;
                 gameActive = true;
                 startScreen.classList.add('hidden');
+                updateGoldUI();
                 loadLevel(currentLevel, true);
                 playLevelUpSound();
                 vibrate(60);
@@ -1961,8 +2064,14 @@
 
                 resetBtn.addEventListener('click', resetLevel);
                 hintBtn.addEventListener('click', showHint);
-                restartBtn.addEventListener('click', restartGame);
+                restartBtn.addEventListener('click', function() {
+                    if (restartBtn.disabled) return;
+                    restartGame();
+                });
                 closeOverlayBtn.addEventListener('click', closeOverlay);
+                buyLifeBtn.addEventListener('click', buyLife);
+                mainMenuBtn.addEventListener('click', goToMainMenu);
+
                 saveExitBtn.addEventListener('click', saveAndExit);
                 exitNoSaveBtn.addEventListener('click', exitWithoutSaving);
                 newGameBtn.addEventListener('click', startNewGame);
@@ -2015,6 +2124,7 @@
                 updateHintBadge();
                 updateHearts();
                 updateRegenUI();
+                updateGoldUI();
 
                 loadLevel(1, false);
                 gameLoop();

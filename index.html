@@ -38,29 +38,16 @@
             70% { transform: scale(0.95); }
             100% { transform: scale(1); }
         }
-        .top-actions {
-            display: flex; gap: 6px; justify-content: center;
-            margin-top: 4px;
-        }
+        .top-actions { display: flex; gap: 6px; justify-content: center; margin-top: 4px; }
         .small-btn {
-            flex: 1;
-            padding: 6px 8px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            border: 1px solid #e0e6ed;
-            border-radius: 8px;
-            background: #f8f9fb;
-            color: #7f8c8d;
-            cursor: pointer;
-            transition: transform 0.1s, background 0.2s;
+            flex: 1; padding: 6px 8px; font-size: 0.72rem; font-weight: 600;
+            border: 1px solid #e0e6ed; border-radius: 8px;
+            background: #f8f9fb; color: #7f8c8d;
+            cursor: pointer; transition: transform 0.1s, background 0.2s;
         }
         .small-btn:active { transform: scale(0.96); background: #ecf0f1; }
-        .small-btn.save {
-            background: #e8f5e9; color: #27ae60; border-color: #a5d6a7;
-        }
-        .small-btn.exit {
-            background: #fce4ec; color: #c0392b; border-color: #f8bbd0;
-        }
+        .small-btn.save { background: #e8f5e9; color: #27ae60; border-color: #a5d6a7; }
+        .small-btn.exit { background: #fce4ec; color: #c0392b; border-color: #f8bbd0; }
 
         .regen-bar {
             display: flex; align-items: center; gap: 6px;
@@ -71,9 +58,7 @@
         }
         .regen-bar.visible { opacity: 1; max-height: 40px; margin-top: 4px; }
         .regen-bar .clock { color: #e67e22; font-weight: 700; font-size: 0.95rem; }
-        .regen-progress {
-            flex: 1; height: 6px; background: #ecf0f1; border-radius: 3px; overflow: hidden;
-        }
+        .regen-progress { flex: 1; height: 6px; background: #ecf0f1; border-radius: 3px; overflow: hidden; }
         .regen-progress-fill {
             height: 100%; background: linear-gradient(90deg, #f39c12, #e67e22);
             border-radius: 3px; transition: width 1s linear;
@@ -115,33 +100,19 @@
             pointer-events: none; z-index: 1000; opacity: 0;
             transition: opacity 0.15s ease-out, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             text-align: center; padding: 16px 32px; white-space: nowrap;
-            background: #ffffff;
-            border-radius: 20px;
+            background: #ffffff; border-radius: 20px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
             border: 3px solid #e74c3c;
         }
         .big-warning.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        .big-warning.success {
-            color: #27ae60;
-            border-color: #27ae60;
-        }
+        .big-warning.success { color: #27ae60; border-color: #27ae60; }
 
-        /* ============ AYARLAR BUTONU (SAĞ ÜST) ============ */
         .settings-btn {
-            position: fixed;
-            top: 12px;
-            right: 12px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid #e0e6ed;
-            background: #ffffff;
-            color: #2c3e50;
-            font-size: 1.4rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 12px; right: 12px;
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 1px solid #e0e6ed; background: #ffffff; color: #2c3e50;
+            font-size: 1.4rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 14px rgba(0,0,0,0.12);
             z-index: 5000;
             transition: transform 0.2s, background 0.3s, border-color 0.3s, color 0.3s;
@@ -149,133 +120,76 @@
         .settings-btn:active { transform: scale(0.9) rotate(30deg); }
         .settings-btn.open { transform: rotate(60deg); background: #3498db; color: #fff; border-color: #3498db; }
 
-        /* ============ AYARLAR PANELİ ============ */
         .settings-overlay {
             position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 4900;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s;
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            z-index: 4900; opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
         .settings-overlay.show { opacity: 1; pointer-events: auto; }
 
         .settings-panel {
-            position: fixed;
-            top: 50%; left: 50%;
+            position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0.85);
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 0;
-            width: 90%;
-            max-width: 340px;
-            z-index: 4950;
+            background: #ffffff; border-radius: 20px; padding: 0;
+            width: 90%; max-width: 340px; z-index: 4950;
             opacity: 0; pointer-events: none;
             transition: opacity 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35); overflow: hidden;
         }
-        .settings-panel.show {
-            opacity: 1; pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
-        }
+        .settings-panel.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
         .settings-header {
             padding: 16px 20px;
             background: linear-gradient(135deg, #3498db, #2980b9);
-            color: #fff;
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: #fff; font-size: 1.05rem; font-weight: 700;
+            letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center;
         }
         .settings-close {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: #fff;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: rgba(255,255,255,0.2); border: none; color: #fff;
+            width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center;
             transition: background 0.2s;
         }
         .settings-close:active { background: rgba(255,255,255,0.4); }
-
-        .settings-body {
-            padding: 8px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
+        .settings-body { padding: 8px 0; max-height: 60vh; overflow-y: auto; }
         .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 20px;
-            border-bottom: 1px solid #f0f2f5;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 20px; border-bottom: 1px solid #f0f2f5;
             transition: background 0.2s;
         }
         .setting-item:last-child { border-bottom: none; }
         .setting-item:active { background: #f8f9fb; }
         .setting-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #2c3e50;
+            display: flex; align-items: center; gap: 12px;
+            font-size: 0.95rem; font-weight: 600; color: #2c3e50;
         }
-        .setting-icon {
-            font-size: 1.25rem;
-            width: 28px;
-            text-align: center;
-        }
+        .setting-icon { font-size: 1.25rem; width: 28px; text-align: center; }
 
         .toggle-switch {
-            position: relative;
-            width: 52px;
-            height: 30px;
-            background: #d5dbdb;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background 0.3s;
-            flex-shrink: 0;
+            position: relative; width: 52px; height: 30px;
+            background: #d5dbdb; border-radius: 15px; cursor: pointer;
+            transition: background 0.3s; flex-shrink: 0;
         }
         .toggle-switch::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
-            background: #ffffff;
-            border-radius: 50%;
+            content: ''; position: absolute; top: 3px; left: 3px;
+            width: 24px; height: 24px; background: #ffffff; border-radius: 50%;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         .toggle-switch.on { background: #27ae60; }
         .toggle-switch.on::after { transform: translateX(22px); }
-        .toggle-switch.disabled { opacity: 0.4; cursor: not-allowed; }
 
-        /* ============ AÇILIŞ EKRANI ============ */
         .start-screen {
             position: fixed; inset: 0;
             background: linear-gradient(160deg, #1a2980 0%, #26d0ce 100%);
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 3000; padding: 24px;
             opacity: 1; visibility: visible;
             transition: opacity 0.4s, visibility 0.4s;
         }
         .start-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .start-screen .logo {
-            font-size: 5rem;
-            margin-bottom: 8px;
+            font-size: 5rem; margin-bottom: 8px;
             animation: float 3s ease-in-out infinite;
             filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
         }
@@ -284,91 +198,55 @@
             50% { transform: translateY(-14px) rotate(5deg); }
         }
         .start-screen h1 {
-            color: #fff;
-            font-size: 2rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            margin: 0 0 8px 0;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            text-align: center;
+            color: #fff; font-size: 2rem; font-weight: 900;
+            letter-spacing: 3px; margin: 0 0 8px 0;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3); text-align: center;
         }
         .start-screen .tagline {
-            color: rgba(255,255,255,0.85);
-            font-size: 0.9rem;
-            margin-bottom: 40px;
-            text-align: center;
-            letter-spacing: 0.5px;
+            color: rgba(255,255,255,0.85); font-size: 0.9rem;
+            margin-bottom: 40px; text-align: center; letter-spacing: 0.5px;
         }
-        .start-screen .menu {
-            display: flex; flex-direction: column;
-            gap: 14px; width: 100%; max-width: 300px;
-        }
+        .start-screen .menu { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 300px; }
         .menu-btn {
-            width: 100%;
-            padding: 16px 20px;
-            border: none;
-            border-radius: 16px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
+            width: 100%; padding: 16px 20px; border: none; border-radius: 16px;
+            font-size: 1.05rem; font-weight: 700; cursor: pointer;
             transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
             letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             position: relative;
         }
         .menu-btn:active { transform: scale(0.96); }
         .menu-btn.new-game {
             background: linear-gradient(135deg, #27ae60, #16a085);
-            color: #fff;
-            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.5);
+            color: #fff; box-shadow: 0 8px 24px rgba(39, 174, 96, 0.5);
         }
         .menu-btn.load-game {
-            background: rgba(255,255,255,0.95);
-            color: #2c3e50;
+            background: rgba(255,255,255,0.95); color: #2c3e50;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
         .menu-btn.load-game:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-            transform: none;
-            background: rgba(255,255,255,0.35);
-            color: rgba(255,255,255,0.7);
+            opacity: 0.45; cursor: not-allowed; transform: none;
+            background: rgba(255,255,255,0.35); color: rgba(255,255,255,0.7);
             box-shadow: none;
         }
         .save-info {
-            margin-top: 20px;
-            color: rgba(255,255,255,0.85);
-            font-size: 0.82rem;
-            text-align: center;
-            padding: 10px 16px;
-            background: rgba(0,0,0,0.15);
-            border-radius: 10px;
-            max-width: 300px;
-            line-height: 1.5;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-top: 20px; color: rgba(255,255,255,0.85);
+            font-size: 0.82rem; text-align: center;
+            padding: 10px 16px; background: rgba(0,0,0,0.15);
+            border-radius: 10px; max-width: 300px; line-height: 1.5;
+            min-height: 40px; display: flex; align-items: center; justify-content: center;
         }
         .save-info.empty { opacity: 0.5; font-style: italic; }
 
         .no-lives-overlay {
             position: fixed; inset: 0;
             background: rgba(15, 20, 30, 0.85);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 2000; padding: 20px;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
-        .no-lives-overlay.show {
-            opacity: 1; pointer-events: auto;
-        }
+        .no-lives-overlay.show { opacity: 1; pointer-events: auto; }
         .no-lives-overlay .icon {
             font-size: 4.5rem;
             animation: pulse 1.6s ease-in-out infinite;
@@ -379,129 +257,73 @@
             50% { transform: scale(1.15); opacity: 0.7; }
         }
         .no-lives-overlay .title {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            text-align: center;
+            font-size: 2rem; font-weight: 900; color: #fff;
+            letter-spacing: 2px; margin-bottom: 8px; text-align: center;
             text-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
         }
         .no-lives-overlay .subtitle {
-            font-size: 0.95rem;
-            color: #bdc3c7;
-            margin-bottom: 22px;
-            text-align: center;
-            font-weight: 500;
+            font-size: 0.95rem; color: #bdc3c7; margin-bottom: 22px;
+            text-align: center; font-weight: 500;
         }
         .no-lives-overlay .countdown-box {
             background: rgba(255,255,255,0.08);
             border: 2px solid rgba(243, 156, 18, 0.5);
-            border-radius: 16px;
-            padding: 14px 26px;
-            text-align: center;
+            border-radius: 16px; padding: 14px 26px; text-align: center;
             box-shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
         .no-lives-overlay .countdown-label {
-            font-size: 0.72rem;
-            color: #f39c12;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 6px;
+            font-size: 0.72rem; color: #f39c12;
+            letter-spacing: 2px; text-transform: uppercase;
+            font-weight: 700; margin-bottom: 6px;
         }
         .no-lives-overlay .countdown-time {
-            font-size: 2.4rem;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: 2px;
-            font-variant-numeric: tabular-nums;
+            font-size: 2.4rem; font-weight: 900; color: #fff;
+            letter-spacing: 2px; font-variant-numeric: tabular-nums;
         }
         .no-lives-overlay .overlay-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            width: 100%;
-            max-width: 320px;
+            display: flex; gap: 12px; margin-top: 24px;
+            width: 100%; max-width: 320px;
         }
         .no-lives-overlay .overlay-buttons button {
-            flex: 1;
-            padding: 13px 14px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            transition: transform 0.1s, box-shadow 0.2s;
+            flex: 1; padding: 13px 14px; border-radius: 12px;
+            font-size: 0.95rem; font-weight: 700; cursor: pointer;
+            border: none; transition: transform 0.1s, box-shadow 0.2s;
             letter-spacing: 0.5px;
         }
-        .no-lives-overlay .overlay-buttons button:active {
-            transform: scale(0.96);
-        }
+        .no-lives-overlay .overlay-buttons button:active { transform: scale(0.96); }
         .btn-restart {
             background: linear-gradient(135deg, #27ae60, #16a085);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(39, 174, 96, 0.4);
+            color: #fff; box-shadow: 0 4px 14px rgba(39, 174, 96, 0.4);
         }
         .btn-close-overlay {
-            background: rgba(255,255,255,0.12);
-            color: #fff;
+            background: rgba(255,255,255,0.12); color: #fff;
             border: 1px solid rgba(255,255,255,0.25) !important;
             box-shadow: 0 4px 14px rgba(0,0,0,0.2);
         }
         .no-lives-overlay .hint {
-            margin-top: 20px;
-            font-size: 0.78rem;
-            color: #95a5a6;
-            text-align: center;
-            max-width: 300px;
-            line-height: 1.5;
+            margin-top: 20px; font-size: 0.78rem; color: #95a5a6;
+            text-align: center; max-width: 300px; line-height: 1.5;
         }
 
-        /* ============================================================ */
-        /* ============ GECE TEMASI (body.dark) ====================== */
-        /* ============================================================ */
         body.dark { background: #0f1620; color: #e0e6ed; }
         body.dark h1 { color: #e0e6ed; }
-        body.dark .top-panel {
-            background: #1a2530; border-color: #2c3e50;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-        }
+        body.dark .top-panel { background: #1a2530; border-color: #2c3e50; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
         body.dark .top-row { color: #95a5a6; }
         body.dark .top-row strong { color: #ecf0f1; }
-        body.dark .small-btn {
-            background: #253340; color: #95a5a6; border-color: #2c3e50;
-        }
+        body.dark .small-btn { background: #253340; color: #95a5a6; border-color: #2c3e50; }
         body.dark .small-btn:active { background: #2c3e50; }
-        body.dark .small-btn.save {
-            background: #1a3325; color: #2ecc71; border-color: #27ae60;
-        }
-        body.dark .small-btn.exit {
-            background: #3a1e22; color: #e74c3c; border-color: #c0392b;
-        }
+        body.dark .small-btn.save { background: #1a3325; color: #2ecc71; border-color: #27ae60; }
+        body.dark .small-btn.exit { background: #3a1e22; color: #e74c3c; border-color: #c0392b; }
         body.dark .regen-bar { background: #1e2a35; color: #95a5a6; }
         body.dark .regen-progress { background: #253340; }
-        body.dark canvas {
-            background: #1a2530; border-color: #2c3e50;
-        }
-        body.dark button.ctrl {
-            background: #253340; color: #ecf0f1; border-color: #2c3e50;
-        }
+        body.dark canvas { background: #1a2530; border-color: #2c3e50; }
+        body.dark button.ctrl { background: #253340; color: #ecf0f1; border-color: #2c3e50; }
         body.dark .message { color: #95a5a6; }
-        body.dark .big-warning {
-            background: #1a2530; border-color: #e74c3c;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-        }
+        body.dark .big-warning { background: #1a2530; border-color: #e74c3c; box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
         body.dark .big-warning.success { border-color: #27ae60; }
-        body.dark .settings-btn {
-            background: #1a2530; color: #e0e6ed; border-color: #2c3e50;
-        }
-        body.dark .settings-panel {
-            background: #1a2530;
-        }
-        body.dark .settings-header {
-            background: linear-gradient(135deg, #2c3e50, #1a2530);
-        }
+        body.dark .settings-btn { background: #1a2530; color: #e0e6ed; border-color: #2c3e50; }
+        body.dark .settings-panel { background: #1a2530; }
+        body.dark .settings-header { background: linear-gradient(135deg, #2c3e50, #1a2530); }
         body.dark .setting-item { border-bottom-color: #253340; }
         body.dark .setting-item:active { background: #253340; }
         body.dark .setting-label { color: #ecf0f1; }
@@ -527,10 +349,8 @@
 </head>
 <body>
 
-    <!-- ============ AYARLAR BUTONU ============ -->
     <button type="button" class="settings-btn" id="settingsBtn" aria-label="Ayarlar">⚙️</button>
 
-    <!-- ============ AYARLAR PANELİ ============ -->
     <div class="settings-overlay" id="settingsOverlay"></div>
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
@@ -539,48 +359,31 @@
         </div>
         <div class="settings-body">
             <div class="setting-item">
-                <div class="setting-label">
-                    <span class="setting-icon">🔊</span>
-                    <span>Ses Efektleri</span>
-                </div>
+                <div class="setting-label"><span class="setting-icon">🔊</span><span>Ses Efektleri</span></div>
                 <div class="toggle-switch" id="toggleAudio"></div>
             </div>
             <div class="setting-item">
-                <div class="setting-label">
-                    <span class="setting-icon">🌙</span>
-                    <span>Gece Teması</span>
-                </div>
+                <div class="setting-label"><span class="setting-icon">🌙</span><span>Gece Teması</span></div>
                 <div class="toggle-switch" id="toggleTheme"></div>
             </div>
             <div class="setting-item">
-                <div class="setting-label">
-                    <span class="setting-icon">🎨</span>
-                    <span>Renkli Yılanlar</span>
-                </div>
+                <div class="setting-label"><span class="setting-icon">🎨</span><span>Renkli Yılanlar</span></div>
                 <div class="toggle-switch" id="toggleColors"></div>
             </div>
             <div class="setting-item">
-                <div class="setting-label">
-                    <span class="setting-icon">📳</span>
-                    <span>Titreşim</span>
-                </div>
+                <div class="setting-label"><span class="setting-icon">📳</span><span>Titreşim</span></div>
                 <div class="toggle-switch" id="toggleVibrate"></div>
             </div>
         </div>
     </div>
 
-    <!-- AÇILIŞ EKRANI -->
     <div class="start-screen" id="startScreen">
         <div class="logo">🐍</div>
         <h1>YILAN KAÇIŞI</h1>
         <div class="tagline">Zihnini zorlayan kıvrımlı bulmaca</div>
         <div class="menu">
-            <button type="button" class="menu-btn new-game" id="newGameBtn">
-                <span>🎮</span> Yeni Oyun
-            </button>
-            <button type="button" class="menu-btn load-game" id="loadGameBtn" disabled>
-                <span>💾</span> Kayıtlı Oyunu Yükle
-            </button>
+            <button type="button" class="menu-btn new-game" id="newGameBtn"><span>🎮</span> Yeni Oyun</button>
+            <button type="button" class="menu-btn load-game" id="loadGameBtn" disabled><span>💾</span> Kayıtlı Oyunu Yükle</button>
         </div>
         <div class="save-info empty" id="saveInfo">Kayıt bulunamadı</div>
     </div>
@@ -642,7 +445,7 @@
             "use strict";
 
             // ============ YAPILANDIRMA ============
-            const CANVAS_SIZE = 400;
+            const CANVAS_SIZE = 1000;
             const ANIMATION_SPEED = 0.012;
             const MAX_LEVEL = 200;
             const MAX_LIVES = 5;
@@ -651,22 +454,256 @@
             const HINT_REWARD_INTERVAL = 3;
             const HINT_REWARD_AMOUNT = 1;
             const AUTO_NEXT_DELAY = 1500;
-            const CLICK_GUARD_MS = 300;
+            const CLICK_GUARD_MS = 80;
+            const HEAD_CLICK_TOLERANCE = 1;
 
-            const GRID_MIN = 15;
-            const GRID_MAX = 24;
-            const GRID_LEVELS_PER_STEP = 20;
+            // Yılan sayısı: Seviye 1 = 40, her seviyede +1
+            const SNAKE_BASE = 40;
+            const SNAKE_PER_LEVEL = 1;
+
+            // Yılan boyu: ortalama 30 hücre (bazıları 50'ye kadar)
+            const AVG_SNAKE_SIZE = 30;
 
             const DIR_VECTORS = [
                 { dx: 0, dy: -1 }, { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }
             ];
 
+            // Fotoğraftaki gibi zengin renk paleti
             const COLORS = [
-                '#2C3E50', '#E74C3C', '#27AE60', '#8E44AD', '#F39C12',
-                '#3498DB', '#1ABC9C', '#D35400', '#C0392B', '#16A085',
-                '#E67E22', '#9B59B6', '#E91E63', '#00BCD4', '#FF5722',
-                '#795548', '#607D8B', '#FF9800', '#4CAF50', '#673AB7',
-                '#2196F3', '#F44336', '#009688', '#FFC107', '#9C27B0'
+                '#1e3a8a', '#2563eb', '#3b82f6', '#60a5fa',
+                '#dc2626', '#ef4444', '#f87171',
+                '#16a34a', '#22c55e', '#4ade80',
+                '#9333ea', '#a855f7', '#c084fc',
+                '#ea580c', '#f97316', '#fb923c',
+                '#0891b2', '#06b6d4', '#22d3ee',
+                '#ca8a04', '#eab308', '#facc15',
+                '#be185d', '#ec4899', '#f472b6',
+                '#059669', '#10b981', '#34d399',
+                '#7c2d12', '#9a3412', '#c2410c'
+            ];
+
+            // ============ HAYVAN SİLÜETLERİ (20x20) ============
+            const ANIMALS = [
+                { name: 'Kedi', mask: [
+                    "....................",
+                    "...XX..........XX...",
+                    "...XXX........XXX...",
+                    "...XXXX......XXXX...",
+                    "...XXXXX....XXXXX...",
+                    "..XXXXXXXXXXXXXXXX..",
+                    ".XXXXXXXXXXXXXXXXXX.",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XX.XXXXXXXXXXXXXX.XX",
+                    "XX..XXXXXXXXXXXX..XX",
+                    "XX...XXXXXXXXXX...XX",
+                    "XX....XXXXXXXX....XX",
+                    "XX.....XXXXXX.....XX",
+                    "XX......XXXX......XX",
+                    ".XX..............XX.",
+                    "..XXX..........XXX..",
+                    "...XXXXX....XXXXX...",
+                    "....XXXXXXXXXXXX....",
+                    "......XXXXXXXX......"
+                ]},
+                { name: 'Köpek', mask: [
+                    "....................",
+                    "..XX............XX..",
+                    "..XXX..........XXX..",
+                    "..XXXX........XXXX..",
+                    "..XXXXXXXXXXXXXXXX..",
+                    ".XXXXXXXXXXXXXXXXXX.",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XX.XXXXXXXXXXXXXX.XX",
+                    "XX..XXXXXXXXXXXX..XX",
+                    "XX...XXXXXXXXXX...XX",
+                    "XX....XXXXXXXX....XX",
+                    "XX.....XXXXXX.....XX",
+                    "XX......XXXX......XX",
+                    "XX................XX",
+                    "XXX..............XXX",
+                    ".XXX............XXX.",
+                    "..XXXXXXXXXXXXXX....",
+                    "...XXXXXXXXXXXX.....",
+                    ".....XXXXXXXX......."
+                ]},
+                { name: 'Balık', mask: [
+                    "....................",
+                    "....................",
+                    "........XXXX........",
+                    ".......XXXXXX.......",
+                    "......XXXXXXXX......",
+                    ".....XXXXXXXXXX.....",
+                    "XXXX.XXXXXXXXXXXX...",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXX.XXXXXXXXXXXX...",
+                    ".....XXXXXXXXXX.....",
+                    "......XXXXXXXX......",
+                    ".......XXXXXX.......",
+                    "........XXXX........",
+                    "....................",
+                    "....................",
+                    "...................."
+                ]},
+                { name: 'Kuş', mask: [
+                    "....................",
+                    ".........XX.........",
+                    "........XXXX........",
+                    "........XXXX........",
+                    ".......XXXXXX.......",
+                    "......XXXXXXXX......",
+                    ".....XXXXXXXXXX.....",
+                    "....XXXXX..XXXXX....",
+                    "...XXXXXX..XXXXXX...",
+                    "..XXXXXXX..XXXXXXX..",
+                    "..XXXXXXX..XXXXXXX..",
+                    "...XXXXXX..XXXXXX...",
+                    "....XXXXX..XXXXX....",
+                    ".....XXXXXXXXXX.....",
+                    "......XXXXXXXX......",
+                    ".......XXXXXX.......",
+                    "........XXXX........",
+                    "........XXXX........",
+                    ".........XX.........",
+                    "...................."
+                ]},
+                { name: 'Kelebek', mask: [
+                    "....................",
+                    "..XX............XX..",
+                    ".XXXX..........XXXX.",
+                    "XXXXXX........XXXXXX",
+                    "XXXXXXX......XXXXXXX",
+                    "XXXXXXX......XXXXXXX",
+                    "XXXXXXX......XXXXXXX",
+                    ".XXXXXX......XXXXXX.",
+                    "..XXXXX......XXXXX..",
+                    "...XXXX......XXXX...",
+                    "...XXXX......XXXX...",
+                    "..XXXXX......XXXXX..",
+                    ".XXXXXX......XXXXXX.",
+                    "XXXXXXX......XXXXXXX",
+                    "XXXXXXX......XXXXXXX",
+                    "XXXXXXX......XXXXXXX",
+                    ".XXXX..........XXXX.",
+                    "..XX............XX..",
+                    "....................",
+                    "...................."
+                ]},
+                { name: 'Tavşan', mask: [
+                    "....................",
+                    "...XX........XX.....",
+                    "...XXX......XXX.....",
+                    "...XXX......XXX.....",
+                    "...XXXX....XXXX.....",
+                    "...XXXX....XXXX.....",
+                    "...XXXXX..XXXXX.....",
+                    "....XXXXXXXXXX......",
+                    ".....XXXXXXXX.......",
+                    "......XXXXXX........",
+                    ".....XXXXXXXX.......",
+                    "....XXXXXXXXXX......",
+                    "...XXXXXXXXXXXX.....",
+                    "..XXXXXXXXXXXXXX....",
+                    ".XXXXXXXXXXXXXXXX...",
+                    "XXXXXXXXXXXXXXXXXX..",
+                    "XXXXXXXXXXXXXXXXXX..",
+                    ".XXXXXXXXXXXXXXXX...",
+                    "..XXXXXXXXXXXXXX....",
+                    "....XXXXXXXXXX......"
+                ]},
+                { name: 'Fil', mask: [
+                    "....................",
+                    "....................",
+                    "..XXXXXXXXXXXXX.....",
+                    ".XXXXXXXXXXXXXXX....",
+                    "XXXXXXXXXXXXXXXXX...",
+                    "XXXXXXXXXXXXXXXXX...",
+                    "XXXXXXXXXXXXXXXXX...",
+                    "XXXXXXXXXXXXXXXXX...",
+                    "XX.XXXXXXXXXXXXXX...",
+                    "XX..XXXXXXXXXXXXX...",
+                    "XX...XXXXXXXXXXXX...",
+                    "XX....XXXXXXXXXXX...",
+                    "XX.....XXXXXXXXXX...",
+                    "XX......XXXXXXXXX...",
+                    "XX.......XXXXXXXX...",
+                    "XX........XXXXXXX...",
+                    "XX.........XXXXXX...",
+                    "XX..........XXXXX...",
+                    "XX...........XXXX...",
+                    "XX............XXX..."
+                ]},
+                { name: 'Kalp', mask: [
+                    "....................",
+                    "..XXX..........XXX..",
+                    ".XXXXX........XXXXX.",
+                    "XXXXXXX......XXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    ".XXXXXXXXXXXXXXXXXX.",
+                    "..XXXXXXXXXXXXXXXX..",
+                    "...XXXXXXXXXXXXXX...",
+                    "....XXXXXXXXXXXX....",
+                    ".....XXXXXXXXXX.....",
+                    "......XXXXXXXX......",
+                    ".......XXXXXX.......",
+                    "........XXXX........",
+                    ".........XX.........",
+                    "....................",
+                    "...................."
+                ]},
+                { name: 'Yıldız', mask: [
+                    "....................",
+                    ".........XX.........",
+                    "........XXXX........",
+                    "........XXXX........",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    ".XXXXXXXXXXXXXXXXXX.",
+                    "..XXXXXXXXXXXXXXXX..",
+                    "...XXXXXXXXXXXXXX...",
+                    "....XXXXXXXXXXXX....",
+                    ".....XXXXXXXXXX.....",
+                    "....XXX......XXX....",
+                    "....XXX......XXX....",
+                    "...XXX........XXX...",
+                    "...XX..........XX...",
+                    "..XX............XX..",
+                    "..X..............X..",
+                    "....................",
+                    "....................",
+                    "...................."
+                ]},
+                { name: 'Baykuş', mask: [
+                    "....................",
+                    "..XX............XX..",
+                    "..XXX..........XXX..",
+                    "..XXXX........XXXX..",
+                    "..XXXXXXXXXXXXXXXX..",
+                    ".XXXXXXXXXXXXXXXXXX.",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    "XXXX.XXXXXXXXXX.XXXX",
+                    "XXX...XXXXXXXX...XXX",
+                    "XX.....XXXXXX.....XX",
+                    "XX.....XXXXXX.....XX",
+                    "XXX...XXXXXXXX...XXX",
+                    "XXXX.XXXXXXXXXX.XXXX",
+                    "XXXXXXXXXXXXXXXXXXXX",
+                    ".XXXXXXXXXXXXXXXXXX.",
+                    "..XXXXXXXXXXXXXXXX..",
+                    "...XXXXXXXXXXXXXX...",
+                    "....XXXXXXXXXXXX....",
+                    "......XXXXXXXX......",
+                    "........XXXX........"
+                ]}
             ];
 
             // ============ AYARLAR ============
@@ -689,26 +726,25 @@
                     if (typeof data.vibrationEnabled === 'boolean') settings.vibrationEnabled = data.vibrationEnabled;
                 } catch (e) {}
             }
-
             function saveSettings() {
-                try {
-                    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-                } catch (e) {}
+                try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
             }
 
-            // Canvas arka plan renkleri (tema değişince güncellenir)
             let canvasBgColor = '#ffffff';
             let canvasDotColor = 'rgba(0, 0, 0, 0.06)';
+            let silhouetteColor = 'rgba(0, 0, 0, 0.055)';
 
             function applyTheme() {
                 if (settings.darkTheme) {
                     document.body.classList.add('dark');
                     canvasBgColor = '#1a2530';
-                    canvasDotColor = 'rgba(255, 255, 255, 0.08)';
+                    canvasDotColor = 'rgba(255, 255, 255, 0.06)';
+                    silhouetteColor = 'rgba(255, 255, 255, 0.05)';
                 } else {
                     document.body.classList.remove('dark');
                     canvasBgColor = '#ffffff';
                     canvasDotColor = 'rgba(0, 0, 0, 0.06)';
+                    silhouetteColor = 'rgba(0, 0, 0, 0.055)';
                 }
             }
 
@@ -716,7 +752,6 @@
             let currentLevel = 1;
             let snakes = [];
             let animatingSnakes = [];
-            let isAnimating = false;
             let gameWon = false;
             let hintSnake = null;
             let hintTimer = 0;
@@ -752,8 +787,6 @@
             const saveInfo = document.getElementById('saveInfo');
             const saveExitBtn = document.getElementById('saveExitBtn');
             const exitNoSaveBtn = document.getElementById('exitNoSaveBtn');
-
-            // Ayarlar DOM
             const settingsBtn = document.getElementById('settingsBtn');
             const settingsOverlay = document.getElementById('settingsOverlay');
             const settingsPanel = document.getElementById('settingsPanel');
@@ -768,19 +801,11 @@
 
             // ============ AYARLAR UI ============
             function updateToggleUI() {
-                if (settings.audioEnabled) toggleAudio.classList.add('on');
-                else toggleAudio.classList.remove('on');
-
-                if (settings.darkTheme) toggleTheme.classList.add('on');
-                else toggleTheme.classList.remove('on');
-
-                if (settings.colorEnabled) toggleColors.classList.add('on');
-                else toggleColors.classList.remove('on');
-
-                if (settings.vibrationEnabled) toggleVibrate.classList.add('on');
-                else toggleVibrate.classList.remove('on');
+                toggleAudio.classList.toggle('on', settings.audioEnabled);
+                toggleTheme.classList.toggle('on', settings.darkTheme);
+                toggleColors.classList.toggle('on', settings.colorEnabled);
+                toggleVibrate.classList.toggle('on', settings.vibrationEnabled);
             }
-
             function openSettings() {
                 ensureAudio();
                 settingsPanel.classList.add('show');
@@ -793,48 +818,24 @@
                 settingsBtn.classList.remove('open');
             }
 
-            function toggleAudioSetting() {
-                settings.audioEnabled = !settings.audioEnabled;
-                saveSettings();
-                updateToggleUI();
-                if (settings.audioEnabled) {
-                    ensureAudio();
-                    playSuccessSound();
-                }
-            }
-            function toggleThemeSetting() {
-                settings.darkTheme = !settings.darkTheme;
-                saveSettings();
-                applyTheme();
-                updateToggleUI();
-                vibrate(20);
-            }
-            function toggleColorsSetting() {
-                settings.colorEnabled = !settings.colorEnabled;
-                saveSettings();
-                updateToggleUI();
-                if (settings.audioEnabled) playSuccessSound();
-                vibrate(20);
-            }
-            function toggleVibrationSetting() {
-                settings.vibrationEnabled = !settings.vibrationEnabled;
-                saveSettings();
-                updateToggleUI();
-                if (settings.vibrationEnabled) {
-                    // Kullanıcıya titreşimin açıldığını hissettir
-                    try { if (navigator.vibrate) navigator.vibrate(50); } catch (e) {}
-                }
-                if (settings.audioEnabled) playSuccessSound();
+            // ============ YILAN SAYISI ============
+            function getSnakeCountTarget(level) {
+                return SNAKE_BASE + (level - 1) * SNAKE_PER_LEVEL;
             }
 
             // ============ GRID BOYUTU ============
-            function getGridSize() {
-                return getGridSizeForLevel(currentLevel);
-            }
+            // Yılan sayısı ve ortalama boyutuna göre dinamik hesaplama
+            // Yoğun paketleme için ~0.5 doluluk hedefi
             function getGridSizeForLevel(levelNum) {
-                const step = Math.floor((levelNum - 1) / GRID_LEVELS_PER_STEP);
-                return Math.min(GRID_MIN + step, GRID_MAX);
+                const snakeCount = getSnakeCountTarget(levelNum);
+                const avgLen = AVG_SNAKE_SIZE;
+                // Yoğun paketleme (fotoğraftaki gibi iç içe geçmiş)
+                const fillFactor = 0.5;
+                const cellsNeeded = snakeCount * avgLen / fillFactor;
+                const size = Math.ceil(Math.sqrt(cellsNeeded));
+                return Math.max(45, Math.min(95, size));
             }
+            function getGridSize() { return getGridSizeForLevel(currentLevel); }
             function getCellSize() { return CANVAS_SIZE / getGridSize(); }
 
             // ============ KAYIT SİSTEMİ ============
@@ -852,11 +853,8 @@
                     };
                     localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
                     return true;
-                } catch (e) {
-                    return false;
-                }
+                } catch (e) { return false; }
             }
-
             function loadGame() {
                 try {
                     const raw = localStorage.getItem(SAVE_KEY);
@@ -869,7 +867,6 @@
                     return data;
                 } catch (e) { return null; }
             }
-
             function hasSaveGame() {
                 try {
                     const raw = localStorage.getItem(SAVE_KEY);
@@ -878,10 +875,7 @@
                     return typeof data.level === 'number';
                 } catch (e) { return false; }
             }
-
-            function clearSaveGame() {
-                try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
-            }
+            function clearSaveGame() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
 
             function updateStartScreenInfo() {
                 if (hasSaveGame()) {
@@ -905,7 +899,7 @@
                 }
             }
 
-            // ============ SES & TİTREŞİM ============
+            // ============ SES ============
             let audioCtx = null;
             function ensureAudio() {
                 try {
@@ -1037,6 +1031,31 @@
                     osc.start(now); osc.stop(now + 0.35);
                 } catch (e) {}
             }
+            function playSnakeHiss() {
+                if (!settings.audioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const duration = 0.28;
+                    const sampleRate = audioCtx.sampleRate;
+                    const bufferSize = Math.floor(sampleRate * duration);
+                    const buffer = audioCtx.createBuffer(1, bufferSize, sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
+                    const source = audioCtx.createBufferSource();
+                    source.buffer = buffer;
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.setValueAtTime(2500, now);
+                    filter.frequency.exponentialRampToValueAtTime(6500, now + duration * 0.8);
+                    filter.Q.value = 1.8;
+                    const gain = audioCtx.createGain();
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                    source.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+                    source.start(now); source.stop(now + duration);
+                } catch (e) {}
+            }
             function vibrate(pattern) {
                 if (!settings.vibrationEnabled) return;
                 try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) {}
@@ -1064,32 +1083,105 @@
                 };
             }
 
+            // ============ MASKE EXPAND ============
+            function expandMask(mask, maskSize, gridSize) {
+                const result = [];
+                for (let y = 0; y < gridSize; y++) result[y] = new Array(gridSize).fill(false);
+
+                for (let my = 0; my < maskSize; my++) {
+                    for (let mx = 0; mx < maskSize; mx++) {
+                        if (mask[my][mx] === 'X') {
+                            const x1 = Math.floor(mx * gridSize / maskSize);
+                            const x2 = Math.max(x1 + 1, Math.floor((mx + 1) * gridSize / maskSize));
+                            const y1 = Math.floor(my * gridSize / maskSize);
+                            const y2 = Math.max(y1 + 1, Math.floor((my + 1) * gridSize / maskSize));
+                            for (let y = y1; y < y2 && y < gridSize; y++) {
+                                for (let x = x1; x < x2 && x < gridSize; x++) {
+                                    result[y][x] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return result;
+            }
+
+            // ============ YILAN BOYU SEÇİCİ ============
+            // Ortalama 30, bazıları 50'ye kadar
+            function pickSnakeLength(rng) {
+                const r = rng();
+                if (r < 0.20) return 18 + Math.floor(rng() * 8);   // %20: 18-25 (avg 21.5)
+                if (r < 0.55) return 26 + Math.floor(rng() * 8);   // %35: 26-33 (avg 29.5)
+                if (r < 0.85) return 34 + Math.floor(rng() * 8);   // %30: 34-41 (avg 37.5)
+                return 42 + Math.floor(rng() * 9);                  // %15: 42-50 (avg 46)
+            }
+            // Ağırlıklı ortalama: 0.20*21.5 + 0.35*29.5 + 0.30*37.5 + 0.15*46 = 4.3 + 10.3 + 11.25 + 6.9 = 32.75
+
             // ============ YILAN ŞEKLİ ============
-            function generateShape(rng, movementDir, targetLength, turnProb) {
-                const opposite = (movementDir + 2) % 4;
-                let currDir = opposite;
+            // Maske içinde kalan şekil
+            function generateShapeInMask(rng, head, targetLen, inMask, gridSize, turnProb) {
                 const shape = [{ x: 0, y: 0 }];
                 const visited = new Set(['0,0']);
                 let currX = 0, currY = 0;
-                for (let i = 1; i < targetLength; i++) {
-                    let dirsToTry;
-                    if (i >= 2 && rng() < turnProb) {
+                let currDir = Math.floor(rng() * 4);
+
+                for (let i = 1; i < targetLen; i++) {
+                    const dirsToTry = [];
+                    // Kıvrım olasılığı düşük (uzun düz yollar için)
+                    if (rng() < turnProb) {
                         const turn = rng() < 0.5 ? 1 : 3;
-                        dirsToTry = [(currDir + turn) % 4, currDir, (currDir + (turn === 1 ? 3 : 1)) % 4];
-                    } else {
-                        dirsToTry = [currDir];
+                        dirsToTry.push((currDir + turn) % 4);
                     }
+                    dirsToTry.push(currDir);
+                    // Tıkanmayı önlemek için diğer yönler
+                    for (let d = 0; d < 4; d++) dirsToTry.push(d);
+
                     let moved = false;
                     for (const d of dirsToTry) {
                         const nx = currX + DIR_VECTORS[d].dx;
                         const ny = currY + DIR_VECTORS[d].dy;
                         const key = `${nx},${ny}`;
-                        if (!visited.has(key)) {
-                            currX = nx; currY = ny; currDir = d;
-                            visited.add(key);
-                            shape.push({ x: currX, y: currY });
-                            moved = true; break;
-                        }
+                        const gx = head.x + nx;
+                        const gy = head.y + ny;
+                        if (gx < 0 || gx >= gridSize || gy < 0 || gy >= gridSize) continue;
+                        if (!inMask[gy][gx]) continue;
+                        if (visited.has(key)) continue;
+                        currX = nx; currY = ny; currDir = d;
+                        visited.add(key);
+                        shape.push({ x: currX, y: currY });
+                        moved = true; break;
+                    }
+                    if (!moved) break;
+                }
+                return shape;
+            }
+
+            // Serbest şekil (maske dışına taşabilir)
+            function generateShapeFree(rng, targetLen, gridSize, turnProb) {
+                const shape = [{ x: 0, y: 0 }];
+                const visited = new Set(['0,0']);
+                let currX = 0, currY = 0;
+                let currDir = Math.floor(rng() * 4);
+
+                for (let i = 1; i < targetLen; i++) {
+                    const dirsToTry = [];
+                    if (rng() < turnProb) {
+                        const turn = rng() < 0.5 ? 1 : 3;
+                        dirsToTry.push((currDir + turn) % 4);
+                    }
+                    dirsToTry.push(currDir);
+                    for (let d = 0; d < 4; d++) dirsToTry.push(d);
+
+                    let moved = false;
+                    for (const d of dirsToTry) {
+                        const nx = currX + DIR_VECTORS[d].dx;
+                        const ny = currY + DIR_VECTORS[d].dy;
+                        const key = `${nx},${ny}`;
+                        if (visited.has(key)) continue;
+                        currX = nx; currY = ny; currDir = d;
+                        visited.add(key);
+                        shape.push({ x: currX, y: currY });
+                        moved = true; break;
                     }
                     if (!moved) break;
                 }
@@ -1142,38 +1234,60 @@
                 const rng = mulberry32(levelNum * 7919 + 1234);
                 const gridSize = getGridSizeForLevel(levelNum);
 
-                const snakeCountTarget = 8 + Math.floor(levelNum / 2);
-                const maxSnakesForGrid = Math.floor(gridSize * gridSize / 12);
-                const snakeCount = Math.min(snakeCountTarget, maxSnakesForGrid);
+                const snakeCountTarget = getSnakeCountTarget(levelNum);
 
-                const maxLenCap = Math.floor(gridSize * 1.6);
-                const maxLen = Math.min(13 + Math.floor(levelNum / 6), maxLenCap);
-                const minLen = Math.max(6, maxLen - 6);
+                // Kıvrım olasılığı: uzun düz yollar için düşük
+                const turnProb = Math.min(0.22 + levelNum / 1200, 0.45);
 
-                const turnProb = Math.min(0.5 + levelNum / 250, 0.80);
+                // Hayvan maskesi
+                const animal = ANIMALS[(levelNum - 1) % ANIMALS.length];
+                const maskSize = 20;
+                const inMask = expandMask(animal.mask, maskSize, gridSize);
+
+                // Maskedeki hücreleri listele
+                const maskCells = [];
+                for (let y = 0; y < gridSize; y++) {
+                    for (let x = 0; x < gridSize; x++) {
+                        if (inMask[y][x]) maskCells.push({ x, y });
+                    }
+                }
 
                 const result = [];
                 let consecutiveFailures = 0;
+                const maxConsecutiveFailures = 40;
 
-                for (let i = 0; i < snakeCount; i++) {
+                for (let i = 0; i < snakeCountTarget; i++) {
                     let placed = false;
-                    const attempts = 800 + gridSize * 50;
-                    for (let a = 0; a < attempts; a++) {
-                        const movementDir = Math.floor(rng() * 4);
+                    const targetLen = pickSnakeLength(rng);
 
-                        let targetLen;
-                        if (rng() < 0.75) {
-                            targetLen = minLen + Math.floor(rng() * (maxLen - minLen + 1));
-                        } else {
-                            targetLen = Math.max(4, minLen - 2) + Math.floor(rng() * 5);
+                    // FAZ 1: Maske içinde dene
+                    if (maskCells.length > 5) {
+                        for (let a = 0; a < 40 && !placed; a++) {
+                            const startCell = maskCells[Math.floor(rng() * maskCells.length)];
+                            const head = { x: startCell.x, y: startCell.y };
+                            const shape = generateShapeInMask(rng, head, targetLen, inMask, gridSize, turnProb);
+                            if (shape.length < Math.min(targetLen, 8)) continue;
+
+                            if (!snakeFits(head, shape, gridSize)) continue;
+                            if (snakeOverlaps(head, shape, result)) continue;
+                            if (!snakePathClear(head, shape, result, gridSize)) continue;
+
+                            result.push({
+                                head,
+                                shape: shape.map(p => ({ x: p.x, y: p.y })),
+                                color: COLORS[i % COLORS.length]
+                            });
+                            placed = true;
                         }
+                    }
 
-                        const shape = generateShape(rng, movementDir, targetLen, turnProb);
-                        if (shape.length < 5) continue;
-
+                    // FAZ 2: Serbest
+                    for (let a = 0; a < 30 && !placed; a++) {
                         const headX = Math.floor(rng() * gridSize);
                         const headY = Math.floor(rng() * gridSize);
                         const head = { x: headX, y: headY };
+                        const shape = generateShapeFree(rng, targetLen, gridSize, turnProb);
+                        if (shape.length < Math.min(targetLen, 8)) continue;
 
                         if (!snakeFits(head, shape, gridSize)) continue;
                         if (snakeOverlaps(head, shape, result)) continue;
@@ -1184,20 +1298,16 @@
                             shape: shape.map(p => ({ x: p.x, y: p.y })),
                             color: COLORS[i % COLORS.length]
                         });
-                        placed = true; break;
+                        placed = true;
                     }
+
                     if (placed) consecutiveFailures = 0;
-                    else { consecutiveFailures++; if (consecutiveFailures >= 8) break; }
+                    else {
+                        consecutiveFailures++;
+                        if (consecutiveFailures >= maxConsecutiveFailures) break;
+                    }
                 }
 
-                if (result.length === 0) {
-                    const mid = Math.floor(gridSize / 2);
-                    result.push({
-                        head: { x: mid, y: mid },
-                        shape: [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: -2, y: 0 }, { x: -2, y: 1 }],
-                        color: COLORS[0]
-                    });
-                }
                 return result;
             }
 
@@ -1219,6 +1329,23 @@
                     const cells = getSnakeCells(snakes[i]);
                     for (const c of cells) {
                         if (c.x === x && c.y === y) return { snake: snakes[i], index: i };
+                    }
+                }
+                return null;
+            }
+            function findSnakeForClick(gridX, gridY) {
+                const exact = getSnakeAt(gridX, gridY);
+                if (exact && exact.snake.head.x === gridX && exact.snake.head.y === gridY) {
+                    return exact;
+                }
+                for (let dy = -HEAD_CLICK_TOLERANCE; dy <= HEAD_CLICK_TOLERANCE; dy++) {
+                    for (let dx = -HEAD_CLICK_TOLERANCE; dx <= HEAD_CLICK_TOLERANCE; dx++) {
+                        if (dx === 0 && dy === 0) continue;
+                        const nx = gridX + dx, ny = gridY + dy;
+                        const r = getSnakeAt(nx, ny);
+                        if (r && r.snake.head.x === nx && r.snake.head.y === ny) {
+                            return r;
+                        }
                     }
                 }
                 return null;
@@ -1260,7 +1387,6 @@
                 const idx = snakes.indexOf(snake);
                 if (idx !== -1) snakes.splice(idx, 1);
                 animatingSnakes.push({ snake, progress: 0 });
-                isAnimating = true;
                 hintSnake = null;
             }
             function updateAnimations() {
@@ -1269,15 +1395,13 @@
                     anim.progress += ANIMATION_SPEED;
                     if (anim.progress >= 1) animatingSnakes.splice(i, 1);
                 }
-                if (animatingSnakes.length === 0) {
-                    isAnimating = false;
+                if (animatingSnakes.length === 0 && snakes.length === 0) {
                     checkWinCondition();
                 }
             }
             function checkWinCondition() {
-                if (snakes.length === 0 && !gameWon) {
+                if (snakes.length === 0 && animatingSnakes.length === 0 && !gameWon) {
                     gameWon = true;
-                    showMessage('🎉 Seviye tamamlandı!', 'success');
                     showBigWarning('TAMAMLANDI! 🎉', 'success', 1200);
                     playWinSound();
                     vibrate([60, 40, 60, 40, 120]);
@@ -1288,7 +1412,6 @@
                         gotHint = true;
                     }
                     updateHintBadge();
-                    // OTOMATİK KAYIT
                     saveGame();
                     updateStartScreenInfo();
 
@@ -1322,11 +1445,8 @@
             function updateHearts(animate = false) {
                 const hearts = heartsContainer.querySelectorAll('.heart');
                 hearts.forEach((heart, index) => {
-                    if (index < lives) {
-                        heart.classList.remove('lost');
-                    } else {
-                        heart.classList.add('lost');
-                    }
+                    if (index < lives) heart.classList.remove('lost');
+                    else heart.classList.add('lost');
                     if (animate && index === lives) {
                         heart.classList.add('beat');
                         setTimeout(() => heart.classList.remove('beat'), 500);
@@ -1343,10 +1463,7 @@
             }
 
             function updateRegenUI() {
-                if (lives >= MAX_LIVES) {
-                    regenBar.classList.remove('visible');
-                    return;
-                }
+                if (lives >= MAX_LIVES) { regenBar.classList.remove('visible'); return; }
                 regenBar.classList.add('visible');
                 const now = Date.now();
                 let remaining = nextLifeTime - now;
@@ -1374,11 +1491,8 @@
                 if (now >= nextLifeTime) {
                     lives++;
                     updateHearts(true);
-                    if (lives < MAX_LIVES) {
-                        nextLifeTime = now + LIFE_REGEN_MS;
-                    } else {
-                        nextLifeTime = 0;
-                    }
+                    if (lives < MAX_LIVES) nextLifeTime = now + LIFE_REGEN_MS;
+                    else nextLifeTime = 0;
                     saveGame();
                     if (lives > 0) {
                         noLivesDismissed = false;
@@ -1404,6 +1518,27 @@
             }
 
             // ============ ÇİZİM ============
+            function getCurrentAnimalMask() {
+                const animal = ANIMALS[(currentLevel - 1) % ANIMALS.length];
+                return expandMask(animal.mask, 20, getGridSize());
+            }
+
+            function drawSilhouette() {
+                // Hayvan silüetini hafif arka plan olarak çiz
+                const gridSize = getGridSize();
+                const cellSize = getCellSize();
+                const inMask = getCurrentAnimalMask();
+
+                ctx.fillStyle = silhouetteColor;
+                for (let y = 0; y < gridSize; y++) {
+                    for (let x = 0; x < gridSize; x++) {
+                        if (inMask[y][x]) {
+                            ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                        }
+                    }
+                }
+            }
+
             function drawGrid() {
                 const gridSize = getGridSize();
                 const cellSize = getCellSize();
@@ -1411,11 +1546,16 @@
                 ctx.fillStyle = canvasBgColor;
                 ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
+                // Hayvan silüeti arka plan
+                drawSilhouette();
+
+                // Grid noktaları
+                const dotSize = gridSize > 70 ? 0.7 : 1;
                 ctx.fillStyle = canvasDotColor;
                 for (let i = 0; i <= gridSize; i++) {
                     for (let j = 0; j <= gridSize; j++) {
                         ctx.beginPath();
-                        ctx.arc(i * cellSize, j * cellSize, 1, 0, Math.PI * 2);
+                        ctx.arc(i * cellSize, j * cellSize, dotSize, 0, Math.PI * 2);
                         ctx.fill();
                     }
                 }
@@ -1424,10 +1564,9 @@
                 ctx.strokeRect(1, 1, CANVAS_SIZE - 2, CANVAS_SIZE - 2);
             }
 
-            // Renkli/gri toggle'ı için yılan rengini belirle
             function getSnakeDisplayColor(snake) {
                 if (settings.colorEnabled) return snake.color;
-                return '#7f8c8d'; // gri
+                return '#7f8c8d';
             }
 
             function drawSnake(snake, progress = 0, alpha = 1, isHint = false) {
@@ -1464,47 +1603,61 @@
                     ctx.beginPath();
                     ctx.moveTo(positions[0].x, positions[0].y);
                     for (let i = 1; i < positions.length; i++) ctx.lineTo(positions[i].x, positions[i].y);
-                    const lineWidth = Math.max(cellSize * 0.42, 4);
+                    const lineWidth = Math.max(cellSize * 0.55, 2);
                     ctx.lineWidth = lineWidth;
                     ctx.lineCap = 'round';
                     ctx.lineJoin = 'round';
                     ctx.strokeStyle = displayColor;
                     if (isHint) { ctx.shadowColor = '#f39c12'; ctx.shadowBlur = 24; }
-                    else { ctx.shadowColor = 'rgba(0,0,0,0.12)'; ctx.shadowBlur = 3; }
+                    else { ctx.shadowColor = 'rgba(0,0,0,0.15)'; ctx.shadowBlur = 2; }
                     ctx.stroke();
                     ctx.shadowBlur = 0;
                 }
+
+                // Yılan BAŞI 2 KAT BÜYÜK
                 const headPos = positions[0];
-                const headRadius = Math.max(cellSize * 0.26, 3);
+                const headRadius = Math.max(cellSize * 0.7, 3);
                 ctx.beginPath();
                 ctx.arc(headPos.x, headPos.y, headRadius, 0, Math.PI * 2);
                 ctx.fillStyle = displayColor;
                 ctx.fill();
 
-                const eyeOffset = cellSize * 0.09;
-                const eyeRadius = Math.max(cellSize * 0.07, 1);
+                ctx.beginPath();
+                ctx.arc(headPos.x, headPos.y, headRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+                ctx.lineWidth = Math.max(1.2, cellSize * 0.1);
+                ctx.stroke();
+
+                // Göz
+                const eyeOffset = cellSize * 0.2;
+                const eyeRadius = Math.max(cellSize * 0.15, 1);
                 ctx.beginPath();
                 ctx.arc(headPos.x + vec.dx * eyeOffset, headPos.y + vec.dy * eyeOffset,
                         eyeRadius, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffffff';
                 ctx.fill();
+                ctx.beginPath();
+                ctx.arc(headPos.x + vec.dx * eyeOffset * 1.3, headPos.y + vec.dy * eyeOffset * 1.3,
+                        eyeRadius * 0.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#000000';
+                ctx.fill();
 
                 if (isHint) {
-                    const arrowLength = cellSize * 1.2;
-                    const arrowStartX = headPos.x + vec.dx * cellSize * 0.5;
-                    const arrowStartY = headPos.y + vec.dy * cellSize * 0.5;
+                    const arrowLength = cellSize * 1.5;
+                    const arrowStartX = headPos.x + vec.dx * cellSize * 0.8;
+                    const arrowStartY = headPos.y + vec.dy * cellSize * 0.8;
                     const arrowEndX = arrowStartX + vec.dx * arrowLength;
                     const arrowEndY = arrowStartY + vec.dy * arrowLength;
                     ctx.strokeStyle = '#f39c12';
                     ctx.fillStyle = '#f39c12';
-                    ctx.lineWidth = 4;
+                    ctx.lineWidth = 5;
                     ctx.lineCap = 'round';
                     ctx.beginPath();
                     ctx.moveTo(arrowStartX, arrowStartY);
                     ctx.lineTo(arrowEndX, arrowEndY);
                     ctx.stroke();
                     const angle = Math.atan2(vec.dy, vec.dx);
-                    const arrowHeadLen = cellSize * 0.4;
+                    const arrowHeadLen = cellSize * 0.5;
                     ctx.beginPath();
                     ctx.moveTo(arrowEndX, arrowEndY);
                     ctx.lineTo(arrowEndX - Math.cos(angle - Math.PI / 6) * arrowHeadLen,
@@ -1536,7 +1689,7 @@
             // ============ OYUN DÖNGÜSÜ ============
             let lastRegenCheck = 0;
             function gameLoop(timestamp) {
-                if (isAnimating) updateAnimations();
+                if (animatingSnakes.length > 0) updateAnimations();
                 if (hintSnake) { hintTimer--; if (hintTimer <= 0) hintSnake = null; }
 
                 if (!timestamp) timestamp = performance.now();
@@ -1566,8 +1719,7 @@
                     vibrate([50, 30, 50]);
                     return;
                 }
-
-                if (isAnimating || gameWon) return;
+                if (gameWon) return;
 
                 const rect = canvas.getBoundingClientRect();
                 const scaleX = canvas.width / rect.width;
@@ -1586,21 +1738,14 @@
                 const gridSize = getGridSize();
                 if (gridX < 0 || gridX >= gridSize || gridY < 0 || gridY >= gridSize) return;
 
-                const result = getSnakeAt(gridX, gridY);
+                const result = findSnakeForClick(gridX, gridY);
                 if (!result) return;
                 const { snake } = result;
 
-                if (snake.head.x !== gridX || snake.head.y !== gridY) {
-                    showMessage('Yılanın başına tıkla!', 'error');
-                    return;
-                }
-
                 if (isPathClear(snake)) {
                     removeSnake(snake);
-                    showMessage('🐍 Süzüldü!', 'success');
-                    showBigWarning('SÜZÜLDÜ! 🐍', 'success', 700);
-                    playSuccessSound();
-                    vibrate(30);
+                    playSnakeHiss();
+                    vibrate(20);
                     updateRemaining();
                 } else {
                     snake.shakeUntil = performance.now() + 400;
@@ -1651,7 +1796,6 @@
                     shakeUntil: 0
                 }));
                 animatingSnakes = [];
-                isAnimating = false;
                 gameWon = false;
                 hintSnake = null;
                 levelDisplay.textContent = currentLevel;
@@ -1661,17 +1805,16 @@
                 updateNoLivesOverlay();
                 updateHintBadge();
 
-                // OTOMATİK KAYIT (her seviye başında da kayıt)
                 saveGame();
+                updateStartScreenInfo();
 
                 if (showTransition) {
                     setTimeout(() => {
-                        showBigWarning('SEVİYE ' + currentLevel, 'success', 1500);
+                        const animal = ANIMALS[(currentLevel - 1) % ANIMALS.length];
+                        showBigWarning('SEVİYE ' + currentLevel + ' • ' + animal.name, 'success', 1500);
                         playLevelUpSound();
                         vibrate(40);
                     }, 200);
-                } else {
-                    showMessage(`Seviye ${currentLevel}`, 'success');
                 }
             }
 
@@ -1694,7 +1837,7 @@
                     updateNoLivesOverlay();
                     return;
                 }
-                if (isAnimating || gameWon) return;
+                if (gameWon) return;
                 if (hints <= 0) {
                     showMessage('İpucu hakkın kalmadı!', 'error');
                     showBigWarning('İPUCU YOK!', 'error', 800);
@@ -1739,7 +1882,6 @@
                 showMessage('Haritaya dokununca ekran tekrar açılır', 'error');
             }
 
-            // ============ KAYDET & ÇIK ============
             function saveAndExit() {
                 ensureAudio();
                 const ok = saveGame();
@@ -1779,7 +1921,7 @@
                 loadLevel(1, true);
                 playLevelUpSound();
                 vibrate(60);
-                saveGame(); // Yeni oyunu hemen kaydet
+                saveGame();
             }
 
             function continueSavedGame() {
@@ -1808,18 +1950,15 @@
 
             // ============ BAŞLATMA ============
             function init() {
-                // Ayarları yükle ve uygula
                 loadSettings();
                 applyTheme();
                 updateToggleUI();
 
-                // Canvas olayları
                 canvas.addEventListener('pointerdown', (e) => {
                     e.preventDefault();
                     handleCanvasClick(e);
                 });
 
-                // Oyun butonları
                 resetBtn.addEventListener('click', resetLevel);
                 hintBtn.addEventListener('click', showHint);
                 restartBtn.addEventListener('click', restartGame);
@@ -1829,24 +1968,43 @@
                 newGameBtn.addEventListener('click', startNewGame);
                 loadGameBtn.addEventListener('click', continueSavedGame);
 
-                // Ayarlar butonları
                 settingsBtn.addEventListener('click', function() {
-                    if (settingsPanel.classList.contains('show')) {
-                        closeSettings();
-                    } else {
-                        openSettings();
-                    }
+                    if (settingsPanel.classList.contains('show')) closeSettings();
+                    else openSettings();
                 });
                 settingsOverlay.addEventListener('click', closeSettings);
                 settingsCloseBtn.addEventListener('click', closeSettings);
 
-                // Toggle butonları
-                toggleAudio.addEventListener('click', toggleAudioSetting);
-                toggleTheme.addEventListener('click', toggleThemeSetting);
-                toggleColors.addEventListener('click', toggleColorsSetting);
-                toggleVibrate.addEventListener('click', toggleVibrationSetting);
+                toggleAudio.addEventListener('click', function() {
+                    settings.audioEnabled = !settings.audioEnabled;
+                    saveSettings();
+                    updateToggleUI();
+                    if (settings.audioEnabled) { ensureAudio(); playSuccessSound(); }
+                });
+                toggleTheme.addEventListener('click', function() {
+                    settings.darkTheme = !settings.darkTheme;
+                    saveSettings();
+                    applyTheme();
+                    updateToggleUI();
+                    vibrate(20);
+                });
+                toggleColors.addEventListener('click', function() {
+                    settings.colorEnabled = !settings.colorEnabled;
+                    saveSettings();
+                    updateToggleUI();
+                    if (settings.audioEnabled) playSuccessSound();
+                    vibrate(20);
+                });
+                toggleVibrate.addEventListener('click', function() {
+                    settings.vibrationEnabled = !settings.vibrationEnabled;
+                    saveSettings();
+                    updateToggleUI();
+                    if (settings.vibrationEnabled) {
+                        try { if (navigator.vibrate) navigator.vibrate(50); } catch (e) {}
+                    }
+                    if (settings.audioEnabled) playSuccessSound();
+                });
 
-                // ESC ile ayarları kapat (masaüstü)
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape' && settingsPanel.classList.contains('show')) {
                         closeSettings();

@@ -69,7 +69,7 @@ button.bomb-btn:disabled { background: #bdc3c7; opacity: 0.6; }
 .big-warning.gold { color: #78350f; border-color: #fbbf24; background: linear-gradient(135deg, #fef3c7, #fde68a); }
 .big-warning.boss { color: #7c2d12; border-color: #dc2626; background: linear-gradient(135deg, #fee2e2, #fecaca); font-size: 2rem; }
 .big-warning.streak { color: #ff6b35; border-color: #ff6b35; background: linear-gradient(135deg, #fff7ed, #ffedd5); }
-.combo-display { position: fixed; top: 30%; left: 50%; transform: translate(-50%,-50%) scale(0.4); font-size: 2.8rem; font-weight: 900; color: #ff6b35; text-shadow: 0 0 20px rgba(255,107,53,0.7); letter-spacing: 3px; pointer-events: none; z-index: 1100; opacity: 0; transition: opacity 0.2s, transform 0.3s; }
+.combo-display { position: fixed; top: 30%; left: 50%; transform: translate(-50%,-50%) scale(0.4); font-size: 1.4rem; font-weight: 900; color: #ff6b35; text-shadow: 0 0 20px rgba(255,107,53,0.7); letter-spacing: 3px; pointer-events: none; z-index: 1100; opacity: 0; transition: opacity 0.2s, transform 0.3s; }
 .combo-display.show { opacity: 1; transform: translate(-50%,-50%) scale(1); animation: comboBounce 0.5s ease; }
 @keyframes comboBounce { 0%{transform: translate(-50%,-50%) scale(0.4) rotate(-8deg);} 60%{transform: translate(-50%,-50%) scale(1.15) rotate(4deg);} 100%{transform: translate(-50%,-50%) scale(1) rotate(0);} }
 .achievement-toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%,-150%); background: linear-gradient(135deg, #ffd700, #ffed4e); color: #78350f; padding: 12px 20px; border-radius: 14px; font-weight: 700; display: flex; align-items: center; gap: 10px; z-index: 6000; transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1); max-width: 90%; box-shadow: 0 12px 40px rgba(255,215,0,0.4); }
@@ -2128,7 +2128,6 @@ function damageBoss(){
     return false;
 }
 
-/* ⭐⭐⭐ loadLevel — onReady callback eklendi ⭐⭐⭐ */
 function loadLevel(level, showTransition, skipStory, onReady){
     currentLevel = Math.max(1, Math.min(MAX_LEVEL, level));
     currentLevelStartTime = Date.now(); currentLevelLifeLost = 0; comboCount = 0; shakeAmount = 0;
@@ -2165,7 +2164,6 @@ function loadLevel(level, showTransition, skipStory, onReady){
                 showLevelTransition('SEVİYE ' + currentLevel, 'normal');
                 playLevelUpSound(); vibrate(40);
             }, 100);
-            /* ✅ YENİ: Hikaye kapandıktan sonra onReady callback'i çağır */
             if (typeof onReady === 'function') setTimeout(onReady, 300);
         });
     } else {
@@ -2176,7 +2174,6 @@ function loadLevel(level, showTransition, skipStory, onReady){
             showLevelTransition('SEVİYE ' + currentLevel, 'normal');
             playLevelUpSound(); vibrate(40);
         }, 200);
-        /* ✅ YENİ: Hikaye yoksa hemen onReady çağır */
         if (typeof onReady === 'function') setTimeout(onReady, 400);
     }
 }
@@ -2391,8 +2388,6 @@ function startZenMode(){
     showBigWarning('🧘 ZEN MODU','success',2000);
     playSuccessSound(); vibrate(60);
 }
-
-/* ⭐⭐⭐ startNewGame — Tutorial artık hikaye bittikten SONRA açılıyor ⭐⭐⭐ */
 function startNewGame(){
     ensureAudio();
     currentMode='normal';
@@ -2405,16 +2400,12 @@ function startNewGame(){
     timeAttackBar.classList.remove('visible');
     updateGoldUI();
 
-    // İlk defa oynanıyor mu? Kontrol et (localStorage)
     const tutorialNeeded = shouldShowTutorial();
 
-    // Hikaye kapandıktan SONRA tutorial açılsın diye onReady callback kullan
     loadLevel(1, true, false, function(){
         if (!tutorialNeeded) return;
-        // Hikaye bitti, tutorial'ı aç
         gameActive = false;
         startTutorial(function(){
-            // Tutorial bitince oyun başlasın
             gameActive = true;
             levelIntroStart = performance.now();
             levelIntroActive = true;

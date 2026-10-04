@@ -99,21 +99,22 @@ body.shop-open .top-right-buttons { opacity: 0; pointer-events: none; }
 .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: #fff; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
 .toggle-switch.on { background: #27ae60; }
 .toggle-switch.on::after { transform: translateX(22px); }
-.start-screen { position: fixed; inset: 0; background: linear-gradient(160deg, #1a2980 0%, #26d0ce 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; padding: 24px; overflow-y: auto; transition: opacity 0.4s, visibility 0.4s; }
+.start-screen { position: fixed; inset: 0; background: linear-gradient(160deg, #1a2980 0%, #26d0ce 100%); display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 3000; padding: 14px 14px 10px; overflow-y: auto; transition: opacity 0.4s, visibility 0.4s; }
 .start-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.start-screen .logo { font-size: 5rem; margin-bottom: 8px; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3)); cursor: pointer; }
+.start-screen .logo { font-size: 3rem; margin-bottom: 2px; margin-top: 4px; line-height: 1; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3)); cursor: pointer; }
 @keyframes float { 0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-14px) rotate(5deg);} }
-.start-screen h1 { color: #fff; font-size: 2rem; font-weight: 900; letter-spacing: 3px; margin: 0 0 8px 0; text-shadow: 0 4px 20px rgba(0,0,0,0.3); text-align: center; }
-.start-screen .tagline { color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-bottom: 12px; text-align: center; }
-.slot-selector { display: flex; gap: 6px; margin-bottom: 14px; background: rgba(0,0,0,0.15); padding: 6px; border-radius: 12px; }
+.start-screen h1 { color: #fff; font-size: 1.3rem; font-weight: 900; letter-spacing: 2px; margin: 0 0 2px 0; text-shadow: 0 4px 20px rgba(0,0,0,0.3); text-align: center; }
+.start-screen .tagline { color: rgba(255,255,255,0.85); font-size: 0.7rem; margin-bottom: 8px; text-align: center; }
+.slot-selector { display: flex; gap: 5px; margin-bottom: 8px; background: rgba(0,0,0,0.15); padding: 4px; border-radius: 10px; }
 .slot-btn { padding: 6px 14px; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
 .slot-btn.active { background: #fff; color: #1a2980; transform: scale(1.05); }
 .slot-btn:active { transform: scale(0.95); }
-.user-status { margin-bottom: 12px; padding: 8px 16px; background: rgba(255,255,255,0.15); border-radius: 12px; color: #fff; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.user-status { margin-bottom: 8px; padding: 6px 12px; background: rgba(255,255,255,0.15); border-radius: 10px; color: #fff; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 .user-status .logout-mini { background: rgba(255,255,255,0.25); border: none; color: #fff; padding: 3px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; cursor: pointer; }
-.start-screen .menu { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 300px; }
-.menu-btn { width: 100%; padding: 13px 20px; border: none; border-radius: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; transition: transform 0.15s; }
-.menu-btn:active { transform: scale(0.96); }
+.start-screen .menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; max-width: 360px; }
+.menu-btn { width: 100%; aspect-ratio: 1; padding: 6px 4px; border: none; border-radius: 12px; font-size: 0.62rem; font-weight: 700; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; position: relative; transition: transform 0.15s; text-align: center; line-height: 1.15; overflow: hidden; }
+.menu-btn > span:first-child { font-size: 1.5rem; line-height: 1; margin-bottom: 1px; }
+.menu-btn:active { transform: scale(0.94); }
 .menu-btn.new-game { background: linear-gradient(135deg, #27ae60, #16a085); color: #fff; }
 .menu-btn.load-game { background: rgba(255,255,255,0.95); color: #2c3e50; }
 .menu-btn.load-game:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -122,13 +123,13 @@ body.shop-open .top-right-buttons { opacity: 0; pointer-events: none; }
 .menu-btn.daily-btn .daily-badge { position: absolute; top: -4px; right: 8px; background: #ef4444; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 8px; animation: badgePulse 1.5s infinite; }
 @keyframes badgePulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.15);} }
 .menu-btn.shop-menu-btn { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #78350f; }
-.menu-btn.shop-menu-btn .shop-menu-gold { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: rgba(120,53,15,0.15); padding: 4px 10px; border-radius: 12px; font-size: 0.78rem; }
+.menu-btn.shop-menu-btn .shop-menu-gold { position: absolute; top: 3px; right: 3px; left: auto; transform: none; background: rgba(120,53,15,0.2); padding: 1px 5px; border-radius: 6px; font-size: 0.55rem; font-weight: 800; }
 .menu-btn.modes-btn { background: linear-gradient(135deg, #9333ea, #7c3aed); color: #fff; }
 .menu-btn.achievements-btn { background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; }
 .menu-btn.records-btn { background: linear-gradient(135deg, #0d9488, #0f766e); color: #fff; }
 .menu-btn.login-btn { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
 .menu-btn.register-btn { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; }
-.save-info { margin-top: 12px; color: rgba(255,255,255,0.85); font-size: 0.8rem; text-align: center; padding: 10px 16px; background: rgba(0,0,0,0.15); border-radius: 10px; max-width: 300px; }
+.save-info { margin-top: 8px; color: rgba(255,255,255,0.85); font-size: 0.7rem; text-align: center; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 10px; max-width: 360px; }
 .save-info.empty { opacity: 0.5; font-style: italic; }
 .no-lives-overlay { position: fixed; inset: 0; background: rgba(15,20,30,0.85); backdrop-filter: blur(6px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; overflow-y: auto; }
 .no-lives-overlay.show { opacity: 1; pointer-events: auto; }
@@ -447,9 +448,17 @@ body.dark .task-progress-bar { background: #253340; }
     h1 { font-size: 1rem; }
     button.ctrl { padding: 9px 4px; font-size: 0.75rem; }
     .big-warning { font-size: 1.5rem; padding: 12px 20px; }
-    .start-screen .logo { font-size: 4rem; }
-    .start-screen h1 { font-size: 1.6rem; }
-    .menu-btn { padding: 12px 18px; font-size: 0.92rem; }
+    .start-screen { padding: 12px 10px 8px; }
+    .start-screen .logo { font-size: 2.6rem; margin-bottom: 2px; margin-top: 2px; }
+    .start-screen h1 { font-size: 1.15rem; letter-spacing: 1.5px; }
+    .start-screen .tagline { font-size: 0.65rem; margin-bottom: 6px; }
+    .start-screen .menu { gap: 5px; max-width: 100%; }
+    .menu-btn { font-size: 0.58rem; padding: 4px 3px; gap: 2px; }
+    .menu-btn > span:first-child { font-size: 1.35rem; }
+    .slot-selector { margin-bottom: 6px; padding: 3px; }
+    .slot-btn { padding: 5px 10px; font-size: 0.7rem; }
+    .user-status { padding: 5px 10px; font-size: 0.72rem; margin-bottom: 6px; }
+    .save-info { font-size: 0.65rem; padding: 5px 10px; margin-top: 6px; }
     .admin-tab { font-size: 0.68rem; padding: 10px 6px; min-width: 70px; }
     .intro-title { font-size: 2.2rem; }
     .intro-snake { font-size: 6rem; }
@@ -459,6 +468,100 @@ body.dark .task-progress-bar { background: #253340; }
     .tutorial-tooltip-text { font-size: 0.82rem; }
     .level-transition-banner { font-size: 1.4rem; padding: 14px 24px; letter-spacing: 2px; }
 }
+
+/* ============ V2.0.0 YENİ ÖZELLİKLER ============ */
+.version-badge { position: absolute; bottom: 14px; right: 14px; padding: 4px 12px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); font-size: 0.7rem; font-weight: 800; border-radius: 10px; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.2); }
+
+/* 1. Combo Ring Timer */
+.combo-ring-wrap { position: fixed; top: 30%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; z-index: 1099; opacity: 0; transition: opacity 0.2s; }
+.combo-ring-wrap.show { opacity: 1; }
+.combo-ring { display: block; transform: rotate(-90deg); }
+.combo-ring .track { fill: none; stroke: rgba(255,107,53,0.15); stroke-width: 5; }
+.combo-ring .bar { fill: none; stroke: #ff6b35; stroke-width: 5; stroke-linecap: round; stroke-dasharray: 264; stroke-dashoffset: 0; transition: stroke 0.3s; }
+.combo-ring .bar.warn { stroke: #fbbf24; }
+.combo-ring .bar.danger { stroke: #e74c3c; }
+
+/* 3. Seviye Hedef Kartı */
+.goal-card { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.5); background: linear-gradient(160deg,#1e293b,#0f172a); border: 2px solid #fbbf24; border-radius: 20px; padding: 22px 28px; z-index: 1400; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.5s cubic-bezier(0.34,1.56,0.64,1); text-align: center; max-width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(251,191,36,0.3); }
+.goal-card.show { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+.goal-card .goal-icon { font-size: 3rem; margin-bottom: 8px; }
+.goal-card .goal-title { font-size: 0.72rem; color: #fbbf24; letter-spacing: 3px; font-weight: 800; margin-bottom: 6px; }
+.goal-card .goal-desc { font-size: 1.05rem; color: #fff; font-weight: 700; margin-bottom: 8px; }
+.goal-card .goal-reward { font-size: 0.85rem; color: #fbbf24; font-weight: 700; background: rgba(251,191,36,0.15); padding: 4px 12px; border-radius: 8px; display: inline-block; }
+
+/* 20. Sinematik geçiş */
+canvas.cinematic { animation: cinematicZoom 1.4s cubic-bezier(0.34,1.2,0.64,1); }
+@keyframes cinematicZoom {
+    0% { transform: scale(1); filter: brightness(1) blur(0); }
+    25% { transform: scale(1.18); filter: brightness(1.6) blur(2px); }
+    55% { transform: scale(0.82); filter: brightness(0.6) blur(1px); }
+    100% { transform: scale(1); filter: brightness(1) blur(0); }
+}
+
+/* 29. Battle Pass */
+.bp-progress-wrap { padding: 14px 16px; }
+.bp-progress-bar { height: 14px; background: #e2e8f0; border-radius: 7px; overflow: hidden; position: relative; }
+.bp-progress-fill { height: 100%; background: linear-gradient(90deg,#fbbf24,#f59e0b); transition: width 0.5s; }
+.bp-progress-label { display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748b; font-weight: 700; margin-top: 6px; }
+.bp-tier-row { display: flex; gap: 6px; overflow-x: auto; padding: 10px 12px 14px; }
+.bp-tier { flex: 0 0 auto; width: 72px; border-radius: 12px; border: 2px solid #e0e6ed; background: #fff; padding: 8px 4px; text-align: center; position: relative; }
+.bp-tier.locked { opacity: 0.5; background: #f8f9fb; }
+.bp-tier.unlocked { border-color: #27ae60; background: #f0fdf4; }
+.bp-tier.claimed { border-color: #94a3b8; background: #f1f5f9; opacity: 0.75; }
+.bp-tier .bp-tier-num { font-size: 0.65rem; font-weight: 900; color: #475569; margin-bottom: 3px; letter-spacing: 0.5px; }
+.bp-tier .bp-tier-icon { font-size: 1.4rem; display: block; line-height: 1; }
+.bp-tier .bp-tier-reward { font-size: 0.65rem; font-weight: 800; color: #78350f; margin-top: 3px; }
+.bp-tier .bp-tier-premium { font-size: 0.55rem; font-weight: 800; color: #7c3aed; margin-top: 2px; }
+.bp-actions { display: flex; gap: 8px; padding: 12px 16px; background: #f8f9fb; border-top: 1px solid #e0e6ed; }
+.bp-actions button { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: 800; font-size: 0.82rem; cursor: pointer; font-family: inherit; }
+.bp-actions button.free-claim { background: linear-gradient(135deg,#27ae60,#16a085); color: #fff; }
+.bp-actions button.premium-claim { background: linear-gradient(135deg,#9333ea,#7c3aed); color: #fff; }
+.bp-actions button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* 31. Premium */
+.premium-card { margin: 12px 16px; padding: 20px; background: linear-gradient(160deg,#1e293b,#0f172a); border: 2px solid #fbbf24; border-radius: 16px; color: #fff; text-align: center; box-shadow: 0 0 40px rgba(251,191,36,0.25); }
+.premium-card .premium-title { font-size: 1.3rem; font-weight: 900; background: linear-gradient(135deg,#fbbf24,#f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; letter-spacing: 1px; }
+.premium-card .premium-sub { font-size: 0.78rem; color: #94a3b8; }
+.premium-card .premium-price { font-size: 2rem; font-weight: 900; color: #fbbf24; margin: 12px 0; }
+.premium-card .premium-price span { font-size: 1rem; color: #cbd5e1; font-weight: 600; }
+.premium-card .premium-benefits { text-align: left; font-size: 0.85rem; line-height: 2; margin: 14px 0; color: #cbd5e1; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 10px; }
+.premium-card button { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #78350f; font-weight: 800; font-size: 1rem; cursor: pointer; font-family: inherit; margin-top: 6px; }
+.premium-card button:active { transform: scale(0.97); }
+
+/* 15. Koleksiyon */
+.collection-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 14px; }
+.collection-item { aspect-ratio: 1; border-radius: 12px; background: #fff; border: 2px solid #e0e6ed; padding: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+.collection-item.locked { background: #f1f5f9; opacity: 0.55; }
+.collection-item .col-icon { font-size: 2rem; line-height: 1; }
+.collection-item .col-name { font-size: 0.68rem; font-weight: 800; color: #2c3e50; margin-top: 4px; text-align: center; }
+.collection-item .col-count { font-size: 0.65rem; color: #7f8c8d; font-weight: 700; }
+.collection-item .col-rare { position: absolute; top: 4px; right: 4px; font-size: 0.58rem; font-weight: 900; padding: 1px 5px; border-radius: 6px; background: #fbbf24; color: #78350f; }
+
+/* 12. Detaylı İstatistik */
+.chart-wrap { padding: 12px 16px; border-bottom: 1px solid #f0f2f5; }
+.chart-title { font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 90px; padding: 0 2px; }
+.chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; height: 100%; }
+.chart-bar { width: 100%; background: linear-gradient(180deg,#fbbf24,#f59e0b); border-radius: 4px 4px 0 0; min-height: 2px; transition: height 0.4s; }
+.chart-bar-wrap.today .chart-bar { background: linear-gradient(180deg,#27ae60,#16a085); }
+.chart-label { font-size: 0.6rem; color: #64748b; font-weight: 700; }
+.chart-value { font-size: 0.6rem; color: #2c3e50; font-weight: 800; }
+
+/* 22. Bildirim izni bandı */
+.notif-banner { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%) translateY(150%); max-width: 400px; width: calc(100% - 24px); background: #1e293b; color: #fff; padding: 12px 16px; border-radius: 12px; z-index: 5500; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.notif-banner.show { transform: translateX(-50%) translateY(0); }
+.notif-banner .notif-text { flex: 1; font-size: 0.82rem; font-weight: 600; }
+.notif-banner button { background: #fbbf24; border: none; color: #78350f; padding: 6px 12px; border-radius: 8px; font-weight: 800; cursor: pointer; font-family: inherit; font-size: 0.75rem; }
+.notif-banner button.later { background: rgba(255,255,255,0.15); color: #fff; }
+
+/* Dark mode ek uyum */
+body.dark .goal-card { background: linear-gradient(160deg,#0f172a,#050810); }
+body.dark .bp-tier { background: #253340; border-color: #2c3e50; }
+body.dark .bp-tier .bp-tier-num { color: #94a3b8; }
+body.dark .collection-item { background: #253340; border-color: #2c3e50; }
+body.dark .collection-item .col-name { color: #ecf0f1; }
+body.dark .chart-bar-wrap { color: #94a3b8; }
+body.dark .chart-value { color: #ecf0f1; }
 </style>
 </head>
 <body>
@@ -677,13 +780,84 @@ body.dark .task-progress-bar { background: #253340; }
     </div>
 </div>
 
+<!-- 29. Battle Pass Paneli -->
+<div class="overlay-backdrop" id="bpBackdrop"></div>
+<div class="modal-panel" id="bpPanel" style="max-width: 460px;">
+    <div class="modal-header" style="background: linear-gradient(135deg,#dc2626,#7f1d1d);"><span>🎟️ Battle Pass — Sezon 1</span><button type="button" class="modal-close" id="bpCloseBtn">✖</button></div>
+    <div class="modal-body" style="padding: 0;">
+        <div class="bp-progress-wrap">
+            <div class="bp-progress-bar"><div class="bp-progress-fill" id="bpProgressFill" style="width:0%"></div></div>
+            <div class="bp-progress-label"><span id="bpProgressLeft">Kademe 1</span><span id="bpProgressRight">0 / 100 XP</span></div>
+        </div>
+        <div class="bp-tier-row" id="bpTierRow"></div>
+    </div>
+    <div class="bp-actions">
+        <button type="button" class="free-claim" id="bpClaimFree">🎁 Ücretsiz Ödül Al</button>
+        <button type="button" class="premium-claim" id="bpClaimPremium">💎 Premium Ödül Al</button>
+    </div>
+</div>
+
+<!-- 31. Premium Paneli -->
+<div class="overlay-backdrop" id="premiumBackdrop"></div>
+<div class="modal-panel" id="premiumPanel" style="max-width: 420px;">
+    <div class="modal-header" style="background: linear-gradient(135deg,#fbbf24,#f59e0b); color:#78350f;"><span>💎 Premium Üyelik</span><button type="button" class="modal-close" id="premiumCloseBtn" style="background:rgba(120,53,15,0.3);color:#fff;">✖</button></div>
+    <div class="modal-body" style="padding: 0;">
+        <div class="premium-card">
+            <div class="premium-title">PREMIUM</div>
+            <div class="premium-sub">Aylık üyelik planı</div>
+            <div class="premium-price">25 TL<span> / ay</span></div>
+            <div class="premium-benefits">
+                ❤️ Sınırsız can hakkı<br>
+                🪙 2x altın kazanımı<br>
+                🚫 Reklamsız deneyim<br>
+                🎁 Aylık 500 altın bonus<br>
+                ⚡ Öncelikli destek
+            </div>
+            <button type="button" id="premiumSubscribeBtn">💎 Premium'a Geç</button>
+        </div>
+        <div class="shop-note" style="margin: 0 16px 16px;">💳 Ödeme sistemi çok yakında aktif olacak!</div>
+    </div>
+</div>
+
+<!-- 15. Koleksiyon Paneli -->
+<div class="overlay-backdrop" id="collectionBackdrop"></div>
+<div class="modal-panel" id="collectionPanel" style="max-width: 420px;">
+    <div class="modal-header" style="background: linear-gradient(135deg,#0891b2,#0e7490);"><span>📖 Yılan Koleksiyonu</span><button type="button" class="modal-close" id="collectionCloseBtn">✖</button></div>
+    <div class="modal-body" style="padding: 0;"><div class="collection-grid" id="collectionGrid"></div></div>
+</div>
+
+<!-- 22. Bildirim izni bandı -->
+<div class="notif-banner" id="notifBanner">
+    <span style="font-size:1.4rem;">🔔</span>
+    <div class="notif-text">Bildirimlere izin ver — can dolduğunda ve günlük ödülde haber verelim!</div>
+    <button type="button" id="notifAllowBtn">İzin Ver</button>
+    <button type="button" class="later" id="notifLaterBtn">Sonra</button>
+</div>
+
 <div class="stars-popup" id="starsPopup"><span class="star-item" id="star1">★</span><span class="star-item" id="star2">★</span><span class="star-item" id="star3">★</span></div>
 <div class="boss-banner" id="bossBanner">🐉 BOSS LEVEL 🐉</div>
+
+<!-- 1. Combo Ring -->
+<div class="combo-ring-wrap" id="comboRingWrap">
+    <svg class="combo-ring" width="140" height="140" viewBox="0 0 100 100">
+        <circle class="track" cx="50" cy="50" r="42"></circle>
+        <circle class="bar" id="comboRingBar" cx="50" cy="50" r="42"></circle>
+    </svg>
+</div>
+
+<!-- 3. Seviye Hedef Kartı -->
+<div class="goal-card" id="goalCard">
+    <div class="goal-icon" id="goalCardIcon">🎯</div>
+    <div class="goal-title">SEVİYE HEDEFİ</div>
+    <div class="goal-desc" id="goalCardDesc">30 saniyede bitir</div>
+    <div class="goal-reward" id="goalCardReward">+3 🪙</div>
+</div>
 
 <div class="start-screen" id="startScreen">
     <div class="logo" id="gameLogo">🐍</div>
     <h1>YILAN KAÇIŞI</h1>
     <div class="tagline">Zihnini zorlayan kıvrımlı bulmaca</div>
+    <div class="version-badge" id="versionBadge">v2.0.0</div>
     <div class="slot-selector" id="slotSelector">
         <button type="button" class="slot-btn active" data-slot="0">Slot 1</button>
         <button type="button" class="slot-btn" data-slot="1">Slot 2</button>
@@ -697,13 +871,16 @@ body.dark .task-progress-bar { background: #253340; }
         <button type="button" class="menu-btn login-btn" id="openLoginBtn"><span>🔐</span> Giriş Yap</button>
         <button type="button" class="menu-btn register-btn" id="openRegisterBtn"><span>📝</span> Kayıt Ol</button>
         <button type="button" class="menu-btn new-game" id="newGameBtn" style="display:none;"><span>🎮</span> Yeni Oyun</button>
-        <button type="button" class="menu-btn load-game" id="loadGameBtn" disabled style="display:none;"><span>💾</span> Kayıtlı Oyunu Yükle</button>
-        <button type="button" class="menu-btn daily-btn" id="dailyTasksBtn" style="display:none;"><span>📅</span> Günlük Görevler<span class="daily-badge" id="dailyTaskBadge">3</span></button>
-        <button type="button" class="menu-btn map-btn" id="mapBtn" style="display:none;"><span>🗺️</span> Seviye Haritası</button>
-        <button type="button" class="menu-btn modes-btn" id="modesBtn" style="display:none;"><span>🎯</span> Oyun Modları</button>
+        <button type="button" class="menu-btn load-game" id="loadGameBtn" disabled style="display:none;"><span>💾</span> Kayıtlı Yükle</button>
+        <button type="button" class="menu-btn daily-btn" id="dailyTasksBtn" style="display:none;"><span>📅</span> Günlük Görev<span class="daily-badge" id="dailyTaskBadge">3</span></button>
+        <button type="button" class="menu-btn map-btn" id="mapBtn" style="display:none;"><span>🗺️</span> Harita</button>
+        <button type="button" class="menu-btn modes-btn" id="modesBtn" style="display:none;"><span>🎯</span> Modlar</button>
         <button type="button" class="menu-btn achievements-btn" id="achievementsBtn" style="display:none;"><span>🏆</span> Başarımlar</button>
         <button type="button" class="menu-btn records-btn" id="recordsBtn" style="display:none;"><span>🏅</span> Rekorlarım</button>
         <button type="button" class="menu-btn shop-menu-btn" id="startShopBtn" style="display:none;"><span>🛒</span> Mağaza<span class="shop-menu-gold">🪙 <span id="startShopGold">0</span></span></button>
+        <button type="button" class="menu-btn" id="battlePassBtn" style="background:linear-gradient(135deg,#dc2626,#7f1d1d);color:#fff;display:none;"><span>🎟️</span> Battle Pass</button>
+        <button type="button" class="menu-btn" id="premiumBtn" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#78350f;display:none;"><span>💎</span> Premium</button>
+        <button type="button" class="menu-btn" id="collectionBtn" style="background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;display:none;"><span>📖</span> Koleksiyon</button>
     </div>
     <div class="save-info empty" id="saveInfo">Kayıt bulunamadı</div>
 </div>
@@ -969,6 +1146,41 @@ let tutorialStepIndex = 0;
 let transitionBannerTimeout = null;
 
 const $ = function(id){ return document.getElementById(id); };
+
+/* ============ V2.0.0 SABİTLERİ ============ */
+const VERSION = '2.0.0';
+const GOAL_TYPES = [
+    { id:'fast', icon:'⚡', desc:'30 saniyede bitir', reward:5, check:function(){ return (Date.now()-currentLevelStartTime)/1000 <= 30; } },
+    { id:'perfect', icon:'🛡️', desc:'Can kaybetmeden bitir', reward:3, check:function(){ return currentLevelLifeLost === 0; } },
+    { id:'combo', icon:'🔥', desc:'5x kombo yap', reward:4, check:function(){ return comboCount >= 5; } },
+    { id:'speed_demon', icon:'🏃', desc:'20 saniyede bitir', reward:8, check:function(){ return (Date.now()-currentLevelStartTime)/1000 <= 20; } },
+    { id:'no_hint', icon:'🧠', desc:'İpucu kullanmadan bitir', reward:3, check:function(){ return !window.__hintUsedThisLevel; } }
+];
+const BP_TIER_XP = 100;
+const BP_MAX_TIER = 50;
+const BP_XP_PER_LEVEL = 25;
+const COLLECTION_TYPES = [
+    { id:'normal', icon:'🐍', name:'Normal Yılan' },
+    { id:'ghost', icon:'👻', name:'Hayalet Yılan', rare:true },
+    { id:'bomb', icon:'💣', name:'Bomba Yılan', rare:true },
+    { id:'chain', icon:'🔗', name:'Zincirli Yılan', rare:true },
+    { id:'boss', icon:'👑', name:'Boss Yılan', rare:true }
+];
+const DAILY_STATS_KEY = 'snakeEscape_dailyPlay';
+const BP_KEY = 'snakeEscape_battlePass';
+const NOTIF_KEY = 'snakeEscape_notifAsked';
+
+/* ============ V2.0.0 STATE ============ */
+let currentGoal = null;
+let goalCompleted = false;
+let comboRingRAF = null;
+let comboRingEndTime = 0;
+let worldParticles = [];
+let bpState = { xp: 0, claimedFree: [], claimedPremium: [], premiumUnlocked: false, lastSeason: 1 };
+let dailyPlayData = {};
+let statsCollection = { normal:0, ghost:0, bomb:0, chain:0, boss:0 };
+let notificationAsked = false;
+
 const canvas=$('gameCanvas'), ctx=canvas.getContext('2d');
 canvas.width=CANVAS_SIZE; canvas.height=CANVAS_SIZE;
 
@@ -1034,6 +1246,18 @@ const tutorialArrow=$('tutorialArrow');
 const levelTransitionBanner=$('levelTransitionBanner');
 
 function safeAdd(el, ev, fn) { if (el && typeof el.addEventListener === 'function') el.addEventListener(ev, fn); }
+
+/* ============ V2.0.0 ELEMENT REFS ============ */
+const versionBadge = $('versionBadge');
+const comboRingWrap = $('comboRingWrap');
+const comboRingBar = $('comboRingBar');
+const goalCard = $('goalCard'), goalCardIcon = $('goalCardIcon'), goalCardDesc = $('goalCardDesc'), goalCardReward = $('goalCardReward');
+const battlePassBtn = $('battlePassBtn'), bpBackdrop = $('bpBackdrop'), bpPanel = $('bpPanel'), bpCloseBtn = $('bpCloseBtn');
+const bpProgressFill = $('bpProgressFill'), bpProgressLeft = $('bpProgressLeft'), bpProgressRight = $('bpProgressRight');
+const bpTierRow = $('bpTierRow'), bpClaimFree = $('bpClaimFree'), bpClaimPremium = $('bpClaimPremium');
+const premiumBtn = $('premiumBtn'), premiumBackdrop = $('premiumBackdrop'), premiumPanel = $('premiumPanel'), premiumCloseBtn = $('premiumCloseBtn'), premiumSubscribeBtn = $('premiumSubscribeBtn');
+const collectionBtn = $('collectionBtn'), collectionBackdrop = $('collectionBackdrop'), collectionPanel = $('collectionPanel'), collectionCloseBtn = $('collectionCloseBtn'), collectionGrid = $('collectionGrid');
+const notifBanner = $('notifBanner'), notifAllowBtn = $('notifAllowBtn'), notifLaterBtn = $('notifLaterBtn');
 
 const Backend = {
     isReal: function(){ return BACKEND.mode!=='local' && (BACKEND.apiEndpoint||BACKEND.firebaseUrl); },
@@ -1183,7 +1407,7 @@ function playBossDeathSound(){
 var bigWarningTimeout;
 function showBigWarning(text,type,duration){ type=type||'error'; duration=duration||900; clearTimeout(bigWarningTimeout); bigWarningEl.textContent=text; bigWarningEl.className='big-warning show'; if(type==='success') bigWarningEl.classList.add('success'); if(type==='gold') bigWarningEl.classList.add('gold'); if(type==='boss') bigWarningEl.classList.add('boss'); if(type==='streak') bigWarningEl.classList.add('streak'); bigWarningTimeout=setTimeout(function(){ bigWarningEl.classList.remove('show'); }, duration); }
 var comboTimeout;
-function showCombo(count){ if(count<2) return; const labels=['','','SÜPER','HARIKA','İNANILMAZ','EFSANE','TANRISAL']; const label=labels[Math.min(count,labels.length-1)]||'TANRISAL'; comboDisplay.textContent=label+' x'+count; comboDisplay.classList.remove('show'); void comboDisplay.offsetWidth; comboDisplay.classList.add('show'); clearTimeout(comboTimeout); comboTimeout=setTimeout(function(){ comboDisplay.classList.remove('show'); }, 900); playTone([600+count*100, 900+count*100],'triangle',0.2,0.09); burstComboStars(count); }
+function showCombo(count){ if(count<2) return; const labels=['','','SÜPER','HARIKA','İNANILMAZ','EFSANE','TANRISAL']; const label=labels[Math.min(count,labels.length-1)]||'TANRISAL'; comboDisplay.textContent=label+' x'+count; comboDisplay.classList.remove('show'); void comboDisplay.offsetWidth; comboDisplay.classList.add('show'); clearTimeout(comboTimeout); comboTimeout=setTimeout(function(){ comboDisplay.classList.remove('show'); }, 900); playTone([600+count*100, 900+count*100],'triangle',0.2,0.09); burstComboStars(count); startComboRing(); }
 var toastTimeout;
 function showToast(name,icon,reward){ clearTimeout(toastTimeout); toastName.textContent=name; toastReward.textContent='+'+reward+' 🪙'; achievementToast.querySelector('.toast-icon').textContent=icon; achievementToast.classList.add('show'); toastTimeout=setTimeout(function(){ achievementToast.classList.remove('show'); }, 3000); }
 var starsPopupTimeout;
@@ -1730,6 +1954,8 @@ function drawGrid(){
     ctx.fillStyle = w.dot;
     for (var i=0;i<=gs;i++) for (var j=0;j<=gs;j++) { ctx.beginPath(); ctx.arc(i*cs,j*cs,ds,0,Math.PI*2); ctx.fill(); }
     ctx.strokeStyle='rgba(52,152,219,0.25)'; ctx.lineWidth=2; ctx.strokeRect(1,1,CANVAS_SIZE-2,CANVAS_SIZE-2);
+    updateWorldParticles();
+    drawWorldParticles();
 }
 function getSnakeDisplayColor(snake, index){
     if (snake.type===SNAKE_TYPES.GHOST) return 'rgba(139,92,246,0.55)';
@@ -1778,6 +2004,10 @@ function drawSnake(snake, progress, alpha, isHint, index){
     if (snake.shakeUntil && now<snake.shakeUntil) { const r=(snake.shakeUntil-now)/400; const inten=r*cs*0.18; const t=now/30; sx=Math.sin(t*1.9)*inten; sy=Math.cos(t*2.3)*inten; }
     const positions=[];
     for (var i=0;i<=n;i++) { const c=getSegmentPosition(cells,n,vec,i,progress,totalExitCells); positions.push({x:(c.x+0.5)*cs+sx, y:(c.y+0.5)*cs+sy}); }
+
+    applyBreathing(positions, vec, cs, now, snake);
+    drawSnakeReflection(snake, positions, vec, cs, alpha, introScale, dc);
+
     ctx.save(); ctx.globalAlpha=alpha*introScale;
     if (snake.type===SNAKE_TYPES.GHOST) ctx.globalAlpha *= 0.7;
 
@@ -1851,6 +2081,8 @@ function drawSnake(snake, progress, alpha, isHint, index){
     const ps=esz*0.22;
     ctx.beginPath(); ctx.arc(el.x+cos*ps, el.y+sin*ps, psz, 0, Math.PI*2); ctx.fillStyle=snake.isBoss?'#dc2626':'#0f0f1a'; ctx.fill();
     ctx.beginPath(); ctx.arc(er.x+cos*ps, er.y+sin*ps, psz, 0, Math.PI*2); ctx.fillStyle=snake.isBoss?'#dc2626':'#0f0f1a'; ctx.fill();
+    const __expr = getHeadExpression(snake, performance.now());
+    applyHeadExpression(__expr, el, er, esz, psz, l2w, ctx, cos, sin, hp);
     ctx.restore();
 
     const tsd=tl*0.90, tln=hs*0.525, fln=hs*0.175, far=0.55;
@@ -2006,6 +2238,7 @@ function checkWinCondition(){
         setTimeout(function(){ showBigWarning('TAMAMLANDI! 🎉','success',1200); playWinSound(); vibrate([60,40,60,40,120]); }, 500);
         setTimeout(function(){ if (currentLevelIsBoss) showBigWarning('🐉 +5 BOSS ALTIN!','boss',1500); else showBigWarning('🪙 +1 ALTIN!','gold',1300); playGoldSound(); }, 1800);
         if (gh) setTimeout(function(){ showBigWarning('💡 +1 İPUCU!','success',1300); }, 3200);
+        setTimeout(postWinHook, 200);
         setTimeout(function(){
             if (currentLevel < MAX_LEVEL) { loadLevel(currentLevel + 1, true, false); }
             else showBigWarning('🏆 TÜM SEVİYELER BİTTİ!','success',3000);
@@ -2176,6 +2409,7 @@ function loadLevel(level, showTransition, skipStory, onReady){
         }, 200);
         if (typeof onReady === 'function') setTimeout(onReady, 400);
     }
+    setTimeout(postLoadLevelHook, 600);
 }
 
 function handleCanvasClick(e){
@@ -2237,6 +2471,9 @@ function handleCanvasClick(e){
         }
         if (snake.type===SNAKE_TYPES.GHOST) { stats.ghostsKilled=(stats.ghostsKilled||0)+1; trackDailyTask('ghostsToday',1,'add'); }
         if (snake.type===SNAKE_TYPES.CHAIN && snake.chainId) { const pair=snakes.find(function(x){ return x.chainId===snake.chainId && x!==snake; }); if (pair) { spawnSegmentDissolve(pair, cs); removeSnake(pair); stats.totalSnakesRemoved++; trackDailyTask('snakesToday',1,'add'); } stats.chainsKilled=(stats.chainsKilled||0)+1; }
+
+        playSnakeTypeSound(snake.type);
+        window.__lastCaughtType = snake.isBoss ? 'boss' : (snake.type || 'normal');
         removeSnake(snake);
 
         playPopSound(1 + comboCount*0.1);
@@ -2297,6 +2534,7 @@ function checkLifeRegen(){
         if (lives<MAX_LIVES) nextLifeTime=now+LIFE_REGEN_MS; else nextLifeTime=0;
         saveAllGameData();
         if (lives>0) { noLivesDismissed=false; noLivesOverlay.classList.remove('show'); showMessage('❤️ Can kazandın!','success'); playSuccessSound(); }
+        notifyLifeRegen();
     }
 }
 function buyLife(){
@@ -2665,6 +2903,7 @@ function renderLeaderboard(){
         div.innerHTML = '<div class="lb-rank">'+(i+1)+'</div><div class="lb-icon">'+item.icon+'</div><div class="lb-info"><div class="lb-label">'+item.label+'</div><div class="lb-value">'+item.value+'</div></div>';
         lbList.appendChild(div);
     });
+    lbList.appendChild(renderStatsChart());
 }
 
 function shopBuyHint(){ ensureAudio(); if(gold<HINT_COST_GOLD){ showBigWarning('YETERSİZ ALTIN!','error',1000); playErrorSound(); return; } gold-=HINT_COST_GOLD; saveWallet(); hints++; updateGoldUI(); updateHintBadge(); saveAllGameData(); playBuySound(); showBigWarning('💡 +1 İPUCU!','success',1200); }
@@ -2724,6 +2963,7 @@ function showHint(){
         var best=avail[0], bd=Infinity;
         const gs = getGridSize();
         for (var i=0;i<avail.length;i++){ const s=avail[i]; const vec=getSnakeDirection(s); var d=0, x=s.head.x+vec.dx, y=s.head.y+vec.dy; while(x>=0&&x<gs&&y>=0&&y<gs){ d++; x+=vec.dx; y+=vec.dy; } if (d<bd) { bd=d; best=s; } }
+        window.__hintUsedThisLevel = true;
         hintSnake=best; hintTimer=180; hints--; updateHintBadge(); saveAllGameData();
         showMessage('💡 İşte çıkabilecek bir yılan!','success'); playHintSound();
     } else { showMessage('Şu an çıkabilecek yılan yok.','error'); showBigWarning('ÇIKIŞ YOK!','error',800); playErrorSound(); }
@@ -2933,7 +3173,7 @@ function applyUserToGame(user){
 }
 function clearUserFromGame(){ currentUser=null; setSession(null); updateUserUI(); updateStartScreenInfo(); }
 function updateUserUI(){
-    const gameButtons = ['newGameBtn','loadGameBtn','mapBtn','modesBtn','achievementsBtn','recordsBtn','startShopBtn','dailyTasksBtn'];
+    const gameButtons = ['newGameBtn','loadGameBtn','mapBtn','modesBtn','achievementsBtn','recordsBtn','startShopBtn','dailyTasksBtn','battlePassBtn','premiumBtn','collectionBtn'];
     if (currentUser) {
         gameButtons.forEach(function(id){ const el=$(id); if(el) el.style.display='flex'; });
         slotSelector.style.display='none';
@@ -3041,6 +3281,565 @@ async function shareGame(){
         if (navigator.share) await navigator.share({ title:'Yılan Kaçışı', text:'🐍 Bu oyunu dene!', url:url });
         else if (navigator.clipboard) { await navigator.clipboard.writeText(url); showBigWarning('🔗 KOPYALANDI','success',1500); }
     } catch(e){}
+}
+
+/* ================================================================
+   V2.0.0 YENİ ÖZELLİKLER
+   ================================================================ */
+
+/* --- 1. COMBO RING TIMER --- */
+function startComboRing() {
+    if (!comboRingWrap || !comboRingBar) return;
+    const duration = COMBO_WINDOW_MS;
+    comboRingEndTime = performance.now() + duration;
+    comboRingWrap.classList.add('show');
+    comboRingBar.classList.remove('warn','danger');
+    if (comboRingRAF) cancelAnimationFrame(comboRingRAF);
+    const totalLen = 264;
+    const tick = function() {
+        const remaining = comboRingEndTime - performance.now();
+        if (remaining <= 0) {
+            comboRingWrap.classList.remove('show');
+            comboRingRAF = null;
+            return;
+        }
+        const ratio = remaining / duration;
+        comboRingBar.style.strokeDashoffset = (totalLen * (1 - ratio)).toFixed(1);
+        if (ratio < 0.25) { comboRingBar.classList.add('danger'); comboRingBar.classList.remove('warn'); }
+        else if (ratio < 0.55) { comboRingBar.classList.add('warn'); comboRingBar.classList.remove('danger'); }
+        else { comboRingBar.classList.remove('warn','danger'); }
+        comboRingRAF = requestAnimationFrame(tick);
+    };
+    comboRingRAF = requestAnimationFrame(tick);
+}
+
+/* --- 3. SEVİYE HEDEF KARTI --- */
+function generateGoalForLevel(level) {
+    const seed = (level * 31 + Math.floor(Date.now()/86400000)) % GOAL_TYPES.length;
+    return GOAL_TYPES[seed];
+}
+function showGoalCard() {
+    if (!goalCard) return;
+    if (currentMode !== 'normal') return;
+    currentGoal = generateGoalForLevel(currentLevel);
+    goalCompleted = false;
+    window.__hintUsedThisLevel = false;
+    goalCardIcon.textContent = currentGoal.icon;
+    goalCardDesc.textContent = currentGoal.desc;
+    goalCardReward.textContent = '+' + currentGoal.reward + ' 🪙';
+    goalCard.classList.add('show');
+    setTimeout(function() { goalCard.classList.remove('show'); }, 2200);
+}
+function evaluateGoal() {
+    if (!currentGoal || goalCompleted) return;
+    if (currentMode !== 'normal') return;
+    goalCompleted = true;
+    let ok = false;
+    try { ok = currentGoal.check(); } catch(e) { ok = false; }
+    if (ok) {
+        gold += currentGoal.reward;
+        stats.totalGoldEarned += currentGoal.reward;
+        saveWallet(); updateGoldUI(true);
+        setTimeout(function() {
+            showBigWarning('🎯 HEDEF TAMAM! +' + currentGoal.reward + ' 🪙', 'gold', 1800);
+            playGoldSound();
+        }, 2400);
+    }
+}
+
+/* --- 4. YILAN NEFES ANİMASYONU --- */
+function applyBreathing(positions, vec, cs, now, snake) {
+    if (positions.length < 2) return;
+    const breathAmp = cs * 0.045;
+    const t = now / 420;
+    for (let i = 0; i < positions.length; i++) {
+        const phase = t + i * 0.55 + (snake.head.x + snake.head.y) * 0.3;
+        const offset = Math.sin(phase) * breathAmp;
+        positions[i].x += -vec.dy * offset;
+        positions[i].y += vec.dx * offset;
+    }
+}
+
+/* --- 9. YILAN SESLERİ --- */
+function playGhostWhisper() {
+    if(!settings.audioEnabled||!audioCtx) return;
+    try {
+        const now=audioCtx.currentTime, dur=0.4, sr=audioCtx.sampleRate, bs=Math.floor(sr*dur);
+        const buf=audioCtx.createBuffer(1,bs,sr), d=buf.getChannelData(0);
+        for(let i=0;i<bs;i++){ const t=i/bs; d[i]=(Math.random()*2-1)*Math.sin(t*Math.PI)*0.5; }
+        const src=audioCtx.createBufferSource(); src.buffer=buf;
+        const f=audioCtx.createBiquadFilter(); f.type='bandpass'; f.frequency.setValueAtTime(800,now); f.frequency.linearRampToValueAtTime(3200,now+dur); f.Q.value=3;
+        const g=audioCtx.createGain(); g.gain.setValueAtTime(0.001,now); g.gain.linearRampToValueAtTime(0.08,now+0.1); g.gain.exponentialRampToValueAtTime(0.001,now+dur);
+        src.connect(f); f.connect(g); g.connect(audioCtx.destination); src.start(now); src.stop(now+dur);
+    } catch(e){}
+}
+function playBombTick() { playTone([1200,1400],'square',0.08,0.08); }
+function playChainClank() {
+    if(!settings.audioEnabled||!audioCtx) return;
+    try {
+        const now=audioCtx.currentTime;
+        [1800,2400,3000].forEach(function(f,i){
+            const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+            o.type='triangle'; o.frequency.value=f;
+            g.gain.setValueAtTime(0.001,now+i*0.03); g.gain.linearRampToValueAtTime(0.07,now+i*0.03+0.005); g.gain.exponentialRampToValueAtTime(0.001,now+i*0.03+0.15);
+            o.connect(g); g.connect(audioCtx.destination); o.start(now+i*0.03); o.stop(now+i*0.03+0.18);
+        });
+    } catch(e){}
+}
+function playBossGrowl() {
+    if(!settings.audioEnabled||!audioCtx) return;
+    try {
+        const now=audioCtx.currentTime;
+        const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+        o.type='sawtooth'; o.frequency.setValueAtTime(90,now); o.frequency.exponentialRampToValueAtTime(45,now+0.6);
+        g.gain.setValueAtTime(0.001,now); g.gain.linearRampToValueAtTime(0.12,now+0.05); g.gain.exponentialRampToValueAtTime(0.001,now+0.65);
+        o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.7);
+    } catch(e){}
+}
+function playSnakeTypeSound(type) {
+    if (type === SNAKE_TYPES.GHOST) playGhostWhisper();
+    else if (type === SNAKE_TYPES.BOMB) playBombTick();
+    else if (type === SNAKE_TYPES.CHAIN) playChainClank();
+}
+
+/* --- 12. DETAYLI İSTATİSTİK --- */
+function loadDailyPlayData() {
+    try { const r = localStorage.getItem(slotKey(DAILY_STATS_KEY)); dailyPlayData = r ? JSON.parse(r) : {}; } catch(e) { dailyPlayData = {}; }
+    const today = new Date().toDateString();
+    if (!dailyPlayData[today]) dailyPlayData[today] = { playMs: 0, levels: 0, snakes: 0 };
+    saveDailyPlayData();
+}
+function saveDailyPlayData() { try { localStorage.setItem(slotKey(DAILY_STATS_KEY), JSON.stringify(dailyPlayData)); } catch(e){} }
+function trackDailyPlay(ms) {
+    const today = new Date().toDateString();
+    if (!dailyPlayData[today]) dailyPlayData[today] = { playMs: 0, levels: 0, snakes: 0 };
+    dailyPlayData[today].playMs += ms;
+    saveDailyPlayData();
+}
+function trackDailyLevelComplete() {
+    const today = new Date().toDateString();
+    if (!dailyPlayData[today]) dailyPlayData[today] = { playMs: 0, levels: 0, snakes: 0 };
+    dailyPlayData[today].levels += 1;
+    saveDailyPlayData();
+}
+function renderStatsChart() {
+    const wrap = document.createElement('div');
+    wrap.className = 'chart-wrap';
+    const title = document.createElement('div');
+    title.className = 'chart-title';
+    title.textContent = '📊 Son 7 Gün Oynama Süresi (dk)';
+    wrap.appendChild(title);
+    const bars = document.createElement('div');
+    bars.className = 'chart-bars';
+    const days = [];
+    const dayNames = ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'];
+    let maxVal = 1;
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date(Date.now() - i*86400000);
+        const key = d.toDateString();
+        const data = dailyPlayData[key] || { playMs:0 };
+        const mins = Math.round(data.playMs / 60000);
+        if (mins > maxVal) maxVal = mins;
+        days.push({ key, mins, dayName: dayNames[d.getDay()], isToday: i===0 });
+    }
+    days.forEach(function(day) {
+        const barWrap = document.createElement('div');
+        barWrap.className = 'chart-bar-wrap' + (day.isToday ? ' today' : '');
+        const val = document.createElement('div');
+        val.className = 'chart-value';
+        val.textContent = day.mins;
+        const bar = document.createElement('div');
+        bar.className = 'chart-bar';
+        bar.style.height = Math.max(2, (day.mins / maxVal) * 70) + 'px';
+        const lbl = document.createElement('div');
+        lbl.className = 'chart-label';
+        lbl.textContent = day.dayName;
+        barWrap.appendChild(val);
+        barWrap.appendChild(bar);
+        barWrap.appendChild(lbl);
+        bars.appendChild(barWrap);
+    });
+    wrap.appendChild(bars);
+    return wrap;
+}
+
+/* --- 15. YILAN KOLEKSİYONU --- */
+function trackSnakeCaught(type) {
+    if (!type) type = 'normal';
+    if (statsCollection[type] === undefined) statsCollection[type] = 0;
+    statsCollection[type]++;
+    saveCollectionStats();
+}
+function saveCollectionStats() {
+    try { localStorage.setItem(slotKey('snakeEscape_collection'), JSON.stringify(statsCollection)); } catch(e){}
+}
+function loadCollectionStats() {
+    try { const r = localStorage.getItem(slotKey('snakeEscape_collection')); if (r) statsCollection = Object.assign(statsCollection, JSON.parse(r)); } catch(e){}
+}
+function openCollection() {
+    ensureAudio();
+    renderCollection();
+    collectionPanel.classList.add('show');
+    collectionBackdrop.classList.add('show');
+}
+function closeCollection() {
+    collectionPanel.classList.remove('show');
+    collectionBackdrop.classList.remove('show');
+}
+function renderCollection() {
+    if (!collectionGrid) return;
+    collectionGrid.innerHTML = '';
+    let totalCaught = 0;
+    COLLECTION_TYPES.forEach(function(t) {
+        const count = statsCollection[t.id] || 0;
+        totalCaught += count;
+        const div = document.createElement('div');
+        div.className = 'collection-item' + (count === 0 ? ' locked' : '');
+        div.innerHTML =
+            (t.rare && count > 0 ? '<span class="col-rare">NADİR</span>' : '') +
+            '<div class="col-icon">' + (count > 0 ? t.icon : '❓') + '</div>' +
+            '<div class="col-name">' + (count > 0 ? t.name : '???') + '</div>' +
+            '<div class="col-count">' + count + ' adet</div>';
+        collectionGrid.appendChild(div);
+    });
+    const totalDiv = document.createElement('div');
+    totalDiv.className = 'collection-item';
+    totalDiv.style.background = 'linear-gradient(135deg,#fef3c7,#fde68a)';
+    totalDiv.style.borderColor = '#fbbf24';
+    totalDiv.innerHTML = '<div class="col-icon">🏆</div><div class="col-name" style="color:#78350f;">TOPLAM</div><div class="col-count" style="color:#78350f;">' + totalCaught + '</div>';
+    collectionGrid.appendChild(totalDiv);
+}
+
+/* --- 17. YILAN YANSIMA EFEKTİ --- */
+function drawSnakeReflection(snake, positions, vec, cs, alpha, introScale, dc) {
+    if (positions.length < 2 || introScale < 0.3) return;
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.18 * introScale;
+    ctx.translate(0, cs * 0.4);
+    ctx.beginPath();
+    ctx.moveTo(positions[1].x, positions[1].y);
+    for (let k = 2; k < positions.length; k++) ctx.lineTo(positions[k].x, positions[k].y);
+    ctx.lineWidth = Math.max(cs * 0.40, 1.2) * introScale;
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = dc;
+    ctx.stroke();
+    ctx.restore();
+}
+
+/* --- 18. KAFA İFADESİ --- */
+function getHeadExpression(snake, now) {
+    if (snake.shakeUntil && now < snake.shakeUntil) return 'shock';
+    if (snake.isBoss) return 'angry';
+    if (snake.type === SNAKE_TYPES.BOMB) return 'angry';
+    if (snake.type === SNAKE_TYPES.GHOST) return 'sleepy';
+    if (!isPathClear(snake)) return 'worried';
+    return 'normal';
+}
+function applyHeadExpression(expr, el, er, esz, psz, l2w, ctx, cos, sin, hp) {
+    if (expr === 'shock') {
+        ctx.strokeStyle = '#dc2626';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(el.x - esz*0.6, el.y - esz*1.4);
+        ctx.lineTo(el.x + esz*0.6, el.y - esz*1.2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(er.x - esz*0.6, er.y - esz*1.2);
+        ctx.lineTo(er.x + esz*0.6, er.y - esz*1.4);
+        ctx.stroke();
+    } else if (expr === 'angry') {
+        ctx.strokeStyle = '#7f1d1d';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(el.x - esz*0.7, el.y - esz*0.6);
+        ctx.lineTo(el.x + esz*0.7, el.y - esz*1.1);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(er.x - esz*0.7, er.y - esz*1.1);
+        ctx.lineTo(er.x + esz*0.7, er.y - esz*0.6);
+        ctx.stroke();
+    } else if (expr === 'worried') {
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(el.x - esz*0.6, el.y - esz*1.2);
+        ctx.lineTo(el.x + esz*0.6, el.y - esz*0.9);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(er.x - esz*0.6, er.y - esz*0.9);
+        ctx.lineTo(er.x + esz*0.6, er.y - esz*1.2);
+        ctx.stroke();
+    } else if (expr === 'sleepy') {
+        ctx.strokeStyle = '#4c1d95';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(el.x - esz*0.5, el.y);
+        ctx.lineTo(el.x + esz*0.5, el.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(er.x - esz*0.5, er.y);
+        ctx.lineTo(er.x + esz*0.5, er.y);
+        ctx.stroke();
+    }
+}
+
+/* --- 19. DÜNYA ARKA PLAN ANİMASYONU --- */
+function initWorldParticles() {
+    worldParticles = [];
+    const worldIdx = Math.min(WORLDS.length-1, Math.floor((currentLevel-1)/20));
+    for (let i = 0; i < 35; i++) {
+        worldParticles.push(spawnWorldParticle(worldIdx));
+    }
+}
+function spawnWorldParticle(worldIdx) {
+    return {
+        x: Math.random() * CANVAS_SIZE,
+        y: Math.random() * CANVAS_SIZE,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: 0.3 + Math.random() * 0.9,
+        size: 2 + Math.random() * 5,
+        life: 0.3 + Math.random() * 0.6,
+        phase: Math.random() * Math.PI * 2,
+        rot: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.02,
+        world: worldIdx
+    };
+}
+function updateWorldParticles() {
+    if (!worldParticles.length) return;
+    const now = performance.now();
+    for (let i = 0; i < worldParticles.length; i++) {
+        const p = worldParticles[i];
+        p.x += p.vx + Math.sin(now / 1200 + p.phase) * 0.35;
+        p.y += p.vy;
+        p.rot += p.rotSpeed;
+        if (p.y > CANVAS_SIZE + 12 || p.x < -12 || p.x > CANVAS_SIZE + 12) {
+            const np = spawnWorldParticle(p.world);
+            np.y = -12;
+            worldParticles[i] = np;
+        }
+    }
+}
+function drawWorldParticles() {
+    if (!worldParticles.length) return;
+    const worldIdx = Math.min(WORLDS.length-1, Math.floor((currentLevel-1)/20));
+    ctx.save();
+    for (let i = 0; i < worldParticles.length; i++) {
+        const p = worldParticles[i];
+        if (p.world !== worldIdx) continue;
+        ctx.globalAlpha = p.life;
+        if (worldIdx === 0) {
+            ctx.fillStyle = '#4caf50';
+            ctx.beginPath(); ctx.ellipse(p.x, p.y, p.size * 1.4, p.size * 0.6, p.rot, 0, Math.PI*2); ctx.fill();
+        } else if (worldIdx === 1 || worldIdx === 5) {
+            ctx.fillStyle = worldIdx === 1 ? '#ffd54f' : '#a855f7';
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.4, 0, Math.PI*2); ctx.fill();
+        } else if (worldIdx === 2 || worldIdx === 7) {
+            ctx.strokeStyle = worldIdx === 2 ? 'rgba(100,180,255,0.7)' : 'rgba(255,255,255,0.8)';
+            ctx.lineWidth = 1.2;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.stroke();
+        } else if (worldIdx === 3) {
+            ctx.fillStyle = '#fff';
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.35, 0, Math.PI*2); ctx.fill();
+        } else if (worldIdx === 4 || worldIdx === 9) {
+            ctx.fillStyle = '#ff6b35';
+            ctx.shadowColor = '#ff6b35'; ctx.shadowBlur = 8;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.55, 0, Math.PI*2); ctx.fill();
+            ctx.shadowBlur = 0;
+        } else if (worldIdx === 6) {
+            ctx.fillStyle = i % 2 ? '#ff2a6d' : '#05d9e8';
+            ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 6;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.4, 0, Math.PI*2); ctx.fill();
+            ctx.shadowBlur = 0;
+        } else if (worldIdx === 8) {
+            ctx.fillStyle = '#ffd700';
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.4, 0, Math.PI*2); ctx.fill();
+        } else {
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI*2); ctx.fill();
+        }
+    }
+    ctx.restore();
+}
+
+/* --- 20. SİNEMATİK GEÇİŞ --- */
+function playCinematicTransition() {
+    if (!canvas) return;
+    canvas.classList.remove('cinematic');
+    void canvas.offsetWidth;
+    canvas.classList.add('cinematic');
+    setTimeout(function() { canvas.classList.remove('cinematic'); }, 1500);
+}
+
+/* --- 22. BİLDİRİMLER --- */
+function requestNotificationPermission() {
+    if (!('Notification' in window)) return;
+    if (Notification.permission === 'granted') { notificationAsked = true; return; }
+    if (Notification.permission === 'denied') { notificationAsked = true; return; }
+    try {
+        const asked = localStorage.getItem(NOTIF_KEY);
+        if (asked === 'later') return;
+    } catch(e){}
+    setTimeout(function() { notifBanner.classList.add('show'); }, 2500);
+}
+function handleNotifAllow() {
+    notifBanner.classList.remove('show');
+    notificationAsked = true;
+    try { localStorage.setItem(NOTIF_KEY, 'granted'); } catch(e){}
+    if (!('Notification' in window)) return;
+    Notification.requestPermission().then(function(perm) {
+        if (perm === 'granted') {
+            showBigWarning('🔔 Bildirimler açık!', 'success', 1500);
+            sendNotification('🐍 Yılan Kaçışı', 'Bildirimler aktif! Artık seni haberdar edeceğiz.');
+        }
+    });
+}
+function handleNotifLater() {
+    notifBanner.classList.remove('show');
+    try { localStorage.setItem(NOTIF_KEY, 'later'); } catch(e){}
+}
+function sendNotification(title, body) {
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+    try {
+        const n = new Notification(title, { body: body, icon: '🐍', tag: 'snakeEscape' });
+        setTimeout(function(){ try { n.close(); } catch(e){} }, 5000);
+    } catch(e){}
+}
+
+/* --- 29. BATTLE PASS --- */
+function loadBattlePass() {
+    try {
+        const r = localStorage.getItem(slotKey(BP_KEY));
+        if (r) bpState = Object.assign(bpState, JSON.parse(r));
+    } catch(e){}
+}
+function saveBattlePass() {
+    try { localStorage.setItem(slotKey(BP_KEY), JSON.stringify(bpState)); } catch(e){}
+}
+function getBPTier() { return Math.min(BP_MAX_TIER, Math.floor(bpState.xp / BP_TIER_XP)); }
+function getBPProgressInTier() { return bpState.xp % BP_TIER_XP; }
+function awardBattlePassXP(amount) {
+    if (currentMode !== 'normal') return;
+    const xp = amount || BP_XP_PER_LEVEL;
+    bpState.xp += xp;
+    saveBattlePass();
+}
+function getBPRewardForTier(tier) {
+    const base = 5 + tier * 2;
+    const prem = 15 + tier * 3;
+    let icon = '🪙';
+    let freeAmt = base;
+    let premAmt = prem;
+    if (tier % 10 === 0 && tier > 0) { icon = '💡'; freeAmt = 1; premAmt = 2; }
+    if (tier % 25 === 0 && tier > 0) { icon = '🎨'; freeAmt = 1; premAmt = 1; }
+    return { freeIcon: icon, freeAmt: freeAmt, premIcon: '💎', premAmt: premAmt };
+}
+function openBattlePass() {
+    ensureAudio();
+    renderBattlePass();
+    bpPanel.classList.add('show');
+    bpBackdrop.classList.add('show');
+}
+function closeBattlePass() {
+    bpPanel.classList.remove('show');
+    bpBackdrop.classList.remove('show');
+}
+function renderBattlePass() {
+    if (!bpTierRow) return;
+    const tier = getBPTier();
+    const prog = getBPProgressInTier();
+    const pct = (prog / BP_TIER_XP) * 100;
+    bpProgressFill.style.width = pct + '%';
+    bpProgressLeft.textContent = 'Kademe ' + (tier + 1) + ' / ' + BP_MAX_TIER;
+    bpProgressRight.textContent = prog + ' / ' + BP_TIER_XP + ' XP';
+    bpTierRow.innerHTML = '';
+    for (let i = 1; i <= BP_MAX_TIER; i++) {
+        const unlocked = i <= tier;
+        const claimed = bpState.claimedFree.indexOf(i) !== -1;
+        const r = getBPRewardForTier(i);
+        const div = document.createElement('div');
+        div.className = 'bp-tier';
+        if (claimed) div.classList.add('claimed');
+        else if (unlocked) div.classList.add('unlocked');
+        else div.classList.add('locked');
+        div.innerHTML =
+            '<div class="bp-tier-num">K' + i + '</div>' +
+            '<div class="bp-tier-icon">' + (unlocked ? r.freeIcon : '🔒') + '</div>' +
+            '<div class="bp-tier-reward">+' + r.freeAmt + '</div>' +
+            '<div class="bp-tier-premium">💎' + (bpState.premiumUnlocked ? '+' + r.premAmt : '🔒') + '</div>';
+        bpTierRow.appendChild(div);
+    }
+    bpClaimFree.disabled = tier < 1;
+    bpClaimPremium.disabled = !bpState.premiumUnlocked || tier < 1;
+    const nextTier = tier + 1;
+    setTimeout(function() {
+        const el = bpTierRow.children[nextTier - 1];
+        if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }, 100);
+}
+function claimBattlePassRewards(premium) {
+    const tier = getBPTier();
+    if (tier < 1) { showBigWarning('Henüz kademe yok', 'error', 1200); return; }
+    const claimedList = premium ? bpState.claimedPremium : bpState.claimedFree;
+    let got = 0;
+    for (let i = 1; i <= tier; i++) {
+        if (claimedList.indexOf(i) !== -1) continue;
+        const r = getBPRewardForTier(i);
+        const amt = premium ? r.premAmt : r.freeAmt;
+        if (premium && !bpState.premiumUnlocked) continue;
+        if (r.freeIcon === '💡' && !premium) { hints += amt; }
+        else if (r.freeIcon === '🎨' && !premium) { gold += 15; }
+        else { gold += amt; stats.totalGoldEarned += amt; }
+        claimedList.push(i);
+        got++;
+    }
+    if (got === 0) { showBigWarning('Alınacak ödül yok', 'error', 1200); return; }
+    saveBattlePass(); saveWallet(); updateGoldUI(true); updateHintBadge(); saveAllGameData();
+    playGoldSound(); vibrate([60,40,60,40,60]);
+    showBigWarning('🎁 ' + got + ' ÖDÜL ALINDI!', 'gold', 2000);
+    renderBattlePass();
+}
+
+/* --- 31. PREMIUM --- */
+function openPremium() {
+    ensureAudio();
+    premiumPanel.classList.add('show');
+    premiumBackdrop.classList.add('show');
+}
+function closePremium() {
+    premiumPanel.classList.remove('show');
+    premiumBackdrop.classList.remove('show');
+}
+
+/* --- HOOKS --- */
+function postLoadLevelHook() {
+    initWorldParticles();
+    playCinematicTransition();
+    setTimeout(showGoalCard, 500);
+}
+
+function postWinHook() {
+    evaluateGoal();
+    awardBattlePassXP(BP_XP_PER_LEVEL);
+    trackDailyLevelComplete();
+    if (window.__lastCaughtType) trackSnakeCaught(window.__lastCaughtType);
+    window.__lastCaughtType = null;
+}
+
+function notifyLifeRegen() {
+    sendNotification('❤️ Canın doldu!', 'Yeni bir can hakkın hazır. Oynamaya devam et!');
+}
+
+function checkDailyNotif() {
+    const now = new Date();
+    const h = now.getHours();
+    const lastSent = localStorage.getItem('snakeEscape_lastDailyNotif') || '';
+    const today = now.toDateString();
+    if (h >= 20 && lastSent !== today) {
+        try { localStorage.setItem('snakeEscape_dailyNotif', today); } catch(e){}
+        sendNotification('🎁 Günlük ödülünü unutma!', 'Bugünkü hediyeni almak için oyuna dön!');
+        try { localStorage.setItem('snakeEscape_lastDailyNotif', today); } catch(e){}
+    }
 }
 
 function init(){
@@ -3167,6 +3966,35 @@ function init(){
         safeAdd(toggleColors, 'click', function(){ settings.colorEnabled=!settings.colorEnabled; saveSettings(); updateToggleUI(); if(settings.audioEnabled) playSuccessSound(); vibrate(20); });
         safeAdd(toggleVibrate, 'click', function(){ settings.vibrationEnabled=!settings.vibrationEnabled; saveSettings(); updateToggleUI(); vibrate(50); });
 
+        /* --- V2.0.0: Yeni buton ve panel bağlantıları --- */
+        safeAdd(battlePassBtn, 'click', openBattlePass);
+        safeAdd(bpBackdrop, 'click', closeBattlePass);
+        safeAdd(bpCloseBtn, 'click', closeBattlePass);
+        safeAdd(bpClaimFree, 'click', function(){ claimBattlePassRewards(false); });
+        safeAdd(bpClaimPremium, 'click', function(){ claimBattlePassRewards(true); });
+
+        safeAdd(premiumBtn, 'click', openPremium);
+        safeAdd(premiumBackdrop, 'click', closePremium);
+        safeAdd(premiumCloseBtn, 'click', closePremium);
+        safeAdd(premiumSubscribeBtn, 'click', function(){ showBigWarning('ÇOK YAKINDA!', 'error', 1200); });
+
+        safeAdd(collectionBtn, 'click', openCollection);
+        safeAdd(collectionBackdrop, 'click', closeCollection);
+        safeAdd(collectionCloseBtn, 'click', closeCollection);
+
+        safeAdd(notifAllowBtn, 'click', handleNotifAllow);
+        safeAdd(notifLaterBtn, 'click', handleNotifLater);
+
+        loadBattlePass();
+        loadCollectionStats();
+        loadDailyPlayData();
+        updateUserUI();
+        requestNotificationPermission();
+        setInterval(checkDailyNotif, 60000);
+        setInterval(function(){ trackDailyPlay(30000); }, 30000);
+
+        if (versionBadge) versionBadge.textContent = 'v' + VERSION;
+
         safeAdd(document, 'keydown', function(e){
             if (e.key === 'Escape') {
                 if (tutorialActive) { skipTutorial(); return; }
@@ -3183,6 +4011,9 @@ function init(){
                 else if (langPanel.classList.contains('show')) closeLanguagePicker();
                 else if (registerPanel.classList.contains('show')) closeRegister();
                 else if (loginPanel.classList.contains('show')) closeLogin();
+                else if (bpPanel.classList.contains('show')) closeBattlePass();
+                else if (premiumPanel.classList.contains('show')) closePremium();
+                else if (collectionPanel.classList.contains('show')) closeCollection();
                 else if (shopOverlay.classList.contains('show')) closeShop();
             }
         });

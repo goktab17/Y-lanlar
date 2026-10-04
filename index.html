@@ -101,7 +101,7 @@ body.shop-open .top-right-buttons { opacity: 0; pointer-events: none; }
 .toggle-switch.on::after { transform: translateX(22px); }
 .start-screen { position: fixed; inset: 0; background: linear-gradient(160deg, #1a2980 0%, #26d0ce 100%); display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 3000; padding: 14px 14px 10px; overflow-y: auto; transition: opacity 0.4s, visibility 0.4s; }
 .start-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.start-screen .logo { font-size: 3rem; margin-bottom: 2px; margin-top: 4px; line-height: 1; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3)); cursor: pointer; }
+.start-screen .logo { font-size: 3rem; margin-bottom: 8px; margin-top: 40px; line-height: 1; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3)); cursor: pointer; }
 @keyframes float { 0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-14px) rotate(5deg);} }
 .start-screen h1 { color: #fff; font-size: 1.3rem; font-weight: 900; letter-spacing: 2px; margin: 0 0 2px 0; text-shadow: 0 4px 20px rgba(0,0,0,0.3); text-align: center; }
 .start-screen .tagline { color: rgba(255,255,255,0.85); font-size: 0.7rem; margin-bottom: 8px; text-align: center; }
@@ -112,7 +112,7 @@ body.shop-open .top-right-buttons { opacity: 0; pointer-events: none; }
 .user-status { margin-bottom: 8px; padding: 6px 12px; background: rgba(255,255,255,0.15); border-radius: 10px; color: #fff; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 .user-status .logout-mini { background: rgba(255,255,255,0.25); border: none; color: #fff; padding: 3px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; cursor: pointer; }
 .start-screen .menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; max-width: 360px; }
-.menu-btn { width: 100%; aspect-ratio: 1; padding: 6px 4px; border: none; border-radius: 12px; font-size: 0.62rem; font-weight: 700; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; position: relative; transition: transform 0.15s; text-align: center; line-height: 1.15; overflow: hidden; }
+.menu-btn { width: 100%; min-height: 88px; padding: 8px 4px; border: none; border-radius: 12px; font-size: 0.62rem; font-weight: 700; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; position: relative; transition: transform 0.15s; text-align: center; line-height: 1.15; overflow: hidden; }
 .menu-btn > span:first-child { font-size: 1.5rem; line-height: 1; margin-bottom: 1px; }
 .menu-btn:active { transform: scale(0.94); }
 .menu-btn.new-game { background: linear-gradient(135deg, #27ae60, #16a085); color: #fff; }
@@ -127,8 +127,8 @@ body.shop-open .top-right-buttons { opacity: 0; pointer-events: none; }
 .menu-btn.modes-btn { background: linear-gradient(135deg, #9333ea, #7c3aed); color: #fff; }
 .menu-btn.achievements-btn { background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; }
 .menu-btn.records-btn { background: linear-gradient(135deg, #0d9488, #0f766e); color: #fff; }
-.menu-btn.login-btn { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
-.menu-btn.register-btn { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; }
+.menu-btn.login-btn { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; grid-column: 1 / 2; }
+.menu-btn.register-btn { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; grid-column: 3 / 4; }
 .save-info { margin-top: 8px; color: rgba(255,255,255,0.85); font-size: 0.7rem; text-align: center; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 10px; max-width: 360px; }
 .save-info.empty { opacity: 0.5; font-style: italic; }
 .no-lives-overlay { position: fixed; inset: 0; background: rgba(15,20,30,0.85); backdrop-filter: blur(6px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; overflow-y: auto; }
@@ -449,11 +449,11 @@ body.dark .task-progress-bar { background: #253340; }
     button.ctrl { padding: 9px 4px; font-size: 0.75rem; }
     .big-warning { font-size: 1.5rem; padding: 12px 20px; }
     .start-screen { padding: 12px 10px 8px; }
-    .start-screen .logo { font-size: 2.6rem; margin-bottom: 2px; margin-top: 2px; }
+    .start-screen .logo { font-size: 2.6rem; margin-bottom: 6px; margin-top: 24px; }
     .start-screen h1 { font-size: 1.15rem; letter-spacing: 1.5px; }
     .start-screen .tagline { font-size: 0.65rem; margin-bottom: 6px; }
     .start-screen .menu { gap: 5px; max-width: 100%; }
-    .menu-btn { font-size: 0.58rem; padding: 4px 3px; gap: 2px; }
+    .menu-btn { font-size: 0.58rem; padding: 6px 3px; gap: 3px; min-height: 80px; }
     .menu-btn > span:first-child { font-size: 1.35rem; }
     .slot-selector { margin-bottom: 6px; padding: 3px; }
     .slot-btn { padding: 5px 10px; font-size: 0.7rem; }
